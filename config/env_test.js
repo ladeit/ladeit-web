@@ -77,8 +77,8 @@ function getClientEnvironment(publicUrl) {
         // This should only be used as an escape hatch. Normally you would put
         // images into the `src` and `import` them in code to get their paths.
         PUBLIC_URL: publicUrl,
-        PUBLIC_SIP:'http://dev.ladeit.io',
-        PUBLIC_WSIP:'dev.ladeit.io',
+        PUBLIC_SIP:'.',
+        PUBLIC_WSIP:'.',
       }
     );
   // Stringify all values so we can feed into Webpack DefinePlugin

@@ -22,7 +22,7 @@ class App extends React.PureComponent {
         ExtendLodash();
         //
         window.SIP = env.PUBLIC_SIP;
-        window.WSIP = env.PUBLIC_WSIP;
+        window.WSIP = env.PUBLIC_WSIP == '.' ? window.location.host : env.PUBLIC_WSIP;
         window.History = this.props.history;
         window.Store = this.props.store;
         window.setI18n = this.setI18n;
