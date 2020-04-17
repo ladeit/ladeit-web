@@ -97,8 +97,9 @@ function getMenu(name){
                     href: '/deployments/$subfix'
                 },
                 {
-                    title: intl.get('services.menuTopology'),
+                    title:intl.get('services.menuTopology'),
                     icon: DeviceHubIcon,
+                    iconFix:Icons.TagAlphaIcon,
                     href: '/topology/$subfix'
                 },
                 {
@@ -124,6 +125,7 @@ function getMenu(name){
                 {
                     title: intl.get('group.menuTopology'),
                     icon: DeviceHubIcon,
+                    iconFix:Icons.TagAlphaIcon,
                     href: '/group/$subfix/topology'
                 },
                 {
