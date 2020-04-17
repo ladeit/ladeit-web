@@ -279,8 +279,6 @@ class Index extends React.PureComponent {
                                                                     <div className={clsx("moreIcon_"+index,"hidden")}>
                                                                         <div className={clsx(classes.groupOperationBox,"flex-c")}>
                                                                             <IconButton size="small" className="flex-one item" onClick={sc.clickSubmenu_setting(one)}><SettingsOutlinedIcon /></IconButton>
-                                                                            <IconButton size="small" className="flex-one item" onClick={sc.clickSubmenu_setting(one)}><SettingsOutlinedIcon /></IconButton>
-                                                                            <IconButton size="small" className="flex-one item" onClick={sc.clickSubmenu_setting(one)}><SettingsOutlinedIcon /></IconButton>
                                                                             <IconButton size="small" className="flex-one item" onClick={sc.clickSubmenu_console(one)}><Icons.ConsoleIcon style={{width:'20px',height:'16px',padding:0,margin:'2px 0',fill:'#8a8a8a'}}/></IconButton>
                                                                         </div>
                                                                     </div>
