@@ -163,7 +163,7 @@ export default ({
             inputPath:'输入路径',
             inputArgs:'输入参数',
             configDefault:'使用默认配置',
-            configOld:'更改配置',
+            configOld:'修改已有配置',
             configImport:'导入之前配置',
             configAuto:'自定义配置',
             //
