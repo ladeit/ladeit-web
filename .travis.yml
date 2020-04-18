@@ -48,14 +48,7 @@ jobs:
             docker build -t $IMAGE_NAME .
             docker push $IMAGE_NAME
             
-            export GIT_REFS=$TRAVIS_BRANCH
-            if [ "$TRAVIS_TAG" != "" ]; then
-              export GIT_REFS=$TRAVIS_TAG
-            fi
             curl --url $LADEIT_URL -H "Content-Type: application/json" -X POST \
-                  --data '{"token":"'$LADEIT_TOKEN'","serviceName":"ladeit-web","image":"'$IMAGE_NAME'","version":"'$TRAVIS_BUILD_NUMBER'","refs":"'$GIT_REFS'", "commitHash":"'$TRAVIS_COMMIT'"}'
+                  --data '{"token":"'$LADEIT_TOKEN'","serviceName":"ladeit-web","image":"'$IMAGE_NAME'","version":"'$TRAVIS_BUILD_NUMBER'","refs":"'$TRAVIS_BRANCH'", "commitHash":"'$TRAVIS_COMMIT'"}'
           )
       name: push ladeit-web to aliyun
-    
-    
-
