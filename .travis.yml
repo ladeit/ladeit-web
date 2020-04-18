@@ -48,7 +48,12 @@ jobs:
             docker build -t $IMAGE_NAME .
             docker push $IMAGE_NAME
             
-            curl --url $LADEIT_URL -H "Content-Type: application/json" -X POST \
+            if [ "$TRAVIS_TAG" != "" ]; then
+              curl --url $LADEIT_URL -H "Content-Type: application/json" -X POST \
+                  --data '{"token":"'$LADEIT_TOKEN_PROD'","serviceName":"ladeit-web","image":"'$IMAGE_NAME'","version":"'$TRAVIS_BUILD_NUMBER'","refs":"'$TRAVIS_BRANCH'", "commitHash":"'$TRAVIS_COMMIT'"}'
+            else
+              curl --url $LADEIT_URL -H "Content-Type: application/json" -X POST \
                   --data '{"token":"'$LADEIT_TOKEN'","serviceName":"ladeit-web","image":"'$IMAGE_NAME'","version":"'$TRAVIS_BUILD_NUMBER'","refs":"'$TRAVIS_BRANCH'", "commitHash":"'$TRAVIS_COMMIT'"}'
+            fi
           )
       name: push ladeit-web to aliyun
