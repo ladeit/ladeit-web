@@ -52,6 +52,3 @@ jobs:
                   --data '{"token":"'$LADEIT_TOKEN'","serviceName":"ladeit-web","image":"'$IMAGE_NAME'","version":"'$TRAVIS_BUILD_NUMBER'","refs":"'$TRAVIS_BRANCH'", "commitHash":"'$TRAVIS_COMMIT'"}'
           )
       name: push ladeit-web to aliyun
-    
-    
-
