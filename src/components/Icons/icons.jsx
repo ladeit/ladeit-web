@@ -361,6 +361,18 @@ class TagNewIcon extends React.PureComponent {
     }
 }
 
+class TagAlphaIcon extends React.PureComponent {
+    render(){
+        const {className,...props} = this.props;
+        return (
+            <span className={"alpha icon"} {...props}>
+                alpha
+            </span>
+        )
+    }
+}
+
+
 
 //
 const ButtonTStyle = theme => ({
@@ -610,6 +622,7 @@ export default {
     Error404Icon,
     Resources404Icon,
     TagNewIcon,
+    TagAlphaIcon,
     IstioIcon,
     K8sIcon,
 

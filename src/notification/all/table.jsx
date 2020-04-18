@@ -42,23 +42,24 @@ class Index extends React.PureComponent {
             noSort:true,
             columns:[
                 { id: 'title', disablePadding: true, label:<span className={classes.cell_title}>{intl.get('notification.tableTitle')}</span>,render(row){
-                    if(row.read_flag){
-                        return <Typography variant="body2" className={clsx("link2",classes.read)} >{row.title}</Typography>;
-                    }else{
-                        return <span className="link2" ><Badge className={`status_select badge`} variant="dot" />{row.title}</span>;//onClick={sc.clickDetail.call(sc,row)}
-                    }
-                }},
+                        if(row.read_flag){
+                            return <Typography variant="body2" className={clsx("link2",classes.read)} >{row.title}</Typography>;
+                        }else{
+                            return <span className="link2" ><Badge className={`status_select badge`} variant="dot" />{row.title}</span>;//onClick={sc.clickDetail.call(sc,row)}
+                        }
+                    }},
+                { id: 'gruop', disablePadding: true, label: intl.get('group.group') +' / '+intl.get('services.services'),render(row){
+                        return <Typography variant="body2">{row.servicegroupname||'一'} / {row.servicename||'一'}</Typography>
+                    }},
                 { id: 'type', disablePadding: true, label: intl.get('notification.tableType'),render(row){
-                    return <Typography variant="body2">{typeList[row.type]}</Typography>
-                }},
+                        return <Typography variant="body2">{typeList[row.type]}</Typography>
+                    }},
+
+                { id: 'create', label: intl.get('notification.tableOprBy'),render(row){
+                        return <Typography variant="body2" className="link2 auto_event" onClick={sc.toUrl(`/profile/${row.username}`)}>{row.username}</Typography>
+                    }},
                 { id: 'time', disablePadding: true, label: intl.get('notification.tableTime'),render(row){
                     return <Typography variant="body2">{Moment(row.create_at).format('YYYY-MM-DD HH:mm:ss')}</Typography>
-                }},
-                { id: 'gruop', disablePadding: true, label: intl.get('group.group') +' / '+intl.get('services.services'),render(row){
-                    return <Typography variant="body2">{row.servicegroupname||'一'} / {row.servicename||'一'}</Typography>
-                }},
-                { id: 'create', label: intl.get('notification.tableOprBy'),render(row){
-                    return <Typography variant="body2" className="link2 auto_event" onClick={sc.toUrl(`/profile/${row.username}`)}>{row.username}</Typography>
                 }},
                 { id: '' }
             ],

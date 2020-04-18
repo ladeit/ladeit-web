@@ -22,6 +22,7 @@ div.right_arrow{width: 16px;height: 16px;position: absolute;right: 0;top: 50%;bo
 button.disabled{opacity:.4}
 g.link{cursor:pointer;}
 g.node{cursor: pointer;}
+.icon.alpha{padding: 2px 4px;font-size: 8px;font-weight: 400;line-height: 12px;margin-top: -8px;border-radius: 16px;border-bottom-left-radius: 0;display: inline-block;background: #ed462f;color: white;}
 
 /*
  font-color: color:rgba(0,0,0,.65)

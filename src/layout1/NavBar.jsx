@@ -132,7 +132,12 @@ function reduceChildRoutes({
                 icon={item.icon}
                 key={item.href}
                 label={item.label}
-                title={item.title}
+                title={
+                    <React.Fragment>
+                        {item.title}
+                        {item.iconFix ? <item.iconFix /> : ''}
+                    </React.Fragment>
+                }
             />
         );
     }
