@@ -8,14 +8,15 @@ install: skip
 
 jobs:
   include:
-    - stage: check
+    - stage: Check
       script:
         - |
           (
             # nothing to do now
+            echo "nothing to do now"
           )
       name: code check
-    - stage:
+    - stage: Push image
       script: 
         - |
           (
