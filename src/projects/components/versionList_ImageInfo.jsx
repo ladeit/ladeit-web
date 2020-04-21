@@ -64,7 +64,7 @@ class Index extends Component {
                         {intl.get('services.image.imageVersion')}&nbsp;:&nbsp;<Inputs.EditLabel1 value={version} width={240} handle={(val)=>{this.handle(data,val)}}/>
                         {intl.get('services.image.imageTime')}&nbsp;:&nbsp;<span className="overflow-text"><Icons.TimeT data={createAt} /></span>
                         <br/>
-                        {intl.get('services.image.imagePath')}&nbsp;:&nbsp;<Tooltip title={image}><span className="overflow-text" style={{width:"240px",padding:'0 8px'}}>{image}</span></Tooltip>
+                        {intl.get('services.image.imagePath')}&nbsp;:&nbsp;<Tooltip title={image}><span className="overflow-text" style={{maxWidth:"480px",padding:'0 8px'}}>{image}</span></Tooltip>
                     </div>
                 </div>
                 <div className="row">
