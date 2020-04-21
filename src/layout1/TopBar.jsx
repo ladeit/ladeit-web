@@ -35,6 +35,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 
 import Icons from 'components/Icons/icons.jsx'
+import ProgressT from './robot/progress.jsx'
 import RobotT from './robot/index.tsx'
 import CustomDropdown from '@/components/CustomDropdown/CustomDropdown.jsx';
 import LanCom from '@/locales/about.jsx';
@@ -143,6 +144,9 @@ function TopBar({
                     </Grid>
                     <Grid item xs >
                         {htmlMenus()}
+                    </Grid>
+                    <Grid item>
+                        <ProgressT />
                     </Grid>
                     <Grid item>
                         <LanCom className="index" callback={(lan)=>{_.href(lan)}}/>
