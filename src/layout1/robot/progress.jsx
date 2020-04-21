@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 import {Popover} from "@material-ui/core";
+import Service from '@/projects/Service';
 import moment from 'moment'
 
 const styles = theme => ({
@@ -69,12 +70,22 @@ class Index extends React.PureComponent {
         }
     }
 
-    state = {
-        closable:false,
-        el:null
+    loadData = ()=>{
+        const sc = this;
+        Service.serviceTips((res)=>{
+            sc.setState({data:res})
+        })
     }
 
-    componentDidMount(){}
+    state = {
+        closable:false,
+        el:null,
+        data:[]
+    }
+
+    componentDidMount(){
+        this.loadData();
+    }
 
     render(){
         const { classes } = this.props;
@@ -89,7 +100,7 @@ class Index extends React.PureComponent {
                         3个服务发布中
                     </div>
                     <div className={clsx("flex-box progress link2",closable?'hidden':'') } >
-                        <LinearProgress color="secondary" variant="buffer" valueBuffer={0} value={0}/>
+                        <LinearProgress className="running" variant="buffer" valueBuffer={0} value={0}/>
                     </div>
                 </div>
                 <Popover
@@ -109,7 +120,7 @@ class Index extends React.PureComponent {
                     <Paper className={clsx(classes.row)} elevation={1}>
                         <div className="flex-r flex-middle">
                             <div className={clsx("flex-one","overflow-text","name")}>group / services</div>
-                            <div className="flex-box"><LinearProgress color="secondary" variant="buffer" valueBuffer={0} value={0}/></div>
+                            <div className="flex-box"><LinearProgress className="running" variant="buffer" valueBuffer={0} value={0}/></div>
                         </div>
                         <br/>
                         <div className="overflow-text content">

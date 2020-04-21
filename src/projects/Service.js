@@ -207,6 +207,9 @@ export default {
         _.ajax({url:`/api/v1/resource/${data.serviceId}/pod`,data:data.count,method:'put'},(res)=>{callback(res)})
     },
 
+    serviceTips(){
+        _.ajax({url:'/api/v1/service',method:'get',data:{}},(res)=>{callback(res)})
+    },
     serviceAdd(){
         _.ajax({url:'/api/v1/servicegroup/addservice',method:'post',data:{}},(res)=>{callback(res)})
     },
