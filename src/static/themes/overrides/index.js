@@ -1,5 +1,6 @@
 import MuiButton from './MuiButton';
-import MuiBadge from './MuiBadge'
+import MuiBadge from './MuiBadge';
+import MuiLinearProgress from './MuiLinearProgress';
 import MuiIconButton from './MuiIconButton';
 import MuiPaper from './MuiPaper';
 import MuiDrawer from './MuiDrawer';
@@ -18,6 +19,7 @@ import MuiListItemIcon from './MuiListItemIcon'
 
 export default {
     MuiButton,
+    MuiLinearProgress,
     MuiBadge,
     MuiIconButton,
     MuiPaper,

@@ -22,7 +22,7 @@ class App extends React.PureComponent {
         ExtendLodash();
         // ip信息指定host
         window.SIP = env.PUBLIC_SIP == '.' ? 'http://'+window.location.host : env.PUBLIC_SIP;
-        window.WSIP = env.PUBLIC_WSIP == '.' ? 'http://'+window.location.host : env.PUBLIC_WSIP;
+        window.WSIP = env.PUBLIC_WSIP == '.' ? window.location.host : env.PUBLIC_WSIP;
         window.History = this.props.history;
         window.Store = this.props.store;
         window.setI18n = this.setI18n;
