@@ -7,6 +7,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 import {Popover} from "@material-ui/core";
 import Service from '@/projects/Service';
+import intl from 'react-intl-universal'
 import moment from 'moment'
 
 const styles = theme => ({
@@ -22,7 +23,7 @@ const styles = theme => ({
             width:'30px'
         },
         '& .memo':{
-            width:'100px',
+            width:'160px',
             padding:'0 8px',
             color:'#485358'
         },
@@ -84,12 +85,13 @@ class Index extends React.PureComponent {
     }
 
     componentDidMount(){
-        this.loadData();
+        //this.loadData();
     }
 
     render(){
         const { classes } = this.props;
         const { el,closable } = this.state;
+        const text = _.template(intl.get('services.tipsServiceDeploy'))({num:3})
         return (
             <React.Fragment>
                 <div className={clsx(classes.root,'flex-r','flex-middle')} >
@@ -97,7 +99,7 @@ class Index extends React.PureComponent {
                         <IconButton className={closable?'activeIcon':''} size="small" onClick={()=>{this.listClose(!closable)}}><DoubleArrowIcon /></IconButton>
                     </div>
                     <div className={clsx("flex-one memo link2",closable?'hidden':'')} onClick={this.popoverTrigger(true)}>
-                        3个服务发布中
+                        {text}
                     </div>
                     <div className={clsx("flex-box progress link2",closable?'hidden':'') } >
                         <LinearProgress className="running" variant="buffer" valueBuffer={0} value={0}/>

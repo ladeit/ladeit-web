@@ -82,6 +82,7 @@ export default ({
         serviceActivity:'最新动态',
         tipsCompleteAuthority:'修改服务权限成功.',
         tipsNoTiminal:"该服务下无资源.",
+        tipsServiceDeploy:'<%-num%> 个服务发布中',
         // dialog
         addDialog:{
             name:'服务名称',
