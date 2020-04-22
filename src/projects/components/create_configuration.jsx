@@ -133,6 +133,7 @@ class Index extends React.PureComponent {
                             res[key] = configuration[key];
                         }
                     }
+                    delete res.livenessProbe;
                     envForm.map(function (v) {v.value = res[v.name];})
                     form_quota.map(function (v) {v.value = res[v.name];})
                     form_quota[1].value || (form_quota[1].value = 'm');
