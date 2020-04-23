@@ -93,9 +93,9 @@ class Index extends React.PureComponent {
                 <DialogTitle>
                     <Typography >
                         {intl.get('services.serviceActivity')}
-                        <div className="fr" style={{lineHeight:'30px'}}>
-                            &nbsp;<DatePicker format="YYYY-MM-DD HH:mm" handle={this.changeSearchDate} />
-                        </div>
+                        {/*<div className="fr" style={{lineHeight:'30px'}}>*/}
+                            {/*&nbsp;<DatePicker format="YYYY-MM-DD HH:mm" handle={this.changeSearchDate} />*/}
+                        {/*</div>*/}
                     </Typography>
                 </DialogTitle>
                 <DialogContent>

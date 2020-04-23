@@ -82,6 +82,7 @@ export default ({
         serviceActivity:'Latest',
         tipsCompleteAuthority:'Modified successfully.',
         tipsNoTiminal:"No resources in this service.",
+        tipsServiceDeploy:'<%-num%> 个服务发布中 en-US',
         // dialog
         addDialog:{
             name:'Service Name',

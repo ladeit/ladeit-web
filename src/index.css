@@ -404,3 +404,12 @@ button.danger_button:hover{ background-color:#9a0036; }
     stroke-dashoffset: 0
   }
 }
+
+@-webkit-keyframes MuiLinearProgress-keyframes-buffer1 {
+  0% {
+    background-position: 0px -23px;
+  }
+  100% {
+    background-position: -90px -23px;
+  }
+}
