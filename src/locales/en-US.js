@@ -421,6 +421,12 @@ export default ({
         clusterEnv:'Label',
         clusterCreateBy:'Creator',
         clusterCreateAt:'Create at',
+        menuDataTransfer:'数据转移 en',
+        tipsDataTransfer:'同时数据转移 en',
+        tipsDataTransfering:'数据转移中... en',
+        tipsStarting:'启动中 en',
+        tipsDataIn:'内嵌 en',
+        tipsDataOut:'外联 en',
     },
     robot:{
         assessment:'Semiautomatic',
