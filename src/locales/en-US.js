@@ -35,7 +35,7 @@ export default ({
     tipsCopy:'Copied.',
     tipsGenerate:'Recreated successfully.',
     tipsCopyInvite:'Copied to clipboard',
-    tipsItsYou:'It\'s you',
+    tipsItsYou:'you',
     tipsNoAuthority:"Permission denied.",
     tipsNoResource:'Cloud not find resource, please contact the administrator.',
     tipsNoFoundData:'No data, please retry.',
