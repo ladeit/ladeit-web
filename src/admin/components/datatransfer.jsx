@@ -56,19 +56,25 @@ class Index extends React.PureComponent {
 
     loadStart(){
         const sc = this;
-        let {mysqlForm,redisForm} = sc.state;
+        let {mysqlForm,redisForm,ladeitForm} = sc.state;
         Service.dataTransferMap(function (res) {
             let mysqlAO = res.mysqlInfoAO || {};
             let redisAO = res.redisInfoAO || {};
+            let labeitAO = res.ladeitInfoAO || {};
             mysqlAO.type = mysqlAO.type - 0;
             redisAO.type = redisAO.type - 0;
+            sc.state.loaded = true;
             sc.state.mysqlData = mysqlAO;
             sc.state.redisData = redisAO;
+            sc.state.labeitData = labeitAO;
             mysqlForm.map(function (v) {
                 v.value = mysqlAO[v.label];
             })
             redisForm.map(function (v) {
                 v.value = redisAO[v.label];
+            })
+            ladeitForm.map(function (v) {
+                v.value = labeitAO[v.label];
             })
             sc.forceUpdate();
         })
@@ -102,7 +108,22 @@ class Index extends React.PureComponent {
         })
     }
 
+    submitLadeit = ()=> {
+        const sc = this;
+        let {ladeitForm,ladeitData} = sc.state;
+        ladeitForm.map(function (v) {
+            ladeitData[v.label] = v.value;
+        })
+        sc.refs.$mask.onStart();
+        Service.dataTransferLadeit(ladeitData,function (res) {
+            if(res){
+                sc.refs.$mask.onEnd();
+            }
+        })
+    }
+
     state = {
+        loaded:false,
         mysqlData:{
             type:false,
             url:'',
@@ -118,6 +139,10 @@ class Index extends React.PureComponent {
             port:'',
             password:''
         },
+        ladeitData:{
+            botmngrhost:'',
+            ladeithost:''
+        },
         mysqlForm:[
             {label:'url',value:''},
             {label:'driver',value:''},
@@ -129,6 +154,10 @@ class Index extends React.PureComponent {
             {label:'host',value:''},
             {label:'port',value:''},
             {label:'password',value:''},
+        ],
+        ladeitForm:[
+            {label:'botmngrhost',value:''},
+            {label:'ladeithost',value:''},
         ]
     }
 
@@ -139,8 +168,8 @@ class Index extends React.PureComponent {
     render(){
         const sc = this;
         const {classes} = this.props;
-        const {mysqlData,redisData,mysqlForm,redisForm} = this.state;
-        console.log('1231')
+        const {loaded,mysqlData,redisData,mysqlForm,redisForm,ladeitForm} = this.state;
+        window.sc = this;
         return (
             <div>
                 <Paper className={classes.row} elevation="1">
@@ -150,7 +179,7 @@ class Index extends React.PureComponent {
                             control={
                                 <Checkbox
                                     size="small" color="primary"
-                                    checked={!mysqlData.type}
+                                    checked={!Boolean(mysqlData.type)}
                                     onChange={(e)=>{
                                         mysqlData.type = false;
                                         sc.forceUpdate();
@@ -163,7 +192,7 @@ class Index extends React.PureComponent {
                             control={
                                 <Checkbox
                                     size="small" color="primary"
-                                    checked={mysqlData.type}
+                                    checked={Boolean(mysqlData.type)}
                                     onChange={(e)=>{
                                         mysqlData.type = true;
                                         sc.forceUpdate();
@@ -186,7 +215,7 @@ class Index extends React.PureComponent {
                             control={
                                 <Checkbox
                                     size="small" color="primary"
-                                    checked={mysqlData.operflag}
+                                    checked={Boolean(mysqlData.operflag)}
                                     onChange={(e)=>{
                                         mysqlData.operflag = e.target.checked;
                                         sc.forceUpdate();
@@ -205,7 +234,7 @@ class Index extends React.PureComponent {
                             control={
                                 <Checkbox
                                     size="small" color="primary"
-                                    checked={!redisData.type}
+                                    checked={!Boolean(redisData.type)}
                                     onChange={(e)=>{
                                         redisData.type = false;
                                         sc.forceUpdate();
@@ -218,7 +247,7 @@ class Index extends React.PureComponent {
                             control={
                                 <Checkbox
                                     size="small" color="primary"
-                                    checked={redisData.type}
+                                    checked={Boolean(redisData.type)}
                                     onChange={(e)=>{
                                         redisData.type = true;
                                         sc.forceUpdate();
@@ -238,6 +267,19 @@ class Index extends React.PureComponent {
                         <Button className="flex-one" size="middle" color="primary" onClick={sc.submitRedis}>{intl.get('confirm')}</Button>
                     </div>
                 </Paper>
+                <Paper className={classes.row} elevation="1">
+                    <div className="title">ladeit config :</div>
+                    {
+                        loaded && ladeitForm.map(function (v) {
+                            return rowHtml.call(sc,v)
+                        })
+                    }
+                    <div className="flex-r" >
+                        <div className="flex-box"></div>
+                        <Button className="flex-one" size="middle" color="primary" onClick={sc.submitLadeit}>{intl.get('confirm')}</Button>
+                    </div>
+                </Paper>
+                {/**/}
                 <Mask className={classes.mask} ref="$mask"/>
             </div>
         )

@@ -33,5 +33,8 @@ export default {
         let param = data.type ? data : {type:false};
         _.ajax({url:`/api/v1/start/redis`,method:'put',data:param},(res)=>{callback(res)})
     },
+    dataTransferLadeit(data,callback){
+        _.ajax({url:`/api/v1/start/ladeit`,method:'put',data:data},(res)=>{callback(res)})
+    },
 }
 
