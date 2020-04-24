@@ -47,10 +47,11 @@ class Index extends Component{
     clickSlackDel = ()=>{
         const sc = this;
         const { slack } = this.state;
+        const text = _.template(intl.get('user.tipsConfirmSlackDel'))({name:slack.slackUserName})
         sc.refs.$del.onOpen({
             open:true,
             title:intl.get('tips'),
-            message:<Typography variant="body1" style={{width:'280px',fontWeight:400}}>确认删除 Slack用户（ {slack.slackUserName} ）授权 ?</Typography>
+            message:<Typography variant="body1" style={{width:'280px',fontWeight:400}}>{text}</Typography>
         })
     }
 

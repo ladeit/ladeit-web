@@ -372,6 +372,7 @@ export default ({
         tipsDeleteAuthor:'Delete authorization.',
         tipsAuthorityUsers:'Slack user authorized : ',
         tipsSlackDel:"Slack user（ <%-name%> ）authorization removed. ",
+        tipsConfirmSlackDel:"确认删除 Slack用户（ <%=name%> ）授权 ? en"
     },
     notification:{
         notification:'Notifications',
