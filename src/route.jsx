@@ -15,12 +15,14 @@ import Register from './login/register.jsx'
 import Test from './login/test.jsx'
 import Terminal from './cluster/component/terminal.jsx'
 import Error404 from './layout1/Error404'
+import Error503 from './layout1/Error503'
 import Resources404 from './layout1/Resources404'
 import Resources401 from './layout1/Resources401'
 
 // admin
 import AdminServices from './admin/services.jsx'
 import AdminClusters from './admin/clusters.jsx'
+import AdminDatatrasfer from './admin/datatransfer.jsx'
 
 // import Home from './layout/Paperbase'
 import Projects from './projects/index.jsx'
@@ -79,6 +81,7 @@ const routes = [
     //
     {exact:true,path:'/admin/services',component:requireAuth(AdminServices)},
     {exact:true,path:'/admin/clusters',component:requireAuth(AdminClusters)},
+    {exact:true,path:'/admin/datatransfer',component:requireAuth(AdminDatatrasfer)},
     //
     {exact:true,path:'/profile/:username',component:requireAuth(UserProfile)},
     {exact:true,path:'/setting/profile',component:requireAuth(UserSetting)},
@@ -118,6 +121,7 @@ const routes = [
     //
     {exact:true,path:'/nomatch',component:Resources404},
     {exact:true,path:'/noauth',component:Resources401},
+    {exact:true,path:'/503',component:Error503},
     {path:'/*',component:Error404}
 ];
 

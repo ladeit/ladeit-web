@@ -28,6 +28,7 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import Label from 'components/Label/Label';
 import StorageOutlinedIcon from '@material-ui/icons/StorageOutlined';
 import ExtensionOutlinedIcon from '@material-ui/icons/ExtensionOutlined';
+import DataUsageIcon from '@material-ui/icons/DataUsage';
 
 
 import Icons from 'components/Icons/icons.jsx'
@@ -167,6 +168,11 @@ function getMenu(name){
                     title: intl.get('cluster.cluster'),
                     icon: Icons.ClustersIcon,
                     href: '/admin/clusters'
+                },
+                {
+                    title: intl.get('adminArea.menuDataTransfer'),
+                    icon: DataUsageIcon,
+                    href: '/admin/datatransfer'
                 }
             ]
         },

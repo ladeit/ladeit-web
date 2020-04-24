@@ -154,7 +154,13 @@ export default function(){
                 navigator.msSaveBlob(blob, fileName)
             }
         }).catch(function (error) {
-            notice.add({text:""+error,type:"error",time:3000});
+            const errMsg = error.toString()
+            const code = errMsg.substr(errMsg.indexOf('code') + 5);
+            if(code=='503'){
+                History.push('/503')
+            }else{
+                notice.add({text:""+error,type:"error",time:3000});
+            }
         })
     }
 
