@@ -402,7 +402,7 @@ export default ({
     inviteWeb:{
         author:'Authorized',
         authorEnd:'Authorized',
-        authorStart:'Authorized user',
+        authorStart:'Authorize',
         back:'Back to labeit?',
         memo1:'Slack App',
         memo2:' will use your account ',
