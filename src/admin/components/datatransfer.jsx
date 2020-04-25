@@ -83,13 +83,18 @@ class Index extends React.PureComponent {
     submitMysql = ()=>{
         const sc = this;
         let {mysqlForm,mysqlData} = sc.state;
-        mysqlForm.map(function (v) {
+        let nullArr = mysqlForm.filter(function (v) {
             mysqlData[v.label] = v.value;
+            return !v.value;
         })
-        sc.refs.$mask.onStart();
+        if(mysqlData.type && nullArr.length){
+            return;
+        }
+        //sc.refs.$mask.onStart();
         Service.dataTransferMysql(mysqlData,function (res) {
             if(res){
-                sc.refs.$mask.onEnd();
+                History.push('/503')
+                //sc.refs.$mask.onEnd();
             }
         })
     }
@@ -97,13 +102,17 @@ class Index extends React.PureComponent {
     submitRedis = ()=>{
         const sc = this;
         let {redisForm,redisData} = sc.state;
-        redisForm.map(function (v) {
+        let nullArr = redisForm.filter(function (v) {
             redisData[v.label] = v.value;
+            return !v.value;
         })
-        sc.refs.$mask.onStart();
+        if(redisData.type && nullArr.length){
+            return;
+        }        //sc.refs.$mask.onStart();
         Service.dataTransferRedis(redisData,function (res) {
             if(res){
-                sc.refs.$mask.onEnd();
+                History.push('/503')
+                //sc.refs.$mask.onEnd();
             }
         })
     }
@@ -111,13 +120,18 @@ class Index extends React.PureComponent {
     submitLadeit = ()=> {
         const sc = this;
         let {ladeitForm,ladeitData} = sc.state;
-        ladeitForm.map(function (v) {
+        let nullArr = ladeitForm.filter(function (v) {
             ladeitData[v.label] = v.value;
+            return !v.value;
         })
-        sc.refs.$mask.onStart();
+        if(nullArr.length){
+            return;
+        }
+        //sc.refs.$mask.onStart();
         Service.dataTransferLadeit(ladeitData,function (res) {
             if(res){
-                sc.refs.$mask.onEnd();
+                //sc.refs.$mask.onEnd();
+                History.push('/503')
             }
         })
     }
@@ -204,7 +218,7 @@ class Index extends React.PureComponent {
                     </div>
                     {
                         !!mysqlData.type && mysqlForm.map(function (v) {
-                            return rowHtml.call(sc,v)
+                            return <RowInput data={v}/>
                         })
                     }
                     <div className="flex-r" >
@@ -259,7 +273,7 @@ class Index extends React.PureComponent {
                     </div>
                     {
                         !!redisData.type && redisForm.map(function (v) {
-                            return rowHtml.call(sc,v)
+                            return <RowInput data={v}/>
                         })
                     }
                     <div className="flex-r" >
@@ -271,7 +285,7 @@ class Index extends React.PureComponent {
                     <div className="title">ladeit config :</div>
                     {
                         loaded && ladeitForm.map(function (v) {
-                            return rowHtml.call(sc,v)
+                            return <RowInput data={v}/>
                         })
                     }
                     <div className="flex-r" >
@@ -288,25 +302,39 @@ class Index extends React.PureComponent {
 
 export default Index;
 
+class RowInput extends React.PureComponent {
+    componentWillMount(){
+        this.state.data = this.props.data;
+    }
 
-function rowHtml(one){
-    const sc = this;
-    return (
-        <div className="flex-r">
-            <label className="flex-one">{one.label} : </label>
-            <div className="flex-box input_box" >
-                <Input
-                    fullWidth
-                    defaultValue={one.value}
-                    inputProps={{'aria-label': 'description'}}
-                    onChange={(event)=>{
-                        one.value = event.target.value;
-                        //sc.forceUpdate();
-                    }}
-                />
+    state = {
+        data:{}
+    }
+
+    render(){
+        const sc = this;
+        const {data} = this.state;
+        return (
+            <div className="flex-r">
+                <label className="flex-one">{data.label} : </label>
+                <div className="flex-box input_box" >
+                    <Input
+                        fullWidth
+                        defaultValue={data.value}
+                        inputProps={{'aria-label': 'description'}}
+                        error={!data.value}
+                        helperText="Must"
+                        onChange={(event)=>{
+                            let value = event.target.value;
+                            let isChange = Boolean(data.value) !== Boolean(value);
+                            data.value = value;
+                            isChange && sc.forceUpdate();
+                        }}
+                    />
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
 
