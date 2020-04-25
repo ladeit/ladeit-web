@@ -56,19 +56,25 @@ class Index extends React.PureComponent {
 
     loadStart(){
         const sc = this;
-        let {mysqlForm,redisForm} = sc.state;
+        let {mysqlForm,redisForm,ladeitForm} = sc.state;
         Service.dataTransferMap(function (res) {
             let mysqlAO = res.mysqlInfoAO || {};
             let redisAO = res.redisInfoAO || {};
+            let labeitAO = res.ladeitInfoAO || {};
             mysqlAO.type = mysqlAO.type - 0;
             redisAO.type = redisAO.type - 0;
+            sc.state.loaded = true;
             sc.state.mysqlData = mysqlAO;
             sc.state.redisData = redisAO;
+            sc.state.labeitData = labeitAO;
             mysqlForm.map(function (v) {
                 v.value = mysqlAO[v.label];
             })
             redisForm.map(function (v) {
                 v.value = redisAO[v.label];
+            })
+            ladeitForm.map(function (v) {
+                v.value = labeitAO[v.label];
             })
             sc.forceUpdate();
         })
@@ -77,13 +83,18 @@ class Index extends React.PureComponent {
     submitMysql = ()=>{
         const sc = this;
         let {mysqlForm,mysqlData} = sc.state;
-        mysqlForm.map(function (v) {
+        let nullArr = mysqlForm.filter(function (v) {
             mysqlData[v.label] = v.value;
+            return !v.value;
         })
-        sc.refs.$mask.onStart();
+        if(mysqlData.type && nullArr.length){
+            return;
+        }
+        //sc.refs.$mask.onStart();
         Service.dataTransferMysql(mysqlData,function (res) {
             if(res){
-                sc.refs.$mask.onEnd();
+                History.push('/503')
+                //sc.refs.$mask.onEnd();
             }
         })
     }
@@ -91,18 +102,42 @@ class Index extends React.PureComponent {
     submitRedis = ()=>{
         const sc = this;
         let {redisForm,redisData} = sc.state;
-        redisForm.map(function (v) {
+        let nullArr = redisForm.filter(function (v) {
             redisData[v.label] = v.value;
+            return !v.value;
         })
-        sc.refs.$mask.onStart();
+        if(redisData.type && nullArr.length){
+            return;
+        }        //sc.refs.$mask.onStart();
         Service.dataTransferRedis(redisData,function (res) {
             if(res){
-                sc.refs.$mask.onEnd();
+                History.push('/503')
+                //sc.refs.$mask.onEnd();
+            }
+        })
+    }
+
+    submitLadeit = ()=> {
+        const sc = this;
+        let {ladeitForm,ladeitData} = sc.state;
+        let nullArr = ladeitForm.filter(function (v) {
+            ladeitData[v.label] = v.value;
+            return !v.value;
+        })
+        if(nullArr.length){
+            return;
+        }
+        //sc.refs.$mask.onStart();
+        Service.dataTransferLadeit(ladeitData,function (res) {
+            if(res){
+                //sc.refs.$mask.onEnd();
+                History.push('/503')
             }
         })
     }
 
     state = {
+        loaded:false,
         mysqlData:{
             type:false,
             url:'',
@@ -118,6 +153,10 @@ class Index extends React.PureComponent {
             port:'',
             password:''
         },
+        ladeitData:{
+            botmngrhost:'',
+            ladeithost:''
+        },
         mysqlForm:[
             {label:'url',value:''},
             {label:'driver',value:''},
@@ -129,6 +168,10 @@ class Index extends React.PureComponent {
             {label:'host',value:''},
             {label:'port',value:''},
             {label:'password',value:''},
+        ],
+        ladeitForm:[
+            {label:'botmngrhost',value:''},
+            {label:'ladeithost',value:''},
         ]
     }
 
@@ -139,8 +182,8 @@ class Index extends React.PureComponent {
     render(){
         const sc = this;
         const {classes} = this.props;
-        const {mysqlData,redisData,mysqlForm,redisForm} = this.state;
-        console.log('1231')
+        const {loaded,mysqlData,redisData,mysqlForm,redisForm,ladeitForm} = this.state;
+        window.sc = this;
         return (
             <div>
                 <Paper className={classes.row} elevation="1">
@@ -150,7 +193,7 @@ class Index extends React.PureComponent {
                             control={
                                 <Checkbox
                                     size="small" color="primary"
-                                    checked={!mysqlData.type}
+                                    checked={!Boolean(mysqlData.type)}
                                     onChange={(e)=>{
                                         mysqlData.type = false;
                                         sc.forceUpdate();
@@ -163,7 +206,7 @@ class Index extends React.PureComponent {
                             control={
                                 <Checkbox
                                     size="small" color="primary"
-                                    checked={mysqlData.type}
+                                    checked={Boolean(mysqlData.type)}
                                     onChange={(e)=>{
                                         mysqlData.type = true;
                                         sc.forceUpdate();
@@ -175,7 +218,7 @@ class Index extends React.PureComponent {
                     </div>
                     {
                         !!mysqlData.type && mysqlForm.map(function (v) {
-                            return rowHtml.call(sc,v)
+                            return <RowInput data={v}/>
                         })
                     }
                     <div className="flex-r" >
@@ -186,7 +229,7 @@ class Index extends React.PureComponent {
                             control={
                                 <Checkbox
                                     size="small" color="primary"
-                                    checked={mysqlData.operflag}
+                                    checked={Boolean(mysqlData.operflag)}
                                     onChange={(e)=>{
                                         mysqlData.operflag = e.target.checked;
                                         sc.forceUpdate();
@@ -205,7 +248,7 @@ class Index extends React.PureComponent {
                             control={
                                 <Checkbox
                                     size="small" color="primary"
-                                    checked={!redisData.type}
+                                    checked={!Boolean(redisData.type)}
                                     onChange={(e)=>{
                                         redisData.type = false;
                                         sc.forceUpdate();
@@ -218,7 +261,7 @@ class Index extends React.PureComponent {
                             control={
                                 <Checkbox
                                     size="small" color="primary"
-                                    checked={redisData.type}
+                                    checked={Boolean(redisData.type)}
                                     onChange={(e)=>{
                                         redisData.type = true;
                                         sc.forceUpdate();
@@ -230,7 +273,7 @@ class Index extends React.PureComponent {
                     </div>
                     {
                         !!redisData.type && redisForm.map(function (v) {
-                            return rowHtml.call(sc,v)
+                            return <RowInput data={v}/>
                         })
                     }
                     <div className="flex-r" >
@@ -238,6 +281,19 @@ class Index extends React.PureComponent {
                         <Button className="flex-one" size="middle" color="primary" onClick={sc.submitRedis}>{intl.get('confirm')}</Button>
                     </div>
                 </Paper>
+                <Paper className={classes.row} elevation="1">
+                    <div className="title">ladeit config :</div>
+                    {
+                        loaded && ladeitForm.map(function (v) {
+                            return <RowInput data={v}/>
+                        })
+                    }
+                    <div className="flex-r" >
+                        <div className="flex-box"></div>
+                        <Button className="flex-one" size="middle" color="primary" onClick={sc.submitLadeit}>{intl.get('confirm')}</Button>
+                    </div>
+                </Paper>
+                {/**/}
                 <Mask className={classes.mask} ref="$mask"/>
             </div>
         )
@@ -246,25 +302,39 @@ class Index extends React.PureComponent {
 
 export default Index;
 
+class RowInput extends React.PureComponent {
+    componentWillMount(){
+        this.state.data = this.props.data;
+    }
 
-function rowHtml(one){
-    const sc = this;
-    return (
-        <div className="flex-r">
-            <label className="flex-one">{one.label} : </label>
-            <div className="flex-box input_box" >
-                <Input
-                    fullWidth
-                    defaultValue={one.value}
-                    inputProps={{'aria-label': 'description'}}
-                    onChange={(event)=>{
-                        one.value = event.target.value;
-                        //sc.forceUpdate();
-                    }}
-                />
+    state = {
+        data:{}
+    }
+
+    render(){
+        const sc = this;
+        const {data} = this.state;
+        return (
+            <div className="flex-r">
+                <label className="flex-one">{data.label} : </label>
+                <div className="flex-box input_box" >
+                    <Input
+                        fullWidth
+                        defaultValue={data.value}
+                        inputProps={{'aria-label': 'description'}}
+                        error={!data.value}
+                        helperText="Must"
+                        onChange={(event)=>{
+                            let value = event.target.value;
+                            let isChange = Boolean(data.value) !== Boolean(value);
+                            data.value = value;
+                            isChange && sc.forceUpdate();
+                        }}
+                    />
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
 

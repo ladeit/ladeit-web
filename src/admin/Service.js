@@ -26,12 +26,23 @@ export default {
         _.ajax({url:`/api/v1/start`,method:'get'},(res)=>{callback(res)})
     },
     dataTransferMysql(data,callback){
-        let param = data.type ? data : {type:false};
-        _.ajax({url:`/api/v1/start/mysql`,method:'put',data:param},(res)=>{callback(res)})
+        if(data.type){
+            data.type = "1";
+        }else{
+            data = {type:"0"};
+        }
+        _.ajax({url:`/api/v1/start/mysql`,method:'put',data:data},(res)=>{callback(res)})
     },
     dataTransferRedis(data,callback){
-        let param = data.type ? data : {type:false};
-        _.ajax({url:`/api/v1/start/redis`,method:'put',data:param},(res)=>{callback(res)})
+        if(data.type){
+            data.type = "1";
+        }else{
+            data = {type:"0"};
+        }
+        _.ajax({url:`/api/v1/start/redis`,method:'put',data:data},(res)=>{callback(res)})
+    },
+    dataTransferLadeit(data,callback){
+        _.ajax({url:`/api/v1/start/ladeit`,method:'put',data:data},(res)=>{callback(res)})
     },
 }
 

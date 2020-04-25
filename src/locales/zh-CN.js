@@ -372,6 +372,7 @@ export default ({
         tipsDeleteAuthor:'删除授权',
         tipsAuthorityUsers:'已授权Slack用户 :',
         tipsSlackDel:"Slack用户（ <%-name%> ）授权已删除. ",
+        tipsConfirmSlackDel:"确认删除 Slack用户（ <%=name%> ）授权 ?"
     },
     notification:{
         notification:'Notifications',
