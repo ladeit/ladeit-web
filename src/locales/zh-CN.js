@@ -35,7 +35,7 @@ export default ({
     tipsCopy:'已复制. ',
     tipsGenerate:'已生成. ',
     tipsCopyInvite:'已复制 邀请链接 到剪切板. ',
-    tipsItsYou:'It\'s you',
+    tipsItsYou:'you',
     tipsNoAuthority:"无权限",
     tipsNoResource:'资源未找到，请联系管理员！',
     tipsNoFoundData:'未加载到数据,请刷新重试 !',
