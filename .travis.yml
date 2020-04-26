@@ -44,8 +44,8 @@ jobs:
             #
             # push every ladeit-web image to aliyun
             #
-            if [ "$TRAVIS_BRANCH" == "master" ] && 
-               [ "$TRAVIS_PULL_REQUEST" == false ]; then
+            if [ "$TRAVIS_BRANCH" == "master" -a "$TRAVIS_PULL_REQUEST" == false ] ||
+               [ "$tag" == true ]; then
               npm install && npm run build
               cd $TRAVIS_BUILD_DIR/build/
               tar -czf build.tar.gz ./*
