@@ -422,7 +422,7 @@ export default ({
         clusterEnv:'标签',
         clusterCreateBy:'创建人',
         clusterCreateAt:'创建时间',
-        menuDataTransfer:'数据转移',
+        menuDataTransfer:'系统设置',
         tipsDataTransfer:'同时数据转移',
         tipsDataTransfering:'数据转移中...',
         tipsStarting:'启动中',
