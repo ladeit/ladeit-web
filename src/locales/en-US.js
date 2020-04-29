@@ -131,6 +131,7 @@ export default ({
             '2':'BlueGreen...',
             '3':'A/BTest...',
             '4':'Rolling...',
+            '8':'运行失败 en',
         },
         releaseStatus:{
             '0':'Preparing',
