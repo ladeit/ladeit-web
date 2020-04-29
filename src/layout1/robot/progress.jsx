@@ -1,5 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
+import {inject,observer} from 'mobx-react';
 import { withStyles } from '@material-ui/styles';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
@@ -44,18 +45,22 @@ const styles = theme => ({
             paddingRight:'8px'
         },
         '& .content':{
-            maxWidth:'380px',
+            width:'380px',
             color:'#94a1a9',
             display:'block'
         }
     }
 })
 
+
 @withStyles(styles)
+@inject("store")
+@observer
 class Index extends React.PureComponent {
 
     listClose = (status) => {
-        this.setState({closable:status})
+        let val = this.state.closable ? 0 : status;
+        this.setState({closable:val})
     }
 
     popoverTrigger = (status) => {
@@ -71,38 +76,77 @@ class Index extends React.PureComponent {
         }
     }
 
-    loadData = ()=>{
-        const sc = this;
-        Service.serviceTips((res)=>{
-            sc.setState({data:res})
-        })
-    }
-
     state = {
         closable:false,
         el:null,
         data:[]
     }
 
-    componentDidMount(){
-        //this.loadData();
+    componentDidMount(){}
+
+    renderStatus(status){
+        let res = "";
+        switch (status) {
+            case '0':
+                res = <LinearProgress className="success" variant={'determinate'}/>;
+                break;
+            case '8':
+                res = <LinearProgress className="failed" variant={'determinate'}/>;
+                break;
+            default:
+                res = <LinearProgress className="running" variant="buffer" valueBuffer={0} value={0}/>;
+                break;
+        }
+        return res;
+    }
+
+    renderEvents = (data)=>{
+        const sc = this;
+        const { classes } = this.props;
+        return data.map((v)=>{
+            return (
+                <Paper className={clsx(classes.row)} elevation={1}>
+                    <div className="flex-r flex-middle">
+                        <div className={clsx("flex-one","overflow-text","name")}>{v.name}</div>
+                        <div className="flex-box">{sc.renderStatus(v.status)}</div>
+                    </div>
+                    <br/>
+                    {
+                        v.messageAOS.map((event)=>{
+                            let startText = moment(event.createAt).format('YYYY-MM-DD HH:mm:ss');
+                            let reason = event.title;
+                            return (
+                                <div className="overflow-text content">
+                                    {startText}&nbsp;&nbsp;
+                                    {reason}
+                                </div>
+                            )
+                        })
+                    }
+                </Paper>
+            )
+        })
     }
 
     render(){
-        const { classes } = this.props;
+        const { classes,store } = this.props;
         const { el,closable } = this.state;
-        const text = _.template(intl.get('services.tipsServiceDeploy'))({num:3})
+        const data = store.event.data;
+        const text = _.template(intl.get('services.tipsServiceDeploy'))({num:data.length});
+        let isClose = data.length == closable;
         return (
             <React.Fragment>
-                <div className={clsx(classes.root,'flex-r','flex-middle')} >
-                    <div className="flex-one icon_button">
-                        <IconButton className={closable?'activeIcon':''} size="small" onClick={()=>{this.listClose(!closable)}}><DoubleArrowIcon /></IconButton>
-                    </div>
-                    <div className={clsx("flex-one memo link2",closable?'hidden':'')} onClick={this.popoverTrigger(true)}>
-                        {text}
-                    </div>
-                    <div className={clsx("flex-box progress link2",closable?'hidden':'') } >
-                        <LinearProgress className="running" variant="buffer" valueBuffer={0} value={0}/>
+                <div className={data.length?'':'hidden'}>
+                    <div className={clsx(classes.root,'flex-r','flex-middle')}>
+                        <div className="flex-one icon_button">
+                            <IconButton className={isClose?'activeIcon':''} size="small" onClick={()=>{this.listClose(data.length)}}><DoubleArrowIcon /></IconButton>
+                        </div>
+                        <div className={clsx("flex-one memo link2",isClose?'hidden':'')} onClick={this.popoverTrigger(true)}>
+                            {text}
+                        </div>
+                        <div className={clsx("flex-box progress link2",isClose?'hidden':'') } >
+                            <LinearProgress className="running" variant="buffer" valueBuffer={0} value={0}/>
+                        </div>
                     </div>
                 </div>
                 <Popover
@@ -119,47 +163,9 @@ class Index extends React.PureComponent {
                         horizontal: 'center',
                     }}
                 >
-                    <Paper className={clsx(classes.row)} elevation={1}>
-                        <div className="flex-r flex-middle">
-                            <div className={clsx("flex-one","overflow-text","name")}>group / services</div>
-                            <div className="flex-box"><LinearProgress className="running" variant="buffer" valueBuffer={0} value={0}/></div>
-                        </div>
-                        <br/>
-                        <div className="overflow-text content">
-                            {moment('2020-4-16 10:10:10').format('YYYY-MM-DD HH:mm:ss')}&nbsp;&nbsp;
-                            buzzy-git-ms/buzzy-test FailedCreate
-                        </div>
-                    </Paper>
-                    <Paper className={clsx(classes.row)} elevation={1}>
-                        <div className="flex-r flex-middle">
-                            <div className={clsx("flex-one","overflow-text","name")}>group / services</div>
-                            <div className="flex-box"><LinearProgress className="success" variant={'determinate'}/></div>
-                        </div>
-                        <br/>
-                        <div className="overflow-text content">
-                            {moment('2020-4-16 10:10:10').format('YYYY-MM-DD HH:mm:ss')}&nbsp;&nbsp;
-                            buzzy-git-ms/buzzy-test FailedCreate
-                        </div>
-                        <div className="overflow-text content">
-                            {moment('2020-4-16 10:10:10').format('YYYY-MM-DD HH:mm:ss')}&nbsp;&nbsp;
-                            buzzy-git-ms/buzzy-test FailedCreate
-                        </div>
-                        <div className="overflow-text content">
-                            {moment('2020-4-16 10:10:10').format('YYYY-MM-DD HH:mm:ss')}&nbsp;&nbsp;
-                            buzzy-git-ms/buzzy-test FailedCreatebuzzy-git-ms/buzzy-test FailedCreatebuzzy-git-ms/buzzy-test FailedCreatebuzzy-git-ms/buzzy-test FailedCreate
-                        </div>
-                    </Paper>
-                    <Paper className={clsx(classes.row)} elevation={1}>
-                        <div className="flex-r flex-middle">
-                            <div className={clsx("flex-one","overflow-text","name")}>group / services</div>
-                            <div className="flex-box"><LinearProgress className="failed" variant={'determinate'}/></div>
-                        </div>
-                        <br/>
-                        <div className="overflow-text content">
-                            {moment('2020-4-16 10:10:10').format('YYYY-MM-DD HH:mm:ss')}&nbsp;&nbsp;
-                            buzzy-git-ms/buzzy-test FailedCreate
-                        </div>
-                    </Paper>
+                    {
+                        this.renderEvents(data)
+                    }
                 </Popover>
             </React.Fragment>
         )
