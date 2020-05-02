@@ -2,7 +2,7 @@ import { observable, action, computed } from 'mobx';
 import * as attach from "xterm/lib/addons/attach/attach";
 
 const conf = {
-    resetTime:100 * 1000,// 展示消失延时
+    resetTime:30 * 1000,// 展示消失延时
     eventsLength:3,// 事件展示数量
     time:1444, // 缓存周期
     cache:[], // 有序缓存队列
@@ -36,7 +36,8 @@ class Store {
             id:one.serviceId,
             name:one.name,
             status:one.status,
-            messageAOS:[]
+            messageAOS:[],
+            _resetTime:0
         }
         return res;
     }
@@ -45,12 +46,12 @@ class Store {
         return {// 合成事件对象
             id:one.namespace,// 没有?
             createAt:one.startTime,
-            title: one.reason
+            title: one.note
         }
     }
 
     addData(one){
-        conf.cache.push(one);
+        conf.cache.push(JSON.parse(one||"{}"));
     }
 
     delCompleteData(data){// 每次渲染校验是否删除
@@ -59,6 +60,7 @@ class Store {
             if(v.messageAOS.length<1){
                 data.splice(i,1);
             }else{
+                console.log(JSON.stringify(v.status))
                 if([0,8].indexOf(v.status)>-1){// 0 成功 / 8 异常
                     v._resetTime += conf.time;
                     if(v._resetTime>conf.resetTime){
@@ -149,7 +151,7 @@ function mock(id,callback){
     //
     let ip = window.WSIP;
     let user = _.local('user');
-    let ws = conf.ws =  new WebSocket(`ws://dev.ladeit.dev.cameobespoke.com/api/v1/events/${user.id}`);
+    let ws = conf.ws =  new WebSocket(`ws://${ip}/api/v1/events/${user.id}`);
     ws.onopen = function(event){
         // TODO terminal - 异常处理
     }
