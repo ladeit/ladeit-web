@@ -278,11 +278,13 @@ class Index extends React.PureComponent {
             //this.setState({service:{...serviceData}});
             if(one.status != serviceData.status){
                 window._.extend(serviceData,one);
-                let id = serviceData.id;
-                this.loadServiceInfo(id);
-                this.loadPipeChart(serviceData);
-                this.loadHeatmapChart(id);
-                this.loadEventNote(id);
+                // let id = serviceData.id;
+                // this.loadServiceInfo(id);
+                // this.loadPipeChart(serviceData);
+                // this.loadHeatmapChart(id);
+                // this.loadEventNote(id);
+                this.state.info.status_text = Service.STATUS2(serviceData.status);
+                this.forceUpdate();
             }
         }
     }

@@ -2,9 +2,9 @@ import { observable, action, computed } from 'mobx';
 import * as attach from "xterm/lib/addons/attach/attach";
 
 const conf = {
-    resetTime:30 * 1000,// 展示消失延时
+    resetTime:12 * 1000,// 展示消失延时
     eventsLength:3,// 事件展示数量
-    time:1444, // 缓存周期
+    time:1000, // 缓存周期
     cache:[], // 有序缓存队列
     callback:null
 }
@@ -36,6 +36,7 @@ class Store {
             id:one.serviceId,
             name:one.name,
             status:one.status,
+            imageAOS:one.imageAOS ? [one.imageAOS] : [],
             messageAOS:[],
             _resetTime:0
         }
@@ -166,5 +167,10 @@ function mock(id,callback){
         // 1004自定义：后台提示（用户已经登陆或被踢掉）
         // 1006连接异常时关闭。
         console.log(event.code);
+        if(event.code == 1006){
+            setTimeout(function () {
+                mock(id,callback);
+            },600)
+        }
     }
 }

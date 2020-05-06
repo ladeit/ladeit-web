@@ -86,7 +86,7 @@ class Index extends React.PureComponent {
 
     renderStatus(status){
         let res = "";
-        switch (status) {
+        switch (status+'') {
             case '0':
                 res = <LinearProgress className="success" variant={'determinate'}/>;
                 break;
