@@ -243,7 +243,7 @@ class Index extends React.PureComponent {
                 </Paper>
                 <Paper className={classes.row} elevation="1">
                     <div className="title">
-                        radis config :&nbsp;&nbsp;
+                        redis config :&nbsp;&nbsp;
                         <FormControlLabel
                             control={
                                 <Checkbox

@@ -35,7 +35,7 @@ export default ({
     tipsCopy:'Copied.',
     tipsGenerate:'Recreated successfully.',
     tipsCopyInvite:'Copied to clipboard',
-    tipsItsYou:'It\'s you',
+    tipsItsYou:'you',
     tipsNoAuthority:"Permission denied.",
     tipsNoResource:'Cloud not find resource, please contact the administrator.',
     tipsNoFoundData:'No data, please retry.',
@@ -82,7 +82,7 @@ export default ({
         serviceActivity:'Latest',
         tipsCompleteAuthority:'Modified successfully.',
         tipsNoTiminal:"No resources in this service.",
-        tipsServiceDeploy:'<%-num%> 个服务发布中 en-US',
+        tipsServiceDeploy:'<%-num%> service(s) deploying...',
         // dialog
         addDialog:{
             name:'Service Name',
@@ -373,7 +373,7 @@ export default ({
         tipsDeleteAuthor:'Delete authorization.',
         tipsAuthorityUsers:'Slack user authorized : ',
         tipsSlackDel:"Slack user（ <%-name%> ）authorization removed. ",
-        tipsConfirmSlackDel:"确认删除 Slack用户（ <%=name%> ）授权 ? en"
+        tipsConfirmSlackDel:"Sure to remove authorization of <%=name%>(slack)?"
     },
     notification:{
         notification:'Notifications',
@@ -405,7 +405,7 @@ export default ({
     inviteWeb:{
         author:'Authorized',
         authorEnd:'Authorized',
-        authorStart:'Authorized user',
+        authorStart:'Authorize',
         back:'Back to labeit?',
         memo1:'Slack App',
         memo2:' will use your account ',
@@ -423,12 +423,12 @@ export default ({
         clusterEnv:'Label',
         clusterCreateBy:'Creator',
         clusterCreateAt:'Create at',
-        menuDataTransfer:'数据转移 en',
-        tipsDataTransfer:'同时数据转移 en',
-        tipsDataTransfering:'数据转移中... en',
-        tipsStarting:'启动中 en',
-        tipsDataIn:'内嵌 en',
-        tipsDataOut:'外联 en',
+        menuDataTransfer:'System settings',
+        tipsDataTransfer:'Transfer data',
+        tipsDataTransfering:'Transfer...',
+        tipsStarting:'Restarting...',
+        tipsDataIn:'Embed',
+        tipsDataOut:'Remote',
     },
     robot:{
         assessment:'Semiautomatic',

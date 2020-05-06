@@ -8,7 +8,15 @@ install: skip
 
 jobs:
   include:
-    - stage:
+    - stage: Check
+      script:
+        - |
+          (
+            # nothing to do now
+            echo "nothing to do now"
+          )
+      name: code check
+    - stage: Push image
       script: 
         - |
           (
@@ -36,26 +44,29 @@ jobs:
             #
             # push every ladeit-web image to aliyun
             #
-            npm install && npm run build
-            cd $TRAVIS_BUILD_DIR/build/
-            tar -czf build.tar.gz ./*
+            if [ "$TRAVIS_BRANCH" == "master" -a "$TRAVIS_PULL_REQUEST" == false ] ||
+               [ "$TRAVIS_TAG" != "" ]; then
+              npm install && npm run build
+              cd $TRAVIS_BUILD_DIR/build/
+              tar -czf build.tar.gz ./*
 
-            cd $TRAVIS_BUILD_DIR
-            export RELEASE_VERSION=$(npm view my-app version)-build-$TRAVIS_BUILD_NUMBER
-            export IMAGE_NAME=registry.cn-hangzhou.aliyuncs.com/ladeit/ladeit-web:$RELEASE_VERSION
+              cd $TRAVIS_BUILD_DIR
+              if [ "$TRAVIS_TAG" != "" ]; then
+                export RELEASE_VERSION=$TRAVIS_TAG
+                export IMAGE_NAME=registry.cn-hangzhou.aliyuncs.com/ladeit/ladeit-web:$RELEASE_VERSION
+                export L_TOKEN=$LADEIT_TOKEN_PROD
+              else
+                export RELEASE_VERSION=$(npm view my-app version)-build-$TRAVIS_BUILD_NUMBER
+                export IMAGE_NAME=registry.cn-hangzhou.aliyuncs.com/ladeit/ladeit-web:$RELEASE_VERSION
+                export L_TOKEN=$LADEIT_TOKEN
+              fi
 
-            echo "$ALIYUN_DOCKER_PASSWORD" | docker login registry.cn-hangzhou.aliyuncs.com -u "$ALIYUN_DOCKER_USERNAME" --password-stdin
-            docker build -t $IMAGE_NAME .
-            docker push $IMAGE_NAME
-            
-            export GIT_REFS=$TRAVIS_BRANCH
-            if [ "$TRAVIS_TAG" != "" ]; then
-              export GIT_REFS=$TRAVIS_TAG
+              echo "$ALIYUN_DOCKER_PASSWORD" | docker login registry.cn-hangzhou.aliyuncs.com -u "$ALIYUN_DOCKER_USERNAME" --password-stdin
+              docker build -t $IMAGE_NAME .
+              docker push $IMAGE_NAME
+              
+              curl --url $LADEIT_URL -H "Content-Type: application/json" -X POST \
+                    --data '{"token":"'$L_TOKEN'","serviceName":"ladeit-web","image":"'$IMAGE_NAME'","version":"'$TRAVIS_BUILD_NUMBER'","refs":"'$TRAVIS_BRANCH'", "commitHash":"'$TRAVIS_COMMIT'"}'
             fi
-            curl --url $LADEIT_URL -H "Content-Type: application/json" -X POST \
-                  --data '{"token":"'$LADEIT_TOKEN'","serviceName":"ladeit-web","image":"'$IMAGE_NAME'","version":"'$TRAVIS_BUILD_NUMBER'","refs":"'$GIT_REFS'", "commitHash":"'$TRAVIS_COMMIT'"}'
           )
       name: push ladeit-web to aliyun
-    
-    
-
