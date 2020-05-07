@@ -23,13 +23,10 @@ import intl from 'react-intl-universal'
 // template
 import CreateT from './create.jsx'
 import DrawerT from '@/components/Dialog/Drawer.jsx'
-import DrawerUserT from './group_user.jsx'
 import ProjectsFlagPng from '@static/img/project_flag.png'
 import ProjectsFlagSPng from '@static/img/project_flag_s.png'
 import MatchShowT from '../../topology/components/pod_topo_match_show'
-import GroupStatusT from './group/group_status'
 import RobotT from '@/topology/robot.jsx'
-import WS from '@static/ws_group'
 import AuthFilter from '@/AuthFilter.jsx'
 import ServiceAdd from './group/group_service.jsx'
 import Terminal from './group/index_terminal'
@@ -128,17 +125,6 @@ const serviceTipsMap = {};
 @withStyles(styles)
 @AuthFilter
 class Index extends React.Component{
-    componentWillMount(){
-        WS.openWS();
-    }
-
-    componentDidMount(){
-
-    }
-
-    componentWillUnmount(){
-        WS.closeWS();
-    }
 
     clickCreate(item){
         const sc = this;

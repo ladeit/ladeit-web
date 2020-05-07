@@ -74,7 +74,6 @@ class App extends React.PureComponent {
     //
     render(){
         const { store,history } = this.props;
-        store.global.autoLogin();
         return (
             <>
                 <RouteConfig history={history}/>

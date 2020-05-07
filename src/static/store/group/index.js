@@ -4,9 +4,16 @@ import Service from '@/projects/Service'
 // 资源项
 class Store {
     @observable
+    groupList = [];
+    @observable
     groupData = {};
     @observable
     userMap = {loaded:false,groupName:'',pageSize:'',records:[]};
+
+    @action
+    ajaxGroupList(){
+
+    }
 
     @action
     delUser(one){
@@ -18,7 +25,7 @@ class Store {
     ajaxUsers(options){
         const sc = this;
         _.extend(sc.userMap,{loaded:false,records:[]})// TODO render很多次了
-        loadGroup.call(sc,options,function (groupData) {
+        getGroup.call(sc,options,function (groupData) {
             Service.groupUsersList_nopage({ServiceGroupId:groupData.id},(res)=>{
                 sc.groupData = groupData;
                 _.extend(sc.userMap,{loaded:true,records:res})
@@ -27,7 +34,7 @@ class Store {
     }
 }
 
-function loadGroup(params,callback){
+function getGroup(params,callback){
     const sc = this;
     Service.groupListByName(params._group,function(res){
         sc.groupData = res[0];

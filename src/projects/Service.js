@@ -10,7 +10,8 @@ export default {
                 '1':intl.get('services.status.1'),
                 '2':intl.get('services.status.2'),
                 '3':intl.get('services.status.3'),
-                '4':intl.get('services.status.4')
+                '4':intl.get('services.status.4'),
+                '8':intl.get('services.status.8')
             }
         }
         return name ? cache.STATUS[name] : cache.STATUS;
@@ -207,7 +208,7 @@ export default {
         _.ajax({url:`/api/v1/resource/${data.serviceId}/pod`,data:data.count,method:'put'},(res)=>{callback(res)})
     },
 
-    serviceTips(){
+    serviceEventTips(callback){
         _.ajax({url:'/api/v1/service',method:'get',data:{}},(res)=>{callback(res)})
     },
     serviceAdd(){
