@@ -4,7 +4,7 @@ import * as attach from "xterm/lib/addons/attach/attach";
 const conf = {
     resetTime:12 * 1000,// 展示消失延时
     eventsLength:3,// 事件展示数量
-    time:1000, // 缓存周期
+    time:600, // 缓存周期
     cache:[], // 有序缓存队列
     callback:null
 }
@@ -35,7 +35,7 @@ class Store {
         let res = {
             id:one.serviceId,
             name:one.name,
-            status:one.status,
+            status:one.status+"",
             imageAOS:one.imageAOS ? [one.imageAOS] : [],
             messageAOS:[],
             _resetTime:0
@@ -53,6 +53,9 @@ class Store {
 
     addData(one){
         conf.cache.push(JSON.parse(one||"{}"));
+        if(conf.cache.length>3){
+            conf.cache.splice(0,conf.cache.length-3);
+        }
     }
 
     delCompleteData(data){// 每次渲染校验是否删除
@@ -76,13 +79,19 @@ class Store {
         let sc = this;
         let data = sc.data;
         let ids = data.map((v)=>{return v.id;})
+        if(conf.cache.length<1){
+            return;
+        }
         //
         conf.cache.forEach((v)=>{
             let service = sc.getServieData(v);
             let event = sc.getMessageData(v);
             let index = ids.indexOf(service.id);
             if(index>-1){
-                service = data[index];
+                let oldService = data[index];
+                service.messageAOS = oldService.messageAOS;
+                service._resetTime = oldService._resetTime;
+                data.splice(index,1,service);
             }else{
                 ids.splice(0,0,service.id);
                 data.splice(0,0,service);
@@ -92,7 +101,7 @@ class Store {
         });
         conf.cache.length = 0;
         //
-        sc.delCompleteData(data);
+        // sc.delCompleteData(data);
         sc.data = [...data];
         conf.callback && conf.callback(data);
     }

@@ -113,7 +113,7 @@ class Index extends React.PureComponent {
                     <br/>
                     {
                         v.messageAOS.map((event)=>{
-                            let startText = moment(event.createAt).format('YYYY-MM-DD HH:mm:ss');
+                            let startText = moment(event.createAt).format('HH:mm:ss');
                             let reason = event.title;
                             return (
                                 <div className="overflow-text content">
