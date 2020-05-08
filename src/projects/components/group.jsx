@@ -186,7 +186,8 @@ class Index extends React.Component{
         let { data } = this.props;
         return (flag)=>{
             if(flag){// 完成
-                History.push(`/topology/${data.name}/${item.name}/common`)
+                sc.$drawerUser.onOpen({open:false});
+                // History.push(`/topology/${data.name}/${item.name}/common`)
             }else{// 取消
                 sc.$drawerUser.onOpen({open:false});
             }

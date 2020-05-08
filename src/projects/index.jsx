@@ -100,7 +100,7 @@ class Index extends React.PureComponent{
               let index = ids.indexOf(vv.id);
               if(index>-1){
                   let service = data[index];
-                  service.imageAOS = _.concat(service.imageAOS,vv.imageAOS);
+                  vv.imageAOS = _.concat(service.imageAOS,vv.imageAOS);
                   if(vv.status != service.status){
                       window._.extend(vv,service);
                       isChange = true;

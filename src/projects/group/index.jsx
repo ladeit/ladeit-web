@@ -120,11 +120,16 @@ class Index extends React.PureComponent {
             event:(name,data)=>{
                 //
             }
-        }
+        };
     }
 
     componentDidMount(){
         this.loadGroup();
+        Store.event.bindDataEvent(this.renderService);
+    }
+
+    componentWillUnmount(){
+        Store.event.bindDataEvent();
     }
 
     loadGroup(){
@@ -162,7 +167,8 @@ class Index extends React.PureComponent {
         let { data } = this.props;
         return (flag)=>{
             if(flag){// 完成
-                History.push(`/topology/${data.name}/${item.name}`)
+                sc.$drawerUser.onOpen({open:false});
+                // History.push(`/topology/${data.name}/${item.name}`)
             }else{// 取消
                 sc.$drawerUser.onOpen({open:false});
             }
@@ -210,7 +216,7 @@ class Index extends React.PureComponent {
                     {auth('RW') ? <Typography variant="body2" component="span" className="link1" onClick={this.clickCreate(item)} key={key}>{intl.get('newCreate')}</Typography> : <Tooltip title={intl.get('tipsNoAuthority')}><span>{intl.get('newCreate')}</span></Tooltip>}
                 </div>
             )
-        }else if(item.status>1){
+        }else if(item.status!=8 && item.status>1){
             if(imageVersion){// 非第一次 : 可查看详情
                 arr.push(
                     <div className="row_text block">
@@ -238,6 +244,30 @@ class Index extends React.PureComponent {
     handleDense = event => {
         this.setState({dense:event.target.checked});
         this.$table.onDense(event.target.checked);
+    }
+
+    renderService = (data)=>{
+        let servicelist = this.state.data;
+        let isChange = false;
+        let ids = data.map((v) => {return v.id;})
+        if(ids.length<1){
+            return;
+        }
+        //
+        servicelist.forEach((vv)=>{
+            let index = ids.indexOf(vv.id);
+            if(index>-1){
+                let service = data[index];
+                if(vv.status != service.status){
+                    window._.extend(vv,service);
+                    isChange = true;
+                }
+            }
+        })
+        //
+        if(isChange){
+            this.setState({data:[...servicelist]})
+        }
     }
 
     render = ()=>{
