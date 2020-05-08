@@ -186,7 +186,7 @@ class Index extends React.PureComponent {
         window.sc = this;
         return (
             <div>
-                <Paper className={classes.row} elevation="1">
+                <Paper className={classes.row} elevation="1" style={{display:'none'}}>
                     <div className="title">
                         mysql config :&nbsp;&nbsp;
                         <FormControlLabel
@@ -241,9 +241,9 @@ class Index extends React.PureComponent {
                         <Button className="flex-one" size="middle" color="primary" onClick={sc.submitMysql}>{intl.get('confirm')}</Button>
                     </div>
                 </Paper>
-                <Paper className={classes.row} elevation="1">
+                <Paper className={classes.row} elevation="1" style={{display:'none'}}>
                     <div className="title">
-                        radis config :&nbsp;&nbsp;
+                        redis config :&nbsp;&nbsp;
                         <FormControlLabel
                             control={
                                 <Checkbox

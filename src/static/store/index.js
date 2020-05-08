@@ -1,5 +1,6 @@
 import global from './global/index'
 import notice from './global/notice'
+import event from './global/event'
 // project
 import project from './project/index'
 // cluster
@@ -15,6 +16,7 @@ import notification from './notification/index'
 export default {
     global,
     notice,
+    event,
     //
     project,
     cluster,

@@ -179,14 +179,18 @@ function requireAuth(Component) {
         checkAuth() {
             // 判断登陆
             const {history} = this.props;
+            const store = window.Store;
             const user = _.local('user');
             const id = user && user.id;
             // 未登陆重定向到登陆页面
             if (!id) {
+                store.event.endEvents(id);
                 let redirect = this.props.location.pathname + this.props.location.search;
                 history.push('/login?message=401&from=' + encodeURIComponent(redirect));
                 return;
             }
+            store.global.autoLogin();
+            store.event.startEvents(id);
             this.state.login = Boolean(id);// TODO 为什么Component先被挂载了
         }
 

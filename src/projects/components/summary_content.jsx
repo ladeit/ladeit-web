@@ -143,10 +143,12 @@ class Index extends React.PureComponent {
 
     componentDidMount(){
         this.loadService();
+        Store.event.bindDataEvent(this.renderService)
     }
 
     componentWillUnmount(){
         clearTimeout(timer);
+        Store.event.bindDataEvent()
     }
 
     loadService(){
@@ -180,10 +182,7 @@ class Index extends React.PureComponent {
         const sc = this;
         let info = sc.state.info;
         Service.serviceInfoMap({ServiceId:id},function(res){
-            res.release_text = Service.STATUS2(res.status);// TODO runStatus
-            res.status_text = Service.STATUS(res.status);
-            res.alltime_text = res.releaseAt ? Moment(res.releaseAt).fromNow(true) : ' 一 ';
-            res.duration_text = res.duration ? Moment(res.duration).fromNow(true) : ' 一 ';
+            TEXT_SERVICE(res);
             sc.state.info = _.extend(info,res);
             sc.forceUpdate();
         })
@@ -271,6 +270,25 @@ class Index extends React.PureComponent {
         }
     }
 
+    renderService = (data)=>{
+        let serviceData = this.state.service;
+        let one = data.filter((v) => {return v.id == serviceData.id;})[0];
+        if(one){
+            //window._.extend(serviceData,one);
+            //this.setState({service:{...serviceData}});
+            if(one.status != serviceData.status){
+                window._.extend(serviceData,one);
+                // let id = serviceData.id;
+                // this.loadServiceInfo(id);
+                // this.loadPipeChart(serviceData);
+                // this.loadHeatmapChart(id);
+                // this.loadEventNote(id);
+                this.state.info.status_text = Service.STATUS2(serviceData.status);
+                this.forceUpdate();
+            }
+        }
+    }
+
     render(){
         const {classes,params} = this.props;
         const { service,info,pod,eventList,eventLoaded } = this.state;
@@ -278,7 +296,6 @@ class Index extends React.PureComponent {
         let imagesUrl = `/releases/${params._group}/${params._name}/common`;
         let deploymentsUrl = `/deployments/${params._group}/${params._name}/common`;
         let auth = this.getServiceAuth(service);
-
         return (
             <div className={classes.box}>
                 <Paper className={`flex-r ${classes.header}`} >
@@ -409,3 +426,11 @@ class Index extends React.PureComponent {
 }
 
 export default Index;
+
+
+function TEXT_SERVICE(res){
+    res.release_text = Service.STATUS2(res.status);// TODO runStatus
+    res.status_text = Service.STATUS(res.status);
+    res.alltime_text = res.releaseAt ? Moment(res.releaseAt).fromNow(true) : ' 一 ';
+    res.duration_text = res.duration ? Moment(res.duration).fromNow(true) : ' 一 ';
+}

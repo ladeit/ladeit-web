@@ -30,23 +30,28 @@ const styles = theme => ({
 class Index extends React.PureComponent{
 
   componentDidMount(){
-    this.loadService();
+      this.loadService();
+      Store.event.bindDataEvent(this.renderService)
+  }
+
+  componentWillUnmount(){
+      Store.event.bindDataEvent()
   }
 
   loadService(){
     const sc = this;
     const user = _.local('user');
     Service.groupList((res)=>{
-      let arr = res.filter((v,i)=>{// TODO 暂时前台删除无权限的，后台校验体系都没做起来
-          // v.servicelist.length && v.servicelist.push(v.servicelist[0])
-          v.servicelist || (v.servicelist = []);
-          if(!user.admin){
-              v.servicelist = v.servicelist.filter(function (one) {
-                  return (one.roleNum||'').indexOf('R')>-1;
-              })
-          }
-          return  v.servicelist.length; //v.servicelist.length
-      })
+      // let arr = res.filter((v,i)=>{// TODO 暂时前台删除无权限的，后台校验体系都没做起来
+      //     // v.servicelist.length && v.servicelist.push(v.servicelist[0])
+      //     v.servicelist || (v.servicelist = []);
+      //     if(!user.admin){
+      //         v.servicelist = v.servicelist.filter(function (one) {
+      //             return (one.roleNum||'').indexOf('R')>-1;
+      //         })
+      //     }
+      //     return  v.servicelist.length; //v.servicelist.length
+      // })
       sc.setState({list:res,list_loaded:true})
     })
   }
@@ -80,6 +85,33 @@ class Index extends React.PureComponent{
     }else{
       return <div className="container"><Icons.Loading /></div>
     }
+  }
+
+  renderService = (data)=>{
+      let groupData = this.state.list;
+      let isChange = false;
+      let ids = data.map((v) => {return v.id;})
+      if(ids.length<1){
+          return;
+      }
+      //
+      groupData.forEach((v) => {
+          v.servicelist.forEach((vv)=>{
+              let index = ids.indexOf(vv.id);
+              if(index>-1){
+                  let service = data[index];
+                  vv.imageAOS = _.concat(service.imageAOS,vv.imageAOS);
+                  if(vv.status != service.status){
+                      window._.extend(vv,service);
+                      isChange = true;
+                  }
+              }
+          })
+      })
+      //
+      if(isChange){
+          this.setState({list:[...groupData]})
+      }
   }
 
   render(){
