@@ -535,7 +535,7 @@ function getNotification(data){
     }else{
         return (
             <div className="cell_action">
-                <TipList options={{height:60}} data={data} />
+                <TipList options={{height:60}} data={data} time={_.udid()}/>
             </div>
         )
     }

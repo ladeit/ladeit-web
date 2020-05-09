@@ -2,6 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import {inject,observer} from 'mobx-react';
 import { withStyles } from '@material-ui/styles';
+import Tooltip from '@material-ui/core/Tooltip';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -114,11 +115,13 @@ class Index extends React.PureComponent {
                     {
                         v.messageAOS.map((event)=>{
                             let startText = moment(event.createAt).format('HH:mm:ss');
-                            let reason = event.title;
+                            let reason = event.title||'';
                             return (
                                 <div className="overflow-text content">
                                     {startText}&nbsp;&nbsp;
-                                    {reason}
+                                    {
+                                        reason.length > 55 ? <Tooltip title={reason} ><span>{reason}</span></Tooltip> : reason
+                                    }
                                 </div>
                             )
                         })

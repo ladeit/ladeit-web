@@ -139,7 +139,9 @@ function TopBar({
                 <Grid container spacing={1} alignItems="center">
                     <Grid item >
                         <RouterLink to="/">
-                            <Typography className={classes.logo}><Icons.LogoIcon /></Typography>
+                            <Typography className={classes.logo}>
+                                <img width="36px" src="/logo/vector/isolated-monochrome-white.svg" />
+                            </Typography>
                         </RouterLink>
                     </Grid>
                     <Grid item xs >
