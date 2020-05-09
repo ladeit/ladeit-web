@@ -270,13 +270,13 @@ class Index extends React.PureComponent {
         }
     }
 
-    renderService = (data)=>{
+    renderService = (data,hasChange)=>{
         let serviceData = this.state.service;
         let one = data.filter((v) => {return v.id == serviceData.id;})[0];
         if(one){
             //window._.extend(serviceData,one);
             //this.setState({service:{...serviceData}});
-            if(one.status != serviceData.status){
+            if(hasChange(one,serviceData)){
                 window._.extend(serviceData,one);
                 // let id = serviceData.id;
                 // this.loadServiceInfo(id);

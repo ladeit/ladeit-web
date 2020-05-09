@@ -36,7 +36,9 @@ class Store {
             id:one.serviceId,
             name:one.name,
             status:one.status+"",
-            imageAOS:one.imageAOS ? [one.imageAOS] : [],
+            imageId:one.imageId,
+            imageVersion:one.imageVersion,
+            imageAOS:one.imageAOS,
             messageAOS:[],
             _resetTime:0
         }
@@ -93,6 +95,7 @@ class Store {
                 service._resetTime = oldService._resetTime;
                 data.splice(index,1,service);
             }else{
+                service.messageAOS = [];
                 ids.splice(0,0,service.id);
                 data.splice(0,0,service);
             }
@@ -103,7 +106,9 @@ class Store {
         //
         // sc.delCompleteData(data);
         sc.data = [...data];
-        conf.callback && conf.callback(data);
+        conf.callback && conf.callback(data,function (a,b) {
+            return `${a.status}_${a.iamgeId}` == `${b.status}_${b.iamgeId}`;
+        });
     }
 
     @action

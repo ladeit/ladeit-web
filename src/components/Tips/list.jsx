@@ -67,6 +67,7 @@ class Index extends React.PureComponent {
         const sc = this;
         const { classes } = this.props;
         let rows = this.rows;
+        console.log('tips-render')
         return (
             <div className={classes.box} ref="$box">
                 {

@@ -87,7 +87,7 @@ class Index extends React.PureComponent{
     }
   }
 
-  renderService = (data)=>{
+  renderService = (data,hasChange)=>{
       let groupData = this.state.list;
       let isChange = false;
       let ids = data.map((v) => {return v.id;})
@@ -101,7 +101,7 @@ class Index extends React.PureComponent{
               if(index>-1){
                   let service = data[index];
                   vv.imageAOS = _.concat(service.imageAOS,vv.imageAOS);
-                  if(vv.status != service.status){
+                  if(hasChange(vv,service)){
                       window._.extend(vv,service);
                       isChange = true;
                   }
