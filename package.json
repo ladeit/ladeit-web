@@ -84,7 +84,6 @@
     "build": "node scripts/build.js",
     "build_test": "node scripts/build_test.js",
     "test": "node scripts/test.js",
-    // "preversion": "npm install",
     "version": "npm run build && git add -A",
     "postversion": "git push && git push --tags && rm -rf build/temp"
   },
