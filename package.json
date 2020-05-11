@@ -85,7 +85,7 @@
     "build_test": "node scripts/build_test.js",
     "test": "node scripts/test.js",
     "version": "npm run build && git add .",
-    "postversion": "git push && git push --tags && rm -rf build/"
+    "postversion": "git push && git push origin --tags && rm -rf build/"
   },
   "eslintConfig": {
     "extends": "react-app"
