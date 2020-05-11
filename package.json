@@ -1,6 +1,6 @@
 {
   "name": "ladeit-web",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "private": true,
   "dependencies": {
     "@antv/data-set": "^0.10.2",
