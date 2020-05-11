@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "ladeit-web",
   "version": "0.1.2",
   "private": true,
   "dependencies": {
@@ -163,5 +163,9 @@
   },
   "devDependencies": {
     "@types/node": "^13.1.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ladeit/ladeit-web.git"
   }
 }
