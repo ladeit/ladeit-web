@@ -1,6 +1,6 @@
 {
   "name": "ladeit-web",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "private": true,
   "dependencies": {
     "@antv/data-set": "^0.10.2",
@@ -85,7 +85,7 @@
     "build_test": "node scripts/build_test.js",
     "test": "node scripts/test.js",
     "preversion": "npm test",
-    "version": "npm run build && git add -A dist",
+    "version": "npm run build && git add -A",
     "postversion": "git push && git push --tags && rm -rf build/temp"
   },
   "eslintConfig": {
