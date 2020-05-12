@@ -8,6 +8,7 @@ import PeopleOutlinedIcon from '@material-ui/icons/PeopleOutlined';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import DeviceHubIcon from '@material-ui/icons/DeviceHub';
 import AddIcon from '@material-ui/icons/Add';
+import AttatchFileIcon from '@material-ui/icons/FileCopyRounded';
 import {
     withStyles,Typography,Button,IconButton,Divider,Avatar,Badge,
     Paper,Tooltip
@@ -30,6 +31,7 @@ import RobotT from '@/topology/robot.jsx'
 import AuthFilter from '@/AuthFilter.jsx'
 import ServiceAdd from './group/group_service.jsx'
 import Terminal from './group/index_terminal'
+import LogJsx from './group/index_log'
 
 const styles = theme => ({
     header:{
@@ -208,6 +210,17 @@ class Index extends React.Component{
         }
     }
 
+    clickLog = (terminalData)=>{
+        const sc = this;
+        return ()=>{
+            console.log('12112')
+            sc.refs.$log.onOpen({
+                open:true,
+                data:terminalData
+            })
+        }
+    }
+
     htmlVersion(item,authX){// 灰度发布
         let { classes,data } = this.props;
         let arr = [];
@@ -319,6 +332,7 @@ class Index extends React.Component{
                                                 </Typography>
                                                 <div className="row_text icon_box flex-middle" >
                                                     <Icons.ConsoleIcon width="24" height="18" onClick={sc.clickTerminal(v)} />
+                                                    <AttatchFileIcon onClick={sc.clickLog(v)} style={{width:'1.2rem',marginTop:'-2px'}}/>
                                                 </div>
                                             </div>
                                         </div>
@@ -384,6 +398,7 @@ class Index extends React.Component{
                 <DrawerT onRef={(ref)=>{this.$drawerUser = ref;}} />
                 <DrawerT ref="$drawer" />
                 <Terminal ref="$terminal" />
+                <LogJsx ref="$log" />
             </div>
         )
     }
