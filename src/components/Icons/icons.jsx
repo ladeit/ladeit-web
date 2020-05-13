@@ -8,6 +8,28 @@ import Typography from '@material-ui/core/Typography'
 import Moment from "moment"
 import K8sImg from '@/static/img/k8s.png'
 
+class LogIcon extends React.PureComponent {
+    render(){
+        const {className,...props} = this.props;
+        return <svg t="1589357863389" {...props} className={className+" icon"} style={{fill:"currentcolor",display:"inline-block",verticalAlign:"middle"}} viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1903" width="18" height="18">
+            <defs>
+                <style type="text/css"></style>
+            </defs>
+            <path
+                d="M886.624 297.376l-191.968-191.968c-2.944-2.944-6.432-5.312-10.336-6.912C680.48 96.864 676.288 96 672 96L224 96C171.072 96 128 139.072 128 192l0 640c0 52.928 43.072 96 96 96l576 0c52.928 0 96-43.072 96-96L896 320C896 311.52 892.64 303.36 886.624 297.376zM704 205.248 818.752 320 704 320 704 205.248zM800 864 224 864c-17.632 0-32-14.336-32-32L192 192c0-17.632 14.368-32 32-32l416 0 0 192c0 17.664 14.304 32 32 32l160 0 0 448C832 849.664 817.664 864 800 864z"
+                p-id="1904"></path>
+            <path
+                d="M288 352l192 0c17.664 0 32-14.336 32-32s-14.336-32-32-32L288 288c-17.664 0-32 14.336-32 32S270.336 352 288 352z"
+                p-id="1905"></path>
+            <path
+                d="M608 480 288 480c-17.664 0-32 14.336-32 32s14.336 32 32 32l320 0c17.696 0 32-14.336 32-32S625.696 480 608 480z"
+                p-id="1906"></path>
+            <path
+                d="M608 672 288 672c-17.664 0-32 14.304-32 32s14.336 32 32 32l320 0c17.696 0 32-14.304 32-32S625.696 672 608 672z"
+                p-id="1907"></path>
+        </svg>
+    }
+}
 
 class TargetLinkIcon extends React.PureComponent {
     render(){
@@ -602,6 +624,7 @@ class TimeT extends React.PureComponent {
 }
 
 export default {
+    LogIcon,
     TargetLinkIcon,
     ConsoleIcon,
     BranchIcon,
