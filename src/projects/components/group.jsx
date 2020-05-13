@@ -8,7 +8,6 @@ import PeopleOutlinedIcon from '@material-ui/icons/PeopleOutlined';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import DeviceHubIcon from '@material-ui/icons/DeviceHub';
 import AddIcon from '@material-ui/icons/Add';
-import AttatchFileIcon from '@material-ui/icons/FileCopyRounded';
 import {
     withStyles,Typography,Button,IconButton,Divider,Avatar,Badge,
     Paper,Tooltip
@@ -332,7 +331,7 @@ class Index extends React.Component{
                                                 </Typography>
                                                 <div className="row_text icon_box flex-middle" >
                                                     <Icons.ConsoleIcon width="24" height="18" onClick={sc.clickTerminal(v)} />
-                                                    <AttatchFileIcon onClick={sc.clickLog(v)} style={{width:'1.2rem',marginTop:'-2px'}}/>
+                                                    <Icons.LogIcon onClick={sc.clickLog(v)} style={{width:'1.2rem',marginTop:'-2px'}}/>
                                                 </div>
                                             </div>
                                         </div>
