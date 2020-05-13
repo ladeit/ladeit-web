@@ -107,7 +107,7 @@ class Store {
         // sc.delCompleteData(data);
         sc.data = [...data];
         conf.callback && conf.callback(data,function (a,b) {
-            return `${a.status}_${a.iamgeId}` == `${b.status}_${b.iamgeId}`;
+            return `${a.status}_${a.imageId}` != `${b.status}_${b.imageId}`;
         });
     }
 
