@@ -20,6 +20,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Button from "components/CustomButtons/Button.js";
 
 import styles from "assets/jss/material-kit-react/components/customDropdownStyle.js";
+import LanCom from '@/locales/aboutNew.jsx';
 
 const useStyles = makeStyles(styles);
 
@@ -122,7 +123,7 @@ export default function CustomDropdown(props) {
               <ClickAwayListener
                   onClickAway={handleCloseAway}
               >
-                <MenuList role="menu" className={classes.menuList}>
+                <MenuList role="menu" className={classes.menuList} >
                   {dropdownHeader !== undefined ? (
                     <MenuItem
                       //onClick={() => handleClose(dropdownHeader)}
@@ -145,10 +146,13 @@ export default function CustomDropdown(props) {
                     return (
                       <MenuItem
                         key={key}
-                        onClick={() => handleClose(prop)}
+                        onClick={() => prop !== 'Language'&&handleClose(prop)}
                         className={dropdownItem}
                       >
                         {prop}
+                        {
+                          prop=='Language'&&<LanCom className="index" callback={(lan)=>{_.href(lan)}}/>
+                        }
                       </MenuItem>
                     );
                   })}

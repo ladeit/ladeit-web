@@ -1,5 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
+import AddIcon from '@material-ui/icons/Add';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {
@@ -17,6 +18,7 @@ import Layout from '@/layout1/dashboard.jsx'
 import MenuLayout from '@/layout1/NavBar.jsx'
 import ImageInfoT from '@/projects/components/versionList_ImageInfo.jsx'
 import {CopyToClipboard} from "../components/group_user";
+import AddImage from "./addImage";
 
 
 const styles = theme => ({
@@ -112,7 +114,15 @@ class Index extends Component{
         item._collapse = !item._collapse;
         this.forceUpdate();
     }
-
+    clickAdd = ()=>{
+        this.refs.$yaml.onOpen({})
+    }
+    clickAdd_save(){
+        const sc = this;
+        return ()=>{
+            sc.refs.$yaml.onCancel()
+        }
+    }  
     render(){
         const { classes } = this.props;
         const { data } = this.state;
@@ -128,11 +138,13 @@ class Index extends Component{
                     {text:params._name,url:`/summary/${serviceUrl}/common`},
                     {text:'Images'}
                 ]}
+                crumbFooter = {<Button color="primary"  onClick={this.clickAdd} startIcon={<AddIcon />} style={{marginLeft:"32px"}}>{intl.get('newCreate')}</Button>}
                 menuT={<MenuLayout params={params} />}
                 contentT={
                 <>
                     <div className={`crumbs_action ${classes.actions}`} >
-                        <DatePicker handle={this.changeSearchDate} />
+
+                            <DatePicker handle={this.changeSearchDate} />
                     </div>
                     <div className={classes.content}>
                       {
@@ -161,6 +173,7 @@ class Index extends Component{
                       }
                       {listFooter}
                     </div>
+                    <AddImage ref="$yaml" onOk={this.clickAdd_save()} title={intl.get('newCreate')} onOk_text={intl.get('generate')}/>
                 </>
               }
             />
