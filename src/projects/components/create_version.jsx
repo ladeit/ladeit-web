@@ -9,6 +9,7 @@ import DL from '@/static/store/CLUSTER_ADD.js'
 import intl from 'react-intl-universal'
 // template
 import VersionListT from './versionList.jsx'
+import ImageCreateT from '../releases/addImage'
 
 const style = theme => ({
     content:{
@@ -91,6 +92,14 @@ class Index extends React.PureComponent {
         }
     }
 
+    handleImageCreate = () => {
+        const sc = this;
+        const data = sc.state.imageList;
+        data.records.length = 0;
+        sc.refs.$imageCreate.onCancel();
+        sc.loadList({id:data.id,currentPage:1, pageSize:data.pageSize});
+    }
+
     render = ()=>{
         let { classes } = this.props;
         let { imageList } = this.state;
@@ -106,8 +115,10 @@ class Index extends React.PureComponent {
                 </div>
                 <div className="flex-box content_box">
                     <VersionListT handle={this.handle()} data={imageList.records} groupUrl={groupUrl}/>
-                    {listFooter}
+                    {listFooter || <br/>}
+                    <span className="link2" onClick={()=>{this.refs.$imageCreate.onOpen()}}>{intl.get('services.firstCreateImageTips')}</span>
                 </div>
+                <ImageCreateT ref="$imageCreate" onOk={this.handleImageCreate}/>
             </div>
         )
     }
