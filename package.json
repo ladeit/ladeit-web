@@ -1,6 +1,6 @@
 {
-  "name": "my-app",
-  "version": "0.1.1",
+  "name": "ladeit-web",
+  "version": "0.3.6",
   "private": true,
   "dependencies": {
     "@antv/data-set": "^0.10.2",
@@ -83,7 +83,9 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "build_test": "node scripts/build_test.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "version": "npm run build && git add .",
+    "postversion": "git push && git push origin --tags && rm -rf build/"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -163,5 +165,9 @@
   },
   "devDependencies": {
     "@types/node": "^13.1.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ladeit/ladeit-web.git"
   }
 }

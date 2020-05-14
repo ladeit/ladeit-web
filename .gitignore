@@ -3,6 +3,7 @@
 **/.idea/**
 **/target/
 **/.iml
+build/
 /logs/
 **/.project
 **/.settings
