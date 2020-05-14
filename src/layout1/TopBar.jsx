@@ -150,7 +150,7 @@ function TopBar({
                     <Grid item>
                         <ProgressT />
                     </Grid>
-                    <Grid item>
+                    <Grid item style={{display:'none'}}>
                         <LanCom className="index" callback={(lan)=>{_.href(lan)}}/>
                     </Grid>
                     <Grid item>
@@ -183,8 +183,9 @@ function TopBar({
                                 {divider: true},
                                 "Profile",
                                 "Setting",
+                                "Language",
                                 {divider: true},
-                                "LoginOut"
+                                "LogOut"
                             ]}
                             onClick={(param)=>{clickMenu(param)}}
                         />
