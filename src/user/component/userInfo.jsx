@@ -123,11 +123,10 @@ class Index extends React.PureComponent {
                 <div className={classes.user_info} >
                     <Avatar src="https://img.toutiao.io/subject%2F6fb1a80dffde44eda80e6eb5c63df9e1" className={classes.user_avatar}/>
                     <div className="user_name">
-                        <Typography variant="body2">WEB DEVELOPER</Typography>
+                        <Typography variant="body2"></Typography>
                         <Typography variant="body1">{user.username}</Typography>
                     </div>
                     <div className="user_actions">
-                        <Button variant="contained" color="primary">ACTION</Button>
                     </div>
                 </div>
                 <div className={classes.container}>
@@ -140,8 +139,6 @@ class Index extends React.PureComponent {
                         aria-label="full width tabs example"
                     >
                         <Tab label="Activity" />
-                        <Tab label="Groups" />
-                        <Tab label="Contributed projects" />
                     </Tabs>
                     <Divider light={true}/>
                     <br/><br/>

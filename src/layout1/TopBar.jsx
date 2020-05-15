@@ -98,7 +98,7 @@ function htmlMenus(){
 }
 
 function clickMenu(param){
-    if('LoginOut' == param){
+    if('LogOut' == param){
         window.Store.global.setUser('')
         window.History.push('/login')
     }else if('Profile' == param){

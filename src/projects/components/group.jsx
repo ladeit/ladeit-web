@@ -31,6 +31,7 @@ import AuthFilter from '@/AuthFilter.jsx'
 import ServiceAdd from './group/group_service.jsx'
 import Terminal from './group/index_terminal'
 import LogJsx from './group/index_log'
+import ImageCreateT from '../releases/addImage'
 
 const styles = theme => ({
     header:{
@@ -220,6 +221,11 @@ class Index extends React.Component{
         }
     }
 
+    handleImageCreate = () => {
+        this.refs.$imageCreate.onCancel();
+        this.props.renderGroup();
+    }
+
     htmlVersion(item,authX){// 灰度发布
         let { classes,data } = this.props;
         let arr = [];
@@ -398,6 +404,7 @@ class Index extends React.Component{
                 <DrawerT ref="$drawer" />
                 <Terminal ref="$terminal" />
                 <LogJsx ref="$log" />
+                <ImageCreateT ref="$imageCreate" onOk={sc.handleImageCreate}/>
             </div>
         )
     }
@@ -432,9 +439,14 @@ function avatorHtml(status){
 function imageMask(item){
     let sc = this;
     let html = `curl --url ${window.SIP}/api/v1/service/image -H "Content-Type: application/json" -X POST --data '{"token":"${item.token}","serviceName":"${item.name}","image":"YOUR_IMAGE_NAME","version":"YOUR_IMAGE_VERSION","refs":"YOUR_GIT_REFS","commitHash":"YOUR_GIT_COMMIT_HASH"}'`
+    let firstMemo1Arr = intl.get('services.firstMemo1').split('<%=button%>') // TODO lodash-template 无用
     return (
         <div className="mask_group_box">
-            <div className="">{intl.get('services.firstMemo1')}</div>
+            <div className="">
+                {firstMemo1Arr[0]}
+                <Button variant="contained" size={'small'} className="icon_button" onClick={()=>{sc.refs.$imageCreate.onOpen(item)}}>{intl.get('services.firstCreateImageButton')}</Button>
+                {firstMemo1Arr[1]}
+            </div>
             <div>{intl.get('services.firstMemo2')}</div>
             <Tooltip title={html}>
                 <div className="html_text fl overflow-text" dangerouslySetInnerHTML={{__html:html}} ></div>

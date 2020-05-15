@@ -1,4 +1,5 @@
 import './moment/zh-CN.js'
+import React from "react";
 
 export default ({
     // 全局 : 针对部分按钮或标题
@@ -64,7 +65,9 @@ export default ({
         downloadYaml:'下载yaml',
         imageMoreButton:'更多镜像',
         firstButton:'首次发布',
-        firstMemo1:'当前服务尚无版本可发布，请参考以下请求将新版本推送至本平台后再进行发布。',
+        firstCreateImageButton:"手动创建",
+        firstCreateImageTips:"没找到 ？ 手动添加镜像",
+        firstMemo1:'当前服务尚无版本可发布，请  <%=button%>  或参考以下请求将新版本推送至本平台后再进行发布。',
         firstMemo2:'推荐将此请求放入CI工具中，每次发版可自动推送至本平台。',
         // label
         serviceMatch:'匹配规则',

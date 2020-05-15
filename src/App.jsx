@@ -19,6 +19,8 @@ const env = process.env;
 class App extends React.PureComponent {
 
     componentWillMount(){
+        // TODO 1. 将第三方包打成dll，通过html-plugin导入首页
+        // TODO 2. 将路由结构与目录结构相匹配。目录即路由，页面内组件放到文件夹（命名components或modules）
         ExtendLodash();
         // ip信息指定host
         window.SIP = env.PUBLIC_SIP == '.' ? 'http://'+window.location.host : env.PUBLIC_SIP;
