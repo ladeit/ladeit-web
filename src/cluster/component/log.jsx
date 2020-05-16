@@ -31,8 +31,10 @@ const useStyles = makeStyles(theme => ({
             backgroundColor:"#fafafa"
         },
         "& .root-box":{
-            backgroundColor:"#212121",
-            position:"relative"
+            //backgroundColor:"#212121",
+            position:"relative",
+            padding:'16px 8px',
+            overflow:'auto'
         },
         "& .button-box":{
             padding:"2px 8px 0"
@@ -126,6 +128,15 @@ function Panel(props){
 
     React.useEffect(()=>{
         scrollFunc('init')();
+        // TODO 回车日志换行功能待定吧
+        // document.body.onkeydown = function (e) {
+        //     if(tabs && (tabIndex || tabIndex===0)){
+        //         let one = tabs[tabIndex];
+        //         if(one.$ref){
+        //             one.$ref.onEnter(e);
+        //         }
+        //     }
+        // }
     })
 
     function rootProps(){
