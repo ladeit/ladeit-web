@@ -20,6 +20,7 @@ import MatchShowT from '../../topology/components/pod_topo_match_show'
 import Service from '../Service'
 import AuthFilter from '@/AuthFilter'
 import Terminal from "../components/group/index_terminal";
+import LogJsx from "../components/group/index_log";
 
 const styles = theme => ({
     toolbar:{
@@ -204,6 +205,16 @@ class Index extends React.PureComponent {
         }
     }
 
+    clickLog = (terminalData)=>{
+        const sc = this;
+        return ()=>{
+            sc.refs.$log.onOpen({
+                open:true,
+                data:terminalData
+            })
+        }
+    }
+
     htmlVersion(item,groupName){// groupName
         let arr = [];
         let text = Service.STATUS(item.status);
@@ -309,7 +320,18 @@ class Index extends React.PureComponent {
                                                                     <div className={clsx("moreIcon_"+index,"hidden")}>
                                                                         <div className={clsx(classes.groupOperationBox,"flex-c")}>
                                                                             <IconButton size="small" className="flex-one item" onClick={sc.clickSubmenu_setting(one)}><SettingsOutlinedIcon /></IconButton>
-                                                                            <IconButton size="small" className="flex-one item" onClick={sc.clickSubmenu_console(one)}><Icons.ConsoleIcon style={{width:'20px',height:'16px',padding:0,margin:'2px 0',fill:'#8a8a8a'}}/></IconButton>
+                                                                            <Tooltip title="console" >
+                                                                                <IconButton size="small" className="flex-one item" onClick={sc.clickSubmenu_console(one)}><Icons.ConsoleIcon style={{width:'20px',height:'16px',padding:0,margin:'2px 0',fill:'#8a8a8a'}}/></IconButton>
+                                                                            </Tooltip>
+                                                                            <Tooltip title="log" >
+                                                                                <IconButton size="small" className="flex-one item" onClick={sc.clickLog(one)} ><Icons.LogIcon style={{width:'1.2rem',marginTop:'-2px'}}/></IconButton>
+                                                                            </Tooltip>
+                                                                            <Tooltip title="restart" >
+                                                                                <IconButton size="small" className="flex-one item"><Icons.RestartIcon style={{width:'1.2rem',marginTop:'-2px'}}/></IconButton>
+                                                                            </Tooltip>
+                                                                            <Tooltip title="yaml" >
+                                                                                <IconButton size="small" className="flex-one item"><Icons.YamlIcon style={{width:'1.2rem',marginTop:'-2px'}}/></IconButton>
+                                                                            </Tooltip>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -331,6 +353,7 @@ class Index extends React.PureComponent {
                             </Grid>
                             {listFooter}
                             <Terminal ref="$terminal" />
+                            <LogJsx ref="$log" />
                         </>
                     }
                 />
