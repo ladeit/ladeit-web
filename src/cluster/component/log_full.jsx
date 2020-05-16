@@ -46,8 +46,8 @@ class Index extends React.PureComponent {
         const onRef = this.props.onRef;
         onRef && onRef(this);
         this.state.error = {loaded:false};
-        this.renderCode = _.debounce(this.renderCode,100);
-        this.onEnter = _.debounce(this.onEnter,100);
+        this.renderCode = _.debounce(this.renderCode,20,{maxWait:200});
+        this.onEnter = _.debounce(this.onEnter,20,{maxWait:200});
     }
 
     componentDidMount(){

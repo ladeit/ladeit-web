@@ -138,6 +138,8 @@ function Panel(props){
                         one.$ref.onEnter(e);
                     }
                 }
+                e.preventDefault();
+                e.stopPropagation();
             }
         }
     })
