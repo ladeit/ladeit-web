@@ -129,14 +129,17 @@ function Panel(props){
     React.useEffect(()=>{
         scrollFunc('init')();
         // TODO 回车日志换行功能待定吧
-        // document.body.onkeydown = function (e) {
-        //     if(tabs && (tabIndex || tabIndex===0)){
-        //         let one = tabs[tabIndex];
-        //         if(one.$ref){
-        //             one.$ref.onEnter(e);
-        //         }
-        //     }
-        // }
+        document.body.onkeydown = function (e) {
+            var terminal = document.getElementById("terminal-box");
+            if(terminal){
+                if(tabs && (tabIndex || tabIndex===0)){
+                    let one = tabs[tabIndex];
+                    if(one.$ref){
+                        one.$ref.onEnter(e);
+                    }
+                }
+            }
+        }
     })
 
     function rootProps(){
