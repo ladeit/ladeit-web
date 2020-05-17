@@ -213,7 +213,6 @@ class Index extends React.Component{
     clickLog = (terminalData)=>{
         const sc = this;
         return ()=>{
-            console.log('12112')
             sc.refs.$log.onOpen({
                 open:true,
                 data:terminalData
@@ -336,8 +335,18 @@ class Index extends React.Component{
                                                     {icon}
                                                 </Typography>
                                                 <div className="row_text icon_box flex-middle" >
-                                                    <Icons.ConsoleIcon width="24" height="18" onClick={sc.clickTerminal(v)} />
-                                                    <Icons.LogIcon onClick={sc.clickLog(v)} style={{width:'1.2rem',marginTop:'-2px'}}/>
+                                                    <Tooltip title="console" >
+                                                        <Icons.ConsoleIcon width="24" height="18" onClick={sc.clickTerminal(v)} />
+                                                    </Tooltip>
+                                                    <Tooltip title="log" >
+                                                        <Icons.LogIcon onClick={sc.clickLog(v)} style={{width:'1.2rem',marginTop:'-2px'}}/>
+                                                    </Tooltip>
+                                                    <Tooltip title="restart" >
+                                                        <Icons.RestartIcon style={{width:'1.2rem',marginTop:'-2px'}}/>
+                                                    </Tooltip>
+                                                    <Tooltip title="yaml" >
+                                                        <Icons.YamlIcon style={{width:'1.2rem',marginTop:'-2px'}}/>
+                                                    </Tooltip>
                                                 </div>
                                             </div>
                                         </div>
@@ -377,7 +386,7 @@ class Index extends React.Component{
                                                         <img src={v.servicePublishBot.id?ProjectsFlagSPng:ProjectsFlagPng} style={{width:'24px'}}/>
                                                     </IconButton>
                                                 ):(
-                                                    <Tooltip title="无权限!">
+                                                    <Tooltip title={intl.get('tipsNoAuthority')} >
                                                         <IconButton style={{opacity:.4}}>
                                                             <img src={v.servicePublishBot.id?ProjectsFlagSPng:ProjectsFlagPng} style={{width:'24px'}}/>
                                                         </IconButton>

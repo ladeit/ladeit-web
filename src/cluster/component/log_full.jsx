@@ -7,6 +7,9 @@ import * as attach from 'xterm/lib/addons/attach/attach';
 import 'xterm/dist/xterm.css'
 
 import Icons from '@/components/Icons/icons.jsx'
+import hljs from 'highlight.js/lib/core';
+import hljs_log from 'highlight.js/lib/languages/accesslog';
+import 'highlight.js/styles/default.css';
 
 const styles = theme => ({
     root: {
@@ -43,6 +46,8 @@ class Index extends React.PureComponent {
         const onRef = this.props.onRef;
         onRef && onRef(this);
         this.state.error = {loaded:false};
+        this.renderCode = _.debounce(this.renderCode,20,{maxWait:200});
+        this.onEnter = _.debounce(this.onEnter,20,{maxWait:200});
     }
 
     componentDidMount(){
@@ -59,6 +64,7 @@ class Index extends React.PureComponent {
         this.socket && this.socket.close()
     }
 
+    html = "";
     state = {
         error: {loaded:false} // {text:''}
     }
@@ -76,8 +82,6 @@ class Index extends React.PureComponent {
         let dom = sc.refs.$dom;
         let host = window.WSIP;
         let user = _.local("user");
-        let term = this.term = new Terminal({});
-        term.open(dom);
         //
         _.delay(function(){
             if(user.token){
@@ -86,7 +90,12 @@ class Index extends React.PureComponent {
                 socket.onopen = function(event){
                     // TODO terminal - 异常处理
                     sc.setState({error:{text:'',loaded:true}})
-                    attach.attach(term, socket);
+                    // attach.attach(term, socket);
+                }
+                socket.onmessage = function (evt) {
+                    var msg = evt.data;
+                    sc.html += msg;
+                    sc.renderCode();
                 }
                 socket.onerror = function(){
                     sc.setState({error:{text:'连接失败',loaded:true}})
@@ -96,6 +105,13 @@ class Index extends React.PureComponent {
                 }
             }
         },100)
+    }
+
+    onEnter = (e)=>{
+        if(e.keyCode === 13){
+            this.html += '\n\r';
+            this.renderCode();
+        }
     }
 
     onResize(){// 17 * 18
@@ -108,13 +124,25 @@ class Index extends React.PureComponent {
         }
     }
 
+    renderCode = () => {
+        let sc = this;
+        let dom = sc.refs.$dom;
+        // separately require languages
+        hljs.registerLanguage('log', hljs_log);
+        dom.innerHTML = hljs.highlight('log', sc.html).value;
+        //
+        var parent = ss.refs.$dom.closest(".root-box");
+        parent.scrollTop = 1000000;
+    }
+
     render = ()=> {
         const {classes} = this.props;
         const { error } = this.state;
+        window.ss = this;
         //
         return (
             <div className={classes.terminalBox}>
-                <div className={classes.root} ref="$dom" ></div>
+                <pre><code className="language-html" ref="$dom"></code></pre>
                 <div className={classes.info}>
                     { (error.loaded && error.text)  && <div className="message"><span>{error.text}，</span><span className="link1" onClick={()=>{this.initTerminal()}}>重连</span></div>}
                     { (!error.loaded && !error.text) && <Icons.Loading /> }
