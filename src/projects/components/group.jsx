@@ -32,6 +32,8 @@ import ServiceAdd from './group/group_service.jsx'
 import Terminal from './group/index_terminal'
 import LogJsx from './group/index_log'
 import ImageCreateT from '../releases/addImage'
+import ConfirmDialog from 'components/Dialog/Alert.jsx'
+import YamlEditT from '../../cluster/component/yamlEdit.jsx'
 
 const styles = theme => ({
     header:{
@@ -220,6 +222,42 @@ class Index extends React.Component{
         }
     }
 
+
+    clickRestart  = (terminalData)=>{
+        const sc = this;
+        return ()=>{
+            sc.refs.$confirm.onOpen({
+                open:true,
+                title:intl.get('tips'),
+                message:<Typography variant="body1" style={{width:'240px',fontWeight:400}}>Confirm restart ?</Typography>,
+                onOk:function (res) {
+                    sc.refs.$confirm.onClose();
+                    Service.serviceRestart(terminalData.id,()=>{
+                        //
+                    })
+                }
+            })
+        }
+    }
+
+    clickYamlList = (terminalData)=>{
+        const sc = this;
+        return ()=>{
+            Service.serviceYamlList(terminalData.id,(result)=>{
+                if(result){
+                    sc.refs.$yaml.onOpen({},result)
+                }
+            })
+        }
+    }
+
+    clickYamlList_save = (terminalData)=>{
+        const sc = this;
+        return ()=>{
+            //
+        }
+    }
+
     handleImageCreate = () => {
         this.refs.$imageCreate.onCancel();
         this.props.renderGroup();
@@ -342,10 +380,10 @@ class Index extends React.Component{
                                                         <Icons.LogIcon onClick={sc.clickLog(v)} style={{width:'1.2rem',marginTop:'-2px'}}/>
                                                     </Tooltip>
                                                     <Tooltip title="restart" >
-                                                        <Icons.RestartIcon style={{width:'1.2rem',marginTop:'-2px'}}/>
+                                                        <Icons.RestartIcon onClick={sc.clickRestart(v)} style={{width:'1.2rem',marginTop:'-2px'}}/>
                                                     </Tooltip>
                                                     <Tooltip title="yaml" >
-                                                        <Icons.YamlIcon style={{width:'1.2rem',marginTop:'-2px'}}/>
+                                                        <Icons.YamlIcon onClick={sc.clickYamlList(v)} style={{width:'1.2rem',marginTop:'-2px'}}/>
                                                     </Tooltip>
                                                 </div>
                                             </div>
@@ -413,7 +451,9 @@ class Index extends React.Component{
                 <DrawerT ref="$drawer" />
                 <Terminal ref="$terminal" />
                 <LogJsx ref="$log" />
+                <ConfirmDialog ref="$confirm" />
                 <ImageCreateT ref="$imageCreate" onOk={sc.handleImageCreate}/>
+                <YamlEditT ref="$yaml" />
             </div>
         )
     }

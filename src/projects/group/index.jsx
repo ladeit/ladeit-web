@@ -21,6 +21,8 @@ import Service from '../Service'
 import AuthFilter from '@/AuthFilter'
 import Terminal from "../components/group/index_terminal";
 import LogJsx from "../components/group/index_log";
+import ConfirmDialog from 'components/Dialog/Alert.jsx'
+import YamlEditT from "../../cluster/component/yamlEdit";
 
 const styles = theme => ({
     toolbar:{
@@ -215,6 +217,34 @@ class Index extends React.PureComponent {
         }
     }
 
+    clickRestart  = (terminalData)=>{
+        const sc = this;
+        return ()=>{
+            sc.refs.$confirm.onOpen({
+                open:true,
+                title:intl.get('tips'),
+                message:<Typography variant="body1" style={{width:'240px',fontWeight:400}}>Confirm restart ?</Typography>,
+                onOk:function (res) {
+                    sc.refs.$confirm.onClose();
+                    Service.serviceRestart(terminalData.id,()=>{
+                        //
+                    })
+                }
+            })
+        }
+    }
+
+    clickYamlList = (terminalData)=>{
+        const sc = this;
+        return ()=>{
+            Service.serviceYamlList(terminalData.id,(result)=>{
+                if(result){
+                    sc.refs.$yaml.onOpen({},result)
+                }
+            })
+        }
+    }
+
     htmlVersion(item,groupName){// groupName
         let arr = [];
         let text = Service.STATUS(item.status);
@@ -327,10 +357,10 @@ class Index extends React.PureComponent {
                                                                                 <IconButton size="small" className="flex-one item" onClick={sc.clickLog(one)} ><Icons.LogIcon style={{width:'1.2rem',marginTop:'-2px'}}/></IconButton>
                                                                             </Tooltip>
                                                                             <Tooltip title="restart" >
-                                                                                <IconButton size="small" className="flex-one item"><Icons.RestartIcon style={{width:'1.2rem',marginTop:'-2px'}}/></IconButton>
+                                                                                <IconButton size="small" className="flex-one item" onClick={sc.clickRestart(one)} ><Icons.RestartIcon style={{width:'1.2rem',marginTop:'-2px'}}/></IconButton>
                                                                             </Tooltip>
                                                                             <Tooltip title="yaml" >
-                                                                                <IconButton size="small" className="flex-one item"><Icons.YamlIcon style={{width:'1.2rem',marginTop:'-2px'}}/></IconButton>
+                                                                                <IconButton size="small" className="flex-one item" onClick={sc.clickYamlList(one)}><Icons.YamlIcon style={{width:'1.2rem',marginTop:'-2px'}}/></IconButton>
                                                                             </Tooltip>
                                                                         </div>
                                                                     </div>
@@ -353,6 +383,8 @@ class Index extends React.PureComponent {
                             </Grid>
                             {listFooter}
                             <Terminal ref="$terminal" />
+                            <ConfirmDialog ref="$confirm" />
+                            <YamlEditT ref="$yaml" />
                             <LogJsx ref="$log" />
                         </>
                     }
