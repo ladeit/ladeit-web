@@ -189,6 +189,9 @@ export default {
     serviceServiceYaml(data,callback){
         _.ajax({url:`/api/v1/resource/${data.serviceId}`,method:'post',data:data.yaml},(res)=>{callback(res)})
     },
+    serviceYamlList(serviceId,callback){
+        _.ajax({url:`/api/v1/resource/${serviceId}/yaml`},(res)=>{callback(res)})
+    },
     serviceYamlHistory(params,callback){
         // {ServiceGroupId:'',ServiceId:'',currentPage:'1',pageSize:'20'}
         _.ajax({url:`/api/v1/yaml/get`,params:params},(res)=>{callback(res)})
@@ -227,6 +230,9 @@ export default {
     },
     serviceTopoUpdate(data,callback){
         _.ajax({url:`/api/v1/resource/${data.serviceId}/topology`,method:'put',data:data.topo},(res)=>{callback(res)})
+    },
+    serviceRestart(serviceId,callback){
+        _.ajax({url:`/api/v1/service/${serviceId}`,method:'put'},(res)=>{callback(res)})
     },
 
     imageList(ServiceId,callback){
