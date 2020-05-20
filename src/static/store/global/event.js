@@ -95,7 +95,6 @@ class Store {
                 service._resetTime = oldService._resetTime;
                 data.splice(index,1,service);
             }else{
-                service.messageAOS = [];
                 ids.splice(0,0,service.id);
                 data.splice(0,0,service);
             }

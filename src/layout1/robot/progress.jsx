@@ -114,8 +114,8 @@ class Index extends React.PureComponent {
                     <br/>
                     {
                         v.messageAOS.map((event)=>{
-                            let startText = moment(event.createAt).format('HH:mm:ss');
-                            let reason = event.title||'';
+                            let startText = event.createAt ? moment(event.createAt).format('HH:mm:ss') : ' 一 ';
+                            let reason = event.title || '';
                             return (
                                 <div className="overflow-text content">
                                     {startText}&nbsp;&nbsp;
@@ -135,8 +135,10 @@ class Index extends React.PureComponent {
         const { classes,store } = this.props;
         const { el,closable } = this.state;
         const data = store.event.data;
-        const text = _.template(intl.get('services.tipsServiceDeploy'))({num:data.length});
+        const runningArr = data.filter((one)=>{return one.status != 0;})
+        const text = _.template(intl.get('services.tipsServiceDeploy'))({num:runningArr.length});
         let isClose = data.length == closable;
+
         return (
             <React.Fragment>
                 <div className={data.length?'':'hidden'}>
@@ -148,7 +150,7 @@ class Index extends React.PureComponent {
                             {text}
                         </div>
                         <div className={clsx("flex-box progress link2",isClose?'hidden':'') } >
-                            <LinearProgress className="running" variant="buffer" valueBuffer={0} value={0}/>
+                            {this.renderStatus(runningArr.length ? '1' : '0')}
                         </div>
                     </div>
                 </div>
