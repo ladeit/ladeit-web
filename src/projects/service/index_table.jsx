@@ -180,7 +180,7 @@ class Index extends React.PureComponent {
     }
 
     htmlEditYaml(row){
-        if(['Service','Deployment'].indexOf(row.type)==-1){return;}
+        if(['Service','Deployment',"StatefulSet"].indexOf(row.type)==-1){return;}
         return <Button color="primary" size="small" startIcon={<EditIcon className="icon"/>}  onClick={this.clickEditYaml(row)} >yaml</Button>
     }
 
