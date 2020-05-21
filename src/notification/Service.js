@@ -35,7 +35,7 @@ export default {
         _.ajax({url:`/api/v1/message/${id}`},(res)=>{callback(res)})
     },
     notificationList(params,callback){
-        // {userId,currentPage,pageSize,readFlag} readFlag:''/'true'/'false'
+        // {userId,currentPage,pageSize,readFlag,type} readFlag:''/'true'/'false'  type:normal/110
         _.ajax({url:`/api/v1/message/messages`,params:params},(res)=>{callback(res)})
     },
     notificationReadList(list,callback){
