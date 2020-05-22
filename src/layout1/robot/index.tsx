@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import {
-    withStyles,Typography, Button, IconButton,Popover,Divider,
+    withStyles,Typography, Button, IconButton,Popover,Divider,Tabs,Tab,
     Card,CardHeader,CardContent,CardActionArea,CardActions,List,ListItem,ListItemAvatar,Avatar,ListItemText,ListItemSecondaryAction
 } from '@material-ui/core';
 import Badge from '@material-ui/core/Badge';
@@ -24,6 +24,7 @@ interface IProps {
 interface IState {
     el?: any;
     notifications: any[];
+    tabVal?:any;
 }
 
 @inject('store')
@@ -36,7 +37,8 @@ class Index extends React.PureComponent<IProps,IState> {
 
     public state:IState = {
         el:null,
-        notifications:[]
+        notifications:[],
+        tabVal:0
     }
 
     private toUrl = (url)=>{
@@ -64,14 +66,49 @@ class Index extends React.PureComponent<IProps,IState> {
         }
     }
 
+
+    public renderContent(list): JSX.Element{
+        let sc = this;
+        let arr = [];
+        list.map(function (one,index) {
+            arr.push(
+                <>
+                    <ListItem key={one} button dense={true} onClick={sc.clickMessage(one,index)}>
+                        <ListItemAvatar>
+                            <Avatar>
+                                {one.title.substr(0,1)}
+                            </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText primary={
+                            <Typography variant="body1">
+                                <div className="overflow-text" style={{width:'100%'}}>{one.title}</div>
+                            </Typography>
+                        } secondary={Moment(one.create_at).format('YYYY-MM-DD HH:mm:ss')} />
+                        <ListItemSecondaryAction>
+                            <IconButton edge="end" aria-label="delete">
+                                <ArrowForwardIcon />
+                            </IconButton>
+                        </ListItemSecondaryAction>
+                    </ListItem>
+                    <Divider light={true}/>
+                </>
+            )
+        })
+        if(list.length < 1){
+            arr.push(<Icons.NodataT text={intl.get('notification.tipsNoRead')} />);
+        }
+        return arr;
+    }
+
     public render(): JSX.Element{
         const sc = this;
         let { classes,store } = this.props;
-        let { el } = this.state;
+        let { el,tabVal } = this.state;
         let id = "robot_png_popover";
         //let active = History.location.pathname.indexOf('/notification')>-1;
+        let normalMsg = store.notification.normalData.records;
         let notifications = store.notification.data.records;
-        let notifications_size = store.notification.data.totalRecord;
+        let notifications_size = store.notification.data.totalRecord;// 总未读记录数
         //
         return (
             <>
@@ -102,44 +139,32 @@ class Index extends React.PureComponent<IProps,IState> {
                     }}
                 >
                     <Card className={classes.card}>
-                        <CardHeader title={<span>{intl.get('notification.notification')}</span>} />
+                        <CardHeader
+                            title={<span>{intl.get('notification.notification')}</span>}
+                            action={<Button size="small" style={{transform:'translateY(8px)'}} onClick={this.toUrl(`/notification/new`)}>{intl.get('notification.seeAll')}</Button>}
+                        />
                         <CardContent className={classes.list}>
                             <List component="nav" >
                                 <Divider light={true}/>
+                                <Tabs
+                                    variant="fullWidth"
+                                    value={tabVal}
+                                    onChange={(e,value)=>{this.setState({tabVal:value})}}
+                                    indicatorColor="primary"
+                                    textColor="primary"
+                                    centered
+                                >
+                                    <Tab label="k8s warning event" />
+                                    <Tab label="othor event" />
+                                </Tabs>
                                 {
-                                    notifications.map(function (one,index) {
-                                        return (
-                                            <>
-                                                <ListItem key={one} button dense={true} onClick={sc.clickMessage(one,index)}>
-                                                    <ListItemAvatar>
-                                                        <Avatar>
-                                                            {one.title.substr(0,1)}
-                                                        </Avatar>
-                                                    </ListItemAvatar>
-                                                    <ListItemText primary={
-                                                        <Typography variant="body1">
-                                                            <div className="overflow-text" style={{width:'100%'}}>{one.title}</div>
-                                                        </Typography>
-                                                    } secondary={Moment(one.create_at).format('YYYY-MM-DD HH:mm:ss')} />
-                                                    <ListItemSecondaryAction>
-                                                        <IconButton edge="end" aria-label="delete">
-                                                            <ArrowForwardIcon />
-                                                        </IconButton>
-                                                    </ListItemSecondaryAction>
-                                                </ListItem>
-                                                <Divider light={true}/>
-                                            </>
-                                        )
-                                    })
+                                    tabVal==0 && sc.renderContent(notifications)
                                 }
                                 {
-                                    notifications.length > 0 ? '' : <Icons.NodataT text={intl.get('notification.tipsNoRead')} />
+                                    tabVal==1 && sc.renderContent(normalMsg)
                                 }
                             </List>
                         </CardContent>
-                        <CardActions className="flex-center actions">
-                            <Button size="small" fullWidth onClick={this.toUrl(`/notification/new`)}>{intl.get('notification.seeAll')}</Button>
-                        </CardActions>
                     </Card>
                 </Popover>
             </>
@@ -153,7 +178,7 @@ const styles = theme => ({
         height:'40px'
     },
     card:{
-        width:'350px',
+        width:'380px',
         '& .actions':{
             backgroundColor:'#fafafa'
         }

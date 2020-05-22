@@ -32,7 +32,7 @@ class Index extends React.PureComponent {// TODO 重新包装
         sc.forceUpdate();
         //
         Service.releaseConsole(options.data.id,function (res) {
-            if(!res || res.length<1){
+            if(!res || res.length<1 || res[0]['children'].length<1){
                 window.Store.notice.add({type:'warning',text:intl.get('services.tipsNoTiminal')})
                 sc.state.open = false;
             }else{

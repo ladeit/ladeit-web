@@ -5,6 +5,8 @@ import Service from '@/notification/Service'
 class Store {
     timeout = null;
     @observable
+    normalData = {loaded:false,pageSize:'',records:[]};
+    @observable
     data = {loaded:false,pageSize:'',records:[]};
     @observable
     allData = {loaded:false,pageNum:1,pageSize:10,pageCount:0,records:[],selected:[]};
@@ -17,8 +19,9 @@ class Store {
     loadNotification(){
         const sc = this;
         sc.timeout || (sc.timeout = roundLoad());
-        sc.timeout(function (res) {
-            sc.data = res;
+        sc.timeout(function (msg110,msgNormal) {
+            msg110 && (sc.data = msg110);
+            msgNormal && (sc.normalData = msgNormal);
         })
     }
 
@@ -99,25 +102,25 @@ export default new Store();
 function roundLoad(){
     let timer = '';
     let loadData = (resultBack)=>{
-        Service.notificationList({currentPage:1,pageSize:5,readFlag:'false'},resultBack)
+        // Service.notificationList({currentPage:1,pageSize:5,readFlag:'false'},resultBack)
+        Service.notificationList({currentPage:1,pageSize:5,readFlag:'false',type:'normal'},function (res) {
+            resultBack('',res)
+        })
+        Service.notificationList({currentPage:1,pageSize:5,readFlag:'false',type:'110'},function (res) {
+            resultBack(res)
+        })
     }
     let timeFn = (callback) => {
         loadData(callback);
         timer = setTimeout(function(){
-            let user = _.local('user');
-            if(!user.id){
-                clearTimeout(timer);
-                return;
-            }
+            if(!_.local('user').id){ return; }
+            //
             loadData(callback);
         },30000)
     }
     //
     return (callback)=>{
-        if(timer){
-            clearTimeout(timer);
-        }
-        //
+        clearTimeout(timer);
         timeFn(callback);
     }
 }
