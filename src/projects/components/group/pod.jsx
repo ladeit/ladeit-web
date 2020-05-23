@@ -170,7 +170,7 @@ function renderPipeChart(data){
             if(el.className.indexOf('cancel')>-1){
                 view.handlePipeChart_cancel();
             }else if(el.className.indexOf('ok')>-1){
-                let input = pipeChart.querySelector('.input');
+                let input = pipeChart.querySelector('.g2_input');
                 view.handlePipeChart_save(input.value - 0);
             }
         }

@@ -113,19 +113,20 @@ class Index extends React.PureComponent<IProps,IState> {
         //
         return (
             <>
-                <Badge
-                    variant="dot"
-                    anchorOrigin={{vertical: 'top', horizontal: 'left'}}
-                    badgeContent={notifications_size?'':0}
-                    color={"error"}
+
+                <IconButton size="small" color="inherit" aria-describedby={id} className={classes.button} style={{backgroundColor:'white'}}
+                    onClick={this.clickRobot}
+                    // onMouseEnter={this.clickRobot}
                 >
-                    <IconButton size="small" color="inherit" aria-describedby={id} className={classes.button} style={{backgroundColor:'white'}}
-                        onClick={this.clickRobot}
-                        // onMouseEnter={this.clickRobot}
+                    <Badge
+                        variant="dot"
+                        anchorOrigin={{vertical: 'top', horizontal: 'left'}}
+                        badgeContent={notifications_size?'':0}
+                        color={"error"}
                     >
                         <NotificationsIcon style={{color:'black'}} />
-                    </IconButton>
-                </Badge>
+                    </Badge>
+                </IconButton>
                 <Popover
                     id={id}
                     open={Boolean(el)}
@@ -183,7 +184,11 @@ const styles = theme => ({
     },
     button:{
         width:'40px',
-        height:'40px'
+        height:'40px',
+        '& .MuiBadge-badge':{
+            top:'3px',
+            left:'3px'
+        }
     },
     card:{
         width:'380px',

@@ -12,7 +12,8 @@ const styles = theme => ({
             textAlign:'center'
         },
         '& .g2_title':{
-            color: "#8c8c8c"
+            color: "#8c8c8c",
+            lineHeight:'1.7rem'
         },
         '& .g2_value':{
             fontSize:'1.6rem'
