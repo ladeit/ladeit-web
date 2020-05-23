@@ -1,8 +1,7 @@
 import G2 from '@antv/g2';
 import { DataSet } from '@antv/data-set';
+import _ from "lodash";
 import intl from 'react-intl-universal'
-
-let chart = null;
 
 function getData(pod){
     const data = [// Running:0,Pending:0,Succeeded:0,Failed:0,Unknown:0,SUM:0
@@ -24,7 +23,9 @@ function getData(pod){
     return dv;
 }
 
-function createView(name,info,dom){
+function createView(name,info,numDom,options){
+    let chartDom = document.getElementById(name);
+    let chart = chartDom.chart;
     if(chart){
         try{
             chart.destroy();// TODO  待定: 无法动态修改guide
@@ -33,18 +34,23 @@ function createView(name,info,dom){
             console.log('service-pipe',e);
         }
     }
+    let opt = _.extend({
+        height:200,
+        legend:{
+            position: 'left-center',
+            offsetX: 16
+        }
+    },options);
+    //
     chart = new G2.Chart({
         container: name,
         forceFit: true,
-        height: 200,
-        padding: 'auto'
+        height: opt.height,
+        padding: 'auto',
     })
     chart.source(getData(info));
     chart.tooltip(false);
-    chart.legend({
-        position: 'left-center',
-        offsetX: 16
-    });
+    chart.legend(opt.legend);
     chart.coord('theta', {
         innerRadius: 0.85
     });
@@ -78,9 +84,10 @@ function createView(name,info,dom){
         })
     chart.guide().html({
         position: [ '50%', '50%' ],
-        html: dom
+        html: numDom
     });
     chart.render();
+    chartDom.chart = chart;
     // window.createView = createView;
     // window.chart = chart;
 }

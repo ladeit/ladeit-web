@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import clsx from 'clsx';
 import Moment from 'moment';
 import {
     ExpandLess as ExpandLessIcon,
@@ -11,13 +12,12 @@ import {
     withStyles,Button,Paper,Typography,Grid,IconButton,Tooltip,Divider,
     Card,CardHeader,CardContent,CardActions
 } from '@material-ui/core';
-
 import Alert from '@/components/Dialog/Alert.jsx'
 import AlertEventList from '@/projects/summary/index.jsx'
 import Icons from '@/components/Icons/icons.jsx'
+import PodJsx from './group/pod'
 
 import moment from 'moment'
-import CreatePipe from './summary_content_pipe.jsx'
 import CreateHeatmap from './summary_content_heatmap.jsx'
 import Service from '../Service'
 import AuthFilter from '@/AuthFilter.jsx'
@@ -61,18 +61,7 @@ const styles = theme => ({
         height: '280px',
         textAlign:'center',
         position: 'relative',
-        '& .pipeChart .MuiButton-root':{
-            width:'46px'
-        }
     },
-    operation:{
-        position:'absolute',
-        right:'32px',
-        '& .icon':{
-            fontSize:'3rem'
-        }
-    },
-
     eventsHeader:{
         padding:'12px 0 !important',
         '& .MuiCardHeader-title':{
@@ -80,59 +69,6 @@ const styles = theme => ({
         }
     }
 })
-
-
-function renderPipeChart(data){
-    let view = this;
-    let editHtml = `<div class="g2-guide-html">
-        <p class="title">pod</p>
-        <div class="value">
-            <input type="number" value="${data._pod}" class="input"/>
-            <div>
-                <button class="cancel MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall fl" tabindex="0" type="button">`+ intl.get('cancel') +`</button>
-                <button class="ok MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall fr" tabindex="0" type="button">`+ intl.get('confirm') +`</button>
-            </div>
-        </div>
-    </div>`
-    let showHtml = `<div class="g2-guide-html">
-        <p class="title">pod</p>
-        <p class="value">${data._pod}</p>
-    </div>`
-    //
-    let pipeChart = document.getElementById("pipeChart");
-    if(pipeChart){// 验证
-        pipeChart.onclick = function(e){
-            let el = e.target;
-            if(el.className.indexOf('cancel')>-1){
-                view.loadPipeChart_cancel();
-            }else if(el.className.indexOf('ok')>-1){
-                let input = pipeChart.querySelector('.input');
-                view.loadPipeChart_save(input.value - 0);
-            }
-        }
-        pipeChart.onkeydown = _.debounce(function(e){
-            let el = e.target;
-            if(el.tagName=="INPUT"){
-                let val = el.value - 0;
-                if(val<0){
-                    el.value = 0;
-                }
-            }
-        },1000)
-    }
-    //
-    return function(isEdit){
-        let html = showHtml;// _.template
-        if(isEdit!=void 0){
-            html = editHtml;
-        }
-        try{
-            CreatePipe('pipeChart',view.state.pod,html);
-        }catch (e) {
-            console.error('heatmapChart faild')
-        }
-    }
-}
 
 let timer = null;
 
@@ -157,7 +93,6 @@ class Index extends React.PureComponent {
         Service.serviceMap({ServiceId:'',ServiceGroup:params._group,ServiceName:params._name},(result)=>{
             let id = result.id;
             sc.loadServiceInfo(id);
-            sc.loadPipeChart(result);
             sc.loadHeatmapChart(id);
             sc.loadEventNote(id);
             //
@@ -186,42 +121,6 @@ class Index extends React.PureComponent {
             sc.state.info = _.extend(info,res);
             sc.forceUpdate();
         })
-    }
-
-    loadPipeChart(serviceData){
-        const sc = this;
-        const id = serviceData.id;
-        if(serviceData.status == -1){
-            let pod = _.extend(sc.state.pod,{SUM:0});
-            pod._pod = pod.SUM;
-            sc.renderPipeChart = renderPipeChart.call(sc,pod);
-            sc.renderPipeChart();
-            sc.forceUpdate();
-        }else{
-            Service.serviceInfoScale(id,function(res) {
-                let pod = _.extend(sc.state.pod,res);
-                pod._pod = pod.SUM;
-                sc.renderPipeChart = renderPipeChart.call(sc,pod);
-                sc.renderPipeChart();
-            })
-        }
-    }
-
-    loadPipeChart_save = (value)=>{
-        const sc = this;
-        let pod = sc.state.pod;
-        let service = sc.state.service;
-        Service.serviceInfoScaleUpdate({serviceId:service.id,count:value},function(res){
-            sc.loadPipeChart(service);
-        })
-    }
-
-    loadPipeChart_cancel = ()=>{
-        const sc = this;
-        let pod = sc.state.pod;
-        pod._pod = pod.SUM;
-        sc.renderPipeChart = renderPipeChart.call(sc,pod);
-        sc.renderPipeChart();
     }
 
     loadHeatmapChart(id){
@@ -280,7 +179,6 @@ class Index extends React.PureComponent {
                 window._.extend(serviceData,one);
                 // let id = serviceData.id;
                 // this.loadServiceInfo(id);
-                // this.loadPipeChart(serviceData);
                 // this.loadHeatmapChart(id);
                 // this.loadEventNote(id);
                 this.state.info.status_text = Service.STATUS2(serviceData.status);
@@ -320,40 +218,8 @@ class Index extends React.PureComponent {
 
                 <Grid container spacing={2}>
                     <Grid item xs={5} >
-                        <Paper className={`flex-center ${classes.paper} ${classes.info}`}>
-                            <div id="pipeChart" style={{width:'400px',padding:'32px 0'}}></div>
-                            {
-                                service.status!='0' || (
-                                    <div className={`flex-c ${classes.operation}`}>
-                                        <div className="flex-box">
-                                            {
-                                                auth('X') ? (
-                                                    <Tooltip title="Scale Up" placement="right">
-                                                        <IconButton size="small" onClick={()=>{this.setPipeChart(+1)}} ><ExpandLessIcon className="icon"/></IconButton>
-                                                    </Tooltip>
-                                                ):(
-                                                    <Tooltip title={intl.get('tipsNoAuthority')} placement="right">
-                                                        <IconButton size="small" style={{opacity:.4}} ><ExpandLessIcon className="icon"/></IconButton>
-                                                    </Tooltip>
-                                                )
-                                            }
-                                        </div>
-                                        <div className="flex-box">
-                                            {
-                                                auth('X') ? (
-                                                    <Tooltip title="Scale Down" placement="right">
-                                                        <IconButton size="small" onClick={()=>{this.setPipeChart(-1)}}><ExpandMoreIcon className="icon"/></IconButton>
-                                                    </Tooltip>
-                                                ):(
-                                                    <Tooltip title={intl.get('tipsNoAuthority')} placement="right">
-                                                        <IconButton size="small" style={{opacity:.4}} ><ExpandMoreIcon className="icon"/></IconButton>
-                                                    </Tooltip>
-                                                )
-                                            }
-                                        </div>
-                                    </div>
-                                )
-                            }
+                        <Paper className={clsx(classes.info,classes.paper)}>
+                            {service.id ? <PodJsx service={service} /> : ''}
                         </Paper>
                     </Grid>
                     <Grid item xs={2} >

@@ -7,6 +7,7 @@ import {
 import Badge from '@material-ui/core/Badge';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import intl from 'react-intl-universal'
+import _ from 'lodash'
 //
 import {observer,inject} from "mobx-react";
 import Icons from 'components/Icons/icons'
@@ -108,22 +109,24 @@ class Index extends React.PureComponent<IProps,IState> {
         //let active = History.location.pathname.indexOf('/notification')>-1;
         let normalMsg = store.notification.normalData.records;
         let notifications = store.notification.data.records;
-        let notifications_size = store.notification.data.totalRecord;// 总未读记录数
+        let notifications_size = store.notification.data.totalRecord || store.notification.normalData.totalRecord;// 总未读记录数
         //
         return (
             <>
-                <Badge
-                    anchorOrigin={{vertical: 'top', horizontal: 'left'}}
-                    badgeContent={notifications_size}
-                    color={"error"}
+
+                <IconButton size="small" color="inherit" aria-describedby={id} className={classes.button} style={{backgroundColor:'white'}}
+                    onClick={this.clickRobot}
+                    // onMouseEnter={this.clickRobot}
                 >
-                    <IconButton size="small" color="inherit" aria-describedby={id} className={classes.button} style={{backgroundColor:'white'}}
-                        onClick={this.clickRobot}
-                        // onMouseEnter={this.clickRobot}
+                    <Badge
+                        variant="dot"
+                        anchorOrigin={{vertical: 'top', horizontal: 'left'}}
+                        badgeContent={notifications_size?'':0}
+                        color={"error"}
                     >
                         <NotificationsIcon style={{color:'black'}} />
-                    </IconButton>
-                </Badge>
+                    </Badge>
+                </IconButton>
                 <Popover
                     id={id}
                     open={Boolean(el)}
@@ -137,6 +140,7 @@ class Index extends React.PureComponent<IProps,IState> {
                         vertical: 'top',
                         horizontal: 'center',
                     }}
+                    className={classes.popover}
                 >
                     <Card className={classes.card}>
                         <CardHeader
@@ -152,11 +156,11 @@ class Index extends React.PureComponent<IProps,IState> {
                                     onChange={(e,value)=>{this.setState({tabVal:value})}}
                                     indicatorColor="primary"
                                     textColor="primary"
-                                    centered
                                 >
-                                    <Tab label="k8s warning event" />
-                                    <Tab label="othor event" />
+                                    <Tab label={intl.get('notification.important')} />
+                                    <Tab label={intl.get('notification.common')} />
                                 </Tabs>
+                                <Divider light={true}/>
                                 {
                                     tabVal==0 && sc.renderContent(notifications)
                                 }
@@ -173,9 +177,18 @@ class Index extends React.PureComponent<IProps,IState> {
 }
 
 const styles = theme => ({
+    popover:{
+        '& .MuiPopover-paper':{
+            width:'380px',
+        }
+    },
     button:{
         width:'40px',
-        height:'40px'
+        height:'40px',
+        '& .MuiBadge-badge':{
+            top:'3px',
+            left:'3px'
+        }
     },
     card:{
         width:'380px',

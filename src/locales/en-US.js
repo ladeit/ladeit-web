@@ -378,6 +378,9 @@ export default ({
         tipsConfirmSlackDel:"Sure to remove authorization of <%=name%>(slack)?"
     },
     notification:{
+        important:'重要',
+        common:'一般',
+        //
         notification:'Notifications',
         seeAll:'SEE ALL',
         allMessage:'All notifications',

@@ -379,6 +379,9 @@ export default ({
         tipsConfirmSlackDel:"确认删除 Slack用户（ <%=name%> ）授权 ?"
     },
     notification:{
+        important:'重要',
+        common:'一般',
+        //
         notification:'Notifications',
         seeAll:'查看更多',
         allMessage:'全部消息',

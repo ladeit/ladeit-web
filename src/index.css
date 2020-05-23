@@ -315,13 +315,13 @@ button.danger_button:hover{ background-color:#9a0036; }
   line-height: 0.2;
 }
 
-.g2-guide-html .title {
+.g2-guide-html .g2_title {
   font-size: 12px;
   color: #8c8c8c;
   font-weight: 300;
 }
 
-.g2-guide-html .input{
+.g2-guide-html .g2_input{
   width: 100%;
   padding: 4px 8px;
   margin-bottom:4px;
@@ -330,22 +330,16 @@ button.danger_button:hover{ background-color:#9a0036; }
   display: inline-block;
 }
 
-.g2-guide-html .value {
+.g2-guide-html .g2_value {
   font-size: 32px;
   color: #000;
   font-weight: bold;
 }
 
-.g2-guide-html .value button{
+.g2-guide-html .g2_value button{
   min-width:42px;
   padding:0 4px;
 }
-
-
-
-
-
-
 
 
 /* flow-chart */
