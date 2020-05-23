@@ -40,14 +40,17 @@ const styles = theme => ({
     }
 });
 
+
+hljs.registerLanguage('log', hljs_log);
+
 @withStyles(styles)
 class Index extends React.PureComponent {
     componentWillMount(){
         const onRef = this.props.onRef;
         onRef && onRef(this);
         this.state.error = {loaded:false};
-        this.renderCode = _.debounce(this.renderCode,600,{maxWait:800});
-        this.onEnter = _.debounce(this.onEnter,300);
+        this.renderCode = _.debounce(this.renderCode,600,{maxWait:1000});
+        this.onEnter = _.debounce(this.onEnter,100);
     }
 
     componentDidMount(){
@@ -94,10 +97,8 @@ class Index extends React.PureComponent {
                 }
                 socket.onmessage = function (evt) {
                     var msg = evt.data;
-                    if(!/^[\n\r]&/.test(msg)){
-                        sc.html.push(msg);
-                        sc.renderCode();
-                    }
+                    sc.html.push(hljs.highlight('log',msg).value);
+                    sc.renderCode();
                 }
                 socket.onerror = function(){
                     sc.setState({error:{text:'连接失败',loaded:true}})
@@ -129,13 +130,12 @@ class Index extends React.PureComponent {
     renderCode = () => {
         let sc = this;
         let dom = sc.refs.$dom;
-        if(sc.html.length > 500){
-            sc.html.splice(0,sc.html.length - 500);
+        if(sc.html.length > 800){
+            sc.html.splice(0,sc.html.length - 800);
         }
         // separately require languages
-        hljs.registerLanguage('log', hljs_log);
         dom.classList.add("log_pointer");
-        dom.innerHTML = hljs.highlight('log', sc.html.join('')).value;
+        dom.innerHTML = sc.html.join('');
         //
         var parent = dom.closest(".root-box");
         parent.scrollTop = 1000000;
