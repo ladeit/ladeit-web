@@ -30,10 +30,11 @@ import RobotT from '@/topology/robot.jsx'
 import AuthFilter from '@/AuthFilter.jsx'
 import ServiceAdd from './group/group_service.jsx'
 import Terminal from './group/index_terminal'
-import LogJsx from './group/index_log'
 import ImageCreateT from '../releases/addImage'
 import ConfirmDialog from 'components/Dialog/Alert.jsx'
 import YamlEditT from '../../cluster/component/yamlEdit.jsx'
+import LogJsx from './group/index_log'
+import PodJsx from './group/pod_small'
 
 const styles = theme => ({
     header:{
@@ -434,8 +435,9 @@ class Index extends React.Component{
                                         </div>
                                     </div>
                                     <Divider light={true} orientation={'vertical'} />
-                                    <div className="flex-box flex-middle">
-                                        {getNotification(v.messageAOS)}
+                                    <div className="flex-box flex-middle" style={{transform:"translateX(8px)"}}>
+                                        {/*{getNotification(v.messageAOS)}*/}
+                                        <PodJsx service={v} style={{width:'98px'}}/>
                                     </div>
                                 </div>
                                 { !v.imagenum ? imageMask.call(sc,v) : (v.status == -1 ? firstMask.call(sc,v,groupAuth(true)) : '' ) }
