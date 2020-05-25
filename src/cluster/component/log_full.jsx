@@ -40,14 +40,17 @@ const styles = theme => ({
     }
 });
 
+
+hljs.registerLanguage('log', hljs_log);
+
 @withStyles(styles)
 class Index extends React.PureComponent {
     componentWillMount(){
         const onRef = this.props.onRef;
         onRef && onRef(this);
         this.state.error = {loaded:false};
-        this.renderCode = _.debounce(this.renderCode,20,{maxWait:200});
-        this.onEnter = _.debounce(this.onEnter,20,{maxWait:200});
+        this.renderCode = _.debounce(this.renderCode,600,{maxWait:1000});
+        this.onEnter = _.debounce(this.onEnter,100);
     }
 
     componentDidMount(){
@@ -64,7 +67,7 @@ class Index extends React.PureComponent {
         this.socket && this.socket.close()
     }
 
-    html = "";
+    html = [];
     state = {
         error: {loaded:false} // {text:''}
     }
@@ -94,7 +97,7 @@ class Index extends React.PureComponent {
                 }
                 socket.onmessage = function (evt) {
                     var msg = evt.data;
-                    sc.html += msg;
+                    sc.html.push(hljs.highlight('log',msg).value);
                     sc.renderCode();
                 }
                 socket.onerror = function(){
@@ -109,7 +112,7 @@ class Index extends React.PureComponent {
 
     onEnter = (e)=>{
         if(e.keyCode === 13){
-            this.html += '\n\r';
+            this.html.push('\n\r');
             this.renderCode();
         }
     }
@@ -127,22 +130,26 @@ class Index extends React.PureComponent {
     renderCode = () => {
         let sc = this;
         let dom = sc.refs.$dom;
+        if(sc.html.length > 800){
+            sc.html.splice(0,sc.html.length - 800);
+        }
         // separately require languages
-        hljs.registerLanguage('log', hljs_log);
-        dom.innerHTML = hljs.highlight('log', sc.html).value;
+        dom.classList.add("log_pointer");
+        dom.innerHTML = sc.html.join('');
         //
-        var parent = ss.refs.$dom.closest(".root-box");
+        var parent = dom.closest(".root-box");
         parent.scrollTop = 1000000;
     }
 
     render = ()=> {
         const {classes} = this.props;
         const { error } = this.state;
-        window.ss = this;
         //
         return (
             <div className={classes.terminalBox}>
-                <pre><code className="language-html" ref="$dom"></code></pre>
+                <pre>
+                    <code className="language-html" ref="$dom"></code>
+                </pre>
                 <div className={classes.info}>
                     { (error.loaded && error.text)  && <div className="message"><span>{error.text}，</span><span className="link1" onClick={()=>{this.initTerminal()}}>重连</span></div>}
                     { (!error.loaded && !error.text) && <Icons.Loading /> }
