@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import AddIcon from '@material-ui/icons/Add';
 import PeopleOutlinedIcon from '@material-ui/icons/PeopleOutlined';
 import PriorityHighOutlinedIcon from '@material-ui/icons/PriorityHighOutlined';
+import RefreshIcon from '@material-ui/icons/Refresh';
 import {
     withStyles,Typography,Button,IconButton,Divider,Avatar,
     Paper,Tooltip
@@ -114,6 +115,12 @@ class Index extends Component{
         data:[]
     }
 
+    handleRefreshNS = (item)=>{
+        return ()=>{
+            Service.namespaceSync(item.id)
+        }
+    }
+
     clusterAdd = () => {
         const sc = this;
         return ()=>{
@@ -171,7 +178,9 @@ class Index extends Component{
                     <div className="title" onClick={this.toUrl(`/cluster/${item.k8sName}/setting`)} >
                         <span className="h5 link2" >{disableClusterIcon(item)}{item.k8sName}</span>
                     </div>
-                    <IconButton size="small" aria-label="user" className="title_icon" onClick={this.toUrl(`/cluster/${item.k8sName}/user`)} ><PeopleOutlinedIcon /></IconButton>
+                    <Tooltip title="Cluster users" >
+                        <IconButton size="small" aria-label="user" className="title_icon" onClick={this.toUrl(`/cluster/${item.k8sName}/user`)} ><PeopleOutlinedIcon /></IconButton>
+                    </Tooltip>
                     {
                         auth("W") ? (
                             <IconButton size="small" aria-label="user" className="title_icon" onClick={this.clickEnvAdd(item)} ><AddIcon /></IconButton>
@@ -181,6 +190,9 @@ class Index extends Component{
                             </Tooltip>
                         )
                     }
+                    <Tooltip title="Synchronize namespace" >
+                        <IconButton size="small" aria-label="user" className="title_icon" onClick={this.handleRefreshNS(item)} ><RefreshIcon /></IconButton>
+                    </Tooltip>
                 </div>
                 <Paper className="box">
                     {
