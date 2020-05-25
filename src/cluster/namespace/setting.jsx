@@ -41,7 +41,7 @@ const styles = theme => ({
 
 
 let options = {
-    namespace:{},
+    namespace:{inputProps:{disabled:true}},
     envTag:{},
     resourceQuota:{size:12},
     cpuLimit:{size:4},
