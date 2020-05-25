@@ -311,7 +311,13 @@ const FormValid = function(column,error){
     return column;
 }
 
-@withStyles(selectStyles,checkedStyles)
+const formStyles = theme => ({
+    select_control:{
+        top:"8px"
+    }
+})
+
+@withStyles(formStyles,selectStyles,checkedStyles)
 class Form extends React.PureComponent{
 
     componentWillMount(){
@@ -429,10 +435,10 @@ class Form extends React.PureComponent{
         //
         return (
             <>
-                <FormControl className={clsx(classes.selectFormControl,className)} {...this.formProps} error={Boolean(msg)} disabled={inputProps.disabled}>
+                <FormControl {...this.formProps}  className={clsx(classes.selectFormControl,classes.select_control,className)}  error={Boolean(msg)} disabled={inputProps.disabled}>
                     <InputLabel
                         htmlFor="multiple-select"
-                        className={classes.selectLabel}
+                        className={clsx(classes.selectLabel)}
                     >
                         {column.label}
                     </InputLabel>

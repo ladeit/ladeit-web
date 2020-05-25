@@ -74,6 +74,9 @@ export default {
         // {clusterId,type,namespace,name}
         _.ajax({url:`/api/v1/resource/${params.clusterId}/${params.type}/${params.namespace}/${params.name}`},(res)=>{callback(res||' ')})
     },
+    namespaceSync(clusterId,callback){
+        _.ajax({url:`/api/v1/cluster/${clusterId}`,method:'put'},(res)=>{callback(res)})
+    },
     envList(data,callback){
         _.ajax({url:`/api/v1/env/${data.id}`},(res)=>{callback(res)})
     },
