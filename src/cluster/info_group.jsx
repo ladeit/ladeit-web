@@ -183,16 +183,26 @@ class Index extends Component{
                     </Tooltip>
                     {
                         auth("W") ? (
-                            <IconButton size="small" aria-label="user" className="title_icon" onClick={this.clickEnvAdd(item)} ><AddIcon /></IconButton>
+                            <Tooltip title="Add namespace" >
+                                <IconButton size="small" aria-label="user" className="title_icon" onClick={this.clickEnvAdd(item)} ><AddIcon /></IconButton>
+                            </Tooltip>
                         ) : (
                             <Tooltip title={intl.get('tipsNoAuthority')} >
                                 <IconButton size="small" aria-label="user" className="title_icon" style={{opacity:.4}} ><AddIcon /></IconButton>
                             </Tooltip>
                         )
                     }
-                    <Tooltip title="Synchronize namespace" >
-                        <IconButton size="small" aria-label="user" className="title_icon" onClick={this.handleRefreshNS(item)} ><RefreshIcon /></IconButton>
-                    </Tooltip>
+                    {
+                        auth("W") ? (
+                            <Tooltip title="Synchronize namespace" >
+                                <IconButton size="small" aria-label="user" className="title_icon" onClick={this.handleRefreshNS(item)} ><RefreshIcon /></IconButton>
+                            </Tooltip>
+                        ) : (
+                            <Tooltip title={intl.get('tipsNoAuthority')} >
+                                <IconButton size="small" aria-label="user" className="title_icon" style={{opacity:.4}}><RefreshIcon /></IconButton>
+                            </Tooltip>
+                        )
+                    }
                 </div>
                 <Paper className="box">
                     {
