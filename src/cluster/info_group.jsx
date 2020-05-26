@@ -117,7 +117,9 @@ class Index extends Component{
 
     handleRefreshNS = (item)=>{
         return ()=>{
-            Service.namespaceSync(item.id,()=>{})
+            Service.namespaceSync(item.id,()=>{
+                Store.notice.add({text:'Synchronization complete. '})
+            })
         }
     }
 
