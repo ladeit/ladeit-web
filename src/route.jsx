@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 
 //import Dashboard from './Layout1/dashboard.jsx'
+import Guite from './login/guide'
 import Invite from './login/invite.jsx'
 import InviteEnv from './login/invite_env.jsx'
 import InviteSlack from './login/invite_slack.jsx'
@@ -71,6 +72,7 @@ const routes = [
     {exact:true,path:'/test',component:Test},
     //
     {exact:true,path:'/',component:requireAuth(Projects)},
+    {exact:true,path:'/guite/admin',component:Guite},
     {exact:true,path:'/invite',component:Invite},
     {exact:true,path:'/inviteEnv',component:InviteEnv},
     {exact:true,path:'/inviteSlack',component:InviteSlack},

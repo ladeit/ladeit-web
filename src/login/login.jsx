@@ -5,8 +5,8 @@ import {
     withStyles,Paper
 } from '@material-ui/core';
 
+import Service from './Service'
 import LoginT from './components/login.jsx'
-
 import BgImg from 'assets/img/bg2.jpg'
 
 const styles = theme => ({
@@ -31,7 +31,11 @@ class Index extends React.PureComponent {
     }
 
     componentDidMount(){
-        //
+        this.validToGuide();
+    }
+
+    validToGuide(){
+        Service.adminFirstLogin()
     }
 
     render = ()=>{

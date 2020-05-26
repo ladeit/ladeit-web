@@ -14,4 +14,18 @@ export default {
         // {ClusterId}
         _.ajax({url:`/api/v1/cluster/addClusterRelation/${code}`,method:'post'},(res)=>{callback(res)})
     },
+    passwordMod(){
+        // {username,password,newPassword}
+        _.ajax({url:'/api/v1/user/password',method:'put'})
+    },
+    adminPassword(data,callback){
+        _.ajax({url:'/api/v1/user/admin/password',method:'put',data:data},(res)=>{callback(res)})
+    },
+    adminFirstLogin(){
+        _.ajax({url:"/api/v1/user/admin"},(res)=>{
+            if(res === "nopassword"){
+                History.push('/guite/admin')
+            }
+        })
+    }
 }
