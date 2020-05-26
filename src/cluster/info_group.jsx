@@ -117,7 +117,9 @@ class Index extends Component{
 
     handleRefreshNS = (item)=>{
         return ()=>{
-            Service.namespaceSync(item.id)
+            Service.namespaceSync(item.id,()=>{
+                Store.notice.add({text:'Synchronization complete. '})
+            })
         }
     }
 
@@ -232,13 +234,6 @@ class Index extends Component{
                                                 <Typography variant="h5" className="link2 row_text" onClick={this.toUrl(`/namespace/${item.k8sName}/${v.namespace}/setting`)}>
                                                     {disableIcon(v)}{v.namespace}
                                                 </Typography>
-                                            </div>
-                                        </div>
-                                        <Divider light={true} orientation={'vertical'} />
-                                        <div className="flex-one">
-                                            <div className="cell_MD overflow-text">
-                                                <Typography variant="body2" className="row_text">{intl.get('namespace.labelEnv')}</Typography>
-                                                <div className="row_text"><Badge color={BADAGE[v.envTag]} >{v.envTag}</Badge></div>
                                             </div>
                                         </div>
                                         <Divider light={true} orientation={'vertical'} />

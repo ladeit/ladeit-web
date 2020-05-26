@@ -41,7 +41,7 @@ class Index extends React.PureComponent {
         ]
         sc.state.form =  [
             {name:'namespace',label:intl.get('namespace.formNamespce'),valid:['require'],type:'input',options:[]},
-            {name:'envTag',label:intl.get('namespace.formEnv'),value:'DEV',valid:['require'],type:'select',options:['DEV','TEST','STAGING','PROD']},
+            // {name:'envTag',label:intl.get('namespace.formEnv'),value:'DEV',valid:['require'],type:'select',options:['DEV','TEST','STAGING','PROD']},
             {name:'resourceQuota',label:intl.get('namespace.formResourceQuota'),size:12,value:false,type:'checked',valid:[sc.changeRourceQuota]}
         ]
         // columnOption
@@ -64,7 +64,7 @@ class Index extends React.PureComponent {
     loadData(){
         const { data } = this.props;
         let form = this.state.form;
-        form.length = 3;
+        form.length = 2;
         if(data){
             if(data.resourceQuota){
                 Array.prototype.push.apply(form,form_quota)
@@ -95,7 +95,7 @@ class Index extends React.PureComponent {
 
     changeRourceQuota = (column)=>{
         let form = this.state.form;
-        form.length = 3;
+        form.length = 2;
         if(!column.value){
             //this.forceUpdate();
         }else{
