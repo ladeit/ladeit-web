@@ -28,10 +28,11 @@ class Index extends React.PureComponent {
         if(user.id){
             History.push('/')
         }
+        this.validToGuide();
     }
 
     componentDidMount(){
-        this.validToGuide();
+        //
     }
 
     validToGuide(){
