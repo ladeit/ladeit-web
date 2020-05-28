@@ -53,8 +53,8 @@ class Index extends React.Component {
     state = {
         form:[
             {name:'name',label:intl.get('services.addDialog.name'),valid:['require']},
-            {name:'clusterId',label:intl.get('services.addDialog.cluster'),className:'margin8',type:'select',ListSubheader:clusterHeader.call(this),valid:['require',this.changeCluster()],options:[]},
-            {name:'envId',label:intl.get('services.addDialog.namespace'),className:'margin8',type:'select',ListSubheader:clusterHeader.call(this),valid:['require'],options:[]}
+            {name:'clusterId',label:intl.get('services.addDialog.cluster'),className:'margin8',type:'select',valid:['require',this.changeCluster()],options:[]},
+            {name:'envId',label:intl.get('services.addDialog.namespace'),className:'margin8',type:'select',valid:['require'],options:[]}
         ]
     }
 

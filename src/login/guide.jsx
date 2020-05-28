@@ -8,6 +8,7 @@ import {
     VisibilityOff as VisibilityOffIcon,
     Visibility as VisibilityIcon,
 } from "@material-ui/icons";
+import SHA from "js-sha256";
 
 const styles = theme => ({
     root:{
@@ -35,8 +36,10 @@ class Index extends React.PureComponent {
 
     handleSubmit = ()=>{
         let data = this.refs.$form.getData();
-        data.username = 'admin';
-        Service.adminPassword(data,(res)=>{
+        Service.adminPassword({
+            username:'admin',
+            newPassword:SHA.sha256(data.newPassword)
+        },(res)=>{
             History.push('/login')
         })
     }
