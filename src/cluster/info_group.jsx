@@ -16,6 +16,9 @@ import Component from '@/Component.jsx'
 import Badge from "components/Badge/Badge.js"
 import DrawerT from '@/components/Dialog/Drawer.jsx'
 import ColonyT from './component/colonyAdd.jsx'
+import ClusterCpuJsx from './component/cluster_cpu'
+import ClusterMemJsx from './component/cluster_mem'
+import PodJsx from "../projects/components/group/pod_small"
 import EnvAdd from './component/envAdd.jsx'
 import AuthFilter from '@/AuthFilter.jsx'
 import intl from 'react-intl-universal'
@@ -240,24 +243,16 @@ class Index extends Component{
                                             </div>
                                         </div>
                                         <Divider light={true} orientation={'vertical'} />
-                                        <div className="flex-box flex-center">
-                                            <div style={{textAlign:'center'}}>
-                                                <Typography variant="body2" className="row_text">{intl.get('namespace.labelResourceLimit')}</Typography>
-                                                <div className="cell_MD overflow-text row_text">
-                                                    {v.cpuLimit && (v.cpuLimit+' '+ (v.cpuLimitUnit||'m'))}&nbsp;&nbsp;
-                                                    {v.memLimit && (v.memLimit+' '+ (v.memLimitUnit||'m'))}
-                                                </div>
-                                            </div>
+                                        <div className="flex-one flex-center">
+                                            <ClusterCpuJsx  data={v}/>
+                                        </div>
+                                        <Divider light={true} orientation={'vertical'} />
+                                        <div className="flex-one flex-center">
+                                            <ClusterMemJsx  data={v}/>
                                         </div>
                                         <Divider light={true} orientation={'vertical'} />
                                         <div className="flex-box flex-center">
-                                            <div style={{textAlign:'center'}}>
-                                                <Typography variant="body2" className="row_text">{intl.get('namespace.labelResourceRequest')}</Typography>
-                                                <div className="cell_MD overflow-text row_text">
-                                                    {v.cpuRequest && (v.cpuRequest+' '+(v.cpuRequestUnit||'m'))}&nbsp;&nbsp;
-                                                    {v.memRequest && (v.memRequest+' '+(v.memRequestUnit||'m'))}
-                                                </div>
-                                            </div>
+                                            <PodJsx service={v} style={{width:'98px'}}/>
                                         </div>
                                     </div>
                                 </Paper>
