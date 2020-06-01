@@ -9,6 +9,7 @@ import {
     withStyles,Typography,Button,IconButton,Divider,Avatar,
     Paper,Tooltip
 } from '@material-ui/core';
+import Label from 'components/Label/Label';
 import Icons from '@/components/Icons/icons.jsx'
 import Service from './Service'
 import Component from '@/Component.jsx'
@@ -228,9 +229,11 @@ class Index extends Component{
                                         <Divider light={true} orientation={'vertical'} />
                                         <div className="flex-one">
                                             <div className="cell_MD overflow-text">
-                                                <Typography variant="body2" className="row_text">
+                                                {/* <Typography variant="body2" className="row_text"> */}
+                                                <Label>
                                                     {intl.get('namespace.labelNamespce')}
-                                                </Typography>
+                                                </Label>
+                                                {/* </Typography> */}
                                                 <Typography variant="h5" className="link2 row_text" onClick={this.toUrl(`/namespace/${item.k8sName}/${v.namespace}/setting`)}>
                                                     {disableIcon(v)}{v.namespace}
                                                 </Typography>
