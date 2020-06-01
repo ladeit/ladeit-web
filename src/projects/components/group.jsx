@@ -130,7 +130,6 @@ const serviceTipsMap = {};
 @withStyles(styles)
 @AuthFilter
 class Index extends React.Component{
-
     clickCreate(item){
         const sc = this;
         return ()=>{
@@ -315,24 +314,36 @@ class Index extends React.Component{
 
     render = ()=>{
         const sc = this;
-        const { classes,data,...other } = this.props;
+        const { classes,data,isChecked,openList,...other } = this.props;
         //const eye = this.state.eye;
         let name = data.name;
         let groupAuth = this.getAuth(data);
         let footer = data.servicelist.length ? '' : noServiceMask.call(sc,groupAuth(true));
         //
+        const flexCell = {
+            display:'flex',
+            minWidth:'100px'
+        }
         return (
             <div className={classes.group} key={data.name} >
                 <div className="flex-middle">
                     <div className="title">
                         <span className="h5 link2" onClick={this.toUrl(`/group/${name}`)}>{name}</span>
                     </div>
-                    <IconButton size="small" aria-label="user" className="title_icon" onClick={this.toUrl(`/group/${name}/user`)}><PeopleOutlinedIcon /></IconButton>
-                    <IconButton size="small" aria-label="setting" className="title_icon" onClick={this.toUrl(`/group/${name}/setting`)}><SettingsOutlinedIcon /></IconButton>
-                    <IconButton size="small" aria-label="topography" className="title_icon" onClick={this.toUrl(`/group/${name}/topology`)}><DeviceHubIcon /></IconButton>
+                    <Tooltip title="Members">
+                        <IconButton size="small" aria-label="user" className="title_icon" onClick={this.toUrl(`/group/${name}/user`)}><PeopleOutlinedIcon /></IconButton>
+                    </Tooltip>
+                    <Tooltip title="Settings">
+                        <IconButton size="small" aria-label="setting" className="title_icon" onClick={this.toUrl(`/group/${name}/setting`)}><SettingsOutlinedIcon /></IconButton>
+                    </Tooltip>
+                    <Tooltip title="Topology">
+                        <IconButton size="small" aria-label="topography" className="title_icon" onClick={this.toUrl(`/group/${name}/topology`)}><DeviceHubIcon /></IconButton>
+                    </Tooltip>
                     {
                         groupAuth(true) ? (
-                            <IconButton size="small" aria-label="user" className="title_icon" onClick={sc.clickAddService()}><AddIcon /></IconButton>
+                            <Tooltip title="Add service">
+                                <IconButton size="small" aria-label="user" className="title_icon" onClick={sc.clickAddService()}><AddIcon /></IconButton>
+                            </Tooltip>
                         ) : (
                             <Tooltip title={intl.get('tipsNoAuthority')} >
                                 <IconButton size="small" aria-label="user" className="title_icon" style={{opacity:.4}} ><AddIcon /></IconButton>
@@ -354,8 +365,22 @@ class Index extends React.Component{
                         let url = v.gateway.join(',');
                         let icon = {'0':<Tooltip title="k8s" ><Icons.K8sIcon style={{margin:'0 6px 0',width:'16px',height:'16px',opacity:.5}}/></Tooltip>,'1':<Tooltip title="istio" ><Icons.IstioIcon style={{margin:'-2px 6px 0',width:'10px',height:'16px',fill:'#8d9ea7'}}/></Tooltip>}[v.serviceType] || '';
                         // CheckCircleIcon,CancelIcon,ErrorIcon
+                        if((!isChecked)&&!(openList.includes(data.id))){
+                            return (
+                                <div style={{minWidth:"100px",display: "inline-block"}} >
+                                     <div className="cell_icon overflow-text">
+                                        {avatorHtml(v.status)}
+                                </div>
+                                     <div className="flex-one" style={{minWidth:"100px",display: "inline-block"}}>
+                                        <div>
+                                            {groupStatusHtml.call(sc,v)}
+                                        </div>
+                                     </div>       
+                                </div>
+                            )
+                        }
                         return (
-                            <Paper className="content mask_group" key={v.id} >
+                            <Paper className="content mask_group" key={v.id}>
                                 <div className="flex-r">
                                     <div className="flex-one flex-middle">
                                         <div className="cell_icon overflow-text">
@@ -373,7 +398,7 @@ class Index extends React.Component{
                                                     </Typography>
                                                     {icon}
                                                 </Typography>
-                                                <div className="row_text icon_box flex-middle" >
+                                                <div className="row_text icon_box flex-middle">
                                                     <Tooltip title="console" >
                                                         <Icons.ConsoleIcon width="24" height="18" onClick={sc.clickTerminal(v)} />
                                                     </Tooltip>
@@ -419,19 +444,19 @@ class Index extends React.Component{
                                     <Divider light={true} orientation={'vertical'} />
                                     <div className="flex-one">
                                         <div className="cell_robot overflow-text flex-center">
+                                        <Tooltip title={"Bot settings"} >
                                             {
                                                 auth('X') ? (
                                                     <IconButton onClick={sc.clickRobot(v)}>
                                                         <img src={v.servicePublishBot.id?ProjectsFlagSPng:ProjectsFlagPng} style={{width:'24px'}}/>
                                                     </IconButton>
                                                 ):(
-                                                    <Tooltip title={intl.get('tipsNoAuthority')} >
-                                                        <IconButton style={{opacity:.4}}>
-                                                            <img src={v.servicePublishBot.id?ProjectsFlagSPng:ProjectsFlagPng} style={{width:'24px'}}/>
-                                                        </IconButton>
-                                                    </Tooltip>
+                                                    <IconButton style={{opacity:.4}}>
+                                                        <img src={v.servicePublishBot.id?ProjectsFlagSPng:ProjectsFlagPng} style={{width:'24px'}}/>
+                                                    </IconButton>
                                                 )
                                             }
+                                             </Tooltip>
                                         </div>
                                     </div>
                                     <Divider light={true} orientation={'vertical'} />
