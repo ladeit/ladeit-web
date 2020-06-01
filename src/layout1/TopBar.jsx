@@ -164,7 +164,7 @@ function TopBar({
                             buttonIcon={(
                               <Avatar
                                   className={classes.avatar}
-                                  src="https://img.toutiao.io/subject%2F6fb1a80dffde44eda80e6eb5c63df9e1"
+                                  src="https://www.gravatar.com/avatar/EMAIL_HASH?d=retro"
                                   alt="My Avatar"
                               />
                           )}

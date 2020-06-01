@@ -87,38 +87,12 @@ class Index extends Component{
         const { classes,store } = this.props;
         const { avatar,user } = this.state;
         const params = this.params;
+        const passwordSty = {
+            color:"rgb(192,201,206)",
+            marginTop:'40px'
+        }
         return (
             <div className={classes.root}>
-                <Card className={classes.card}>
-                    <div className="header" >
-                        <CardHeader
-                            title="Public Avatar"
-                            subheader="You can upload an avatar here or change it at gravatar.com"
-                        />
-                    </div>
-                    <CardContent className="content">
-                        <Avatar src={avatar} className={classes.user_avatar} />
-                        <CustomFileInput
-                            onChange={this.changeAvatar}
-                            formControlProps={{
-                                fullWidth: true
-                            }}
-                            inputProps={{
-                                placeholder: intl.get('user.labelAvator')+" ... "
-                            }}
-                            endButton={{
-                                buttonProps: {
-                                  round: true,
-                                  color: "primary",
-                                  justIcon: true,
-                                  fileButton: true
-                                },
-                                icon: <AttachFile />
-                            }}
-                        />
-                    </CardContent>
-                </Card>
-                <br/>
                 <Card className={classes.card}>
                     <CardHeader
                         className="header"
@@ -142,12 +116,51 @@ class Index extends Component{
                                     <TextField fullWidth label={intl.get('user.labelEmail')} value={user.email} onChange={this.changeInput('email')} />
                                 </div>
                             </Grid>
+                            <Grid item xs={12}>
+                                <div className={classes.input}>
+                                    <Button variant="contained" color="primary" className="" onClick={this.clickSubmit}>{intl.get('user.buttonUpdate')}</Button>
+                                </div>
+                            </Grid>
                         </Grid>
                     </CardContent>
                 </Card>
-                <div class="split">
-                    <Button variant="contained" color="primary" className="" onClick={this.clickSubmit}>{intl.get('user.buttonUpdate')}</Button>
-                </div>
+                <br/>
+                <Card className={classes.card}>
+                    <CardHeader
+                        className="header"
+                        title=""
+                        subheader=""
+                    />
+                    <CardContent className="content">
+                        <Grid container spacing={3}>
+                            <Grid item xs={12}>
+                                <div style={passwordSty}>
+                                    {intl.get('user.password')}
+                                </div>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <div className={classes.input}>
+                                    <TextField fullWidth label={intl.get('user.inputPassword')}/>
+                                </div>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <div className={classes.input}>
+                                    <TextField fullWidth label={intl.get('user.enterNewPassword')}/>
+                                </div>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <div className={classes.input}>
+                                    <TextField fullWidth label={intl.get('user.confirmNewPassword')}/>
+                                </div>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <div className={classes.input}>
+                                    <Button variant="contained" color="primary" className="" >{intl.get('user.changePassword')}</Button>
+                                </div>
+                            </Grid>
+                        </Grid>
+                    </CardContent>
+                </Card>
             </div>
         )
     }

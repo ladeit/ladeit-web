@@ -13,6 +13,7 @@ import Icons from 'components/Icons/icons.jsx'
 import Service from '../Service'
 import AuthFilter from '@/AuthFilter.jsx'
 import intl from 'react-intl-universal'
+import Label from 'components/Label/Label';
 
 const style = theme => ({
     root:{
@@ -40,7 +41,7 @@ class Index extends React.PureComponent {
             {name:'memRequestUnit',label:'',size:4,value:'m',type:'select',options:['m','Mi','Gi']}
         ]
         sc.state.form =  [
-            {name:'namespace',label:intl.get('namespace.formNamespce'),valid:['require'],type:'input',options:[]},
+            {name:'namespace',label: <Label>{intl.get('namespace.formNamespce')}</Label>,valid:['require'],type:'input',options:[]},
             // {name:'envTag',label:intl.get('namespace.formEnv'),value:'DEV',valid:['require'],type:'select',options:['DEV','TEST','STAGING','PROD']},
             {name:'resourceQuota',label:intl.get('namespace.formResourceQuota'),size:12,value:false,type:'checked',valid:[sc.changeRourceQuota]}
         ]
