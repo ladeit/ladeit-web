@@ -134,5 +134,8 @@ export default {
     clusterAUsersDelById(id,callback){
         // {clusterId}
         _.ajax({url:`/api/v1/cluster/ClusterRelation/user`,method:'delete',data:{clusterId:id}},(res)=>{callback(res)})
-    }
+    },
+    clusterShell(clusterId,callback){
+        _.ajax({url:`/api/v1/cluster/webkubectl/${clusterId}`},(res)=>{callback(res)})
+    },
 }
