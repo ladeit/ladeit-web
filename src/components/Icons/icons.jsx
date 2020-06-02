@@ -6,7 +6,7 @@ import Paper from '@material-ui/core/Paper'
 import ListItem from '@material-ui/core/ListItem'
 import Typography from '@material-ui/core/Typography'
 import Moment from "moment"
-import K8sImg from '@/static/img/k8s.png'
+import K8sImg from '@/assets/img/k8s.png'
 
 class LogIcon extends React.PureComponent {
     render(){

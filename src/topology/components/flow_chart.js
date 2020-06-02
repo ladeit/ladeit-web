@@ -1,9 +1,9 @@
 import Go from '@/components/Gojs/go';
-import ServerImg from '@static/img/server.png'
-import AddImg from '@static/img/add.png'
-import TaskImg from '@static/img/task.png'
-import OkImg from '@static/img/ok.png'
-import CloseImg from '@static/img/close.png'
+import ServerImg from '@/assets/img/server.png'
+import AddImg from '@/assets/img/add.png'
+import TaskImg from '@/assets/img/task.png'
+import OkImg from '@/assets/img/ok.png'
+import CloseImg from '@/assets/img/close.png'
 
 
 const styles = {
