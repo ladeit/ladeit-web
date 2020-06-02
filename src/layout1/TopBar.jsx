@@ -128,7 +128,7 @@ function TopBar({
 
     const classes = useStyles();
     const user = _.local("user");
-    const myAvatar = md5(user.email.toLowerCase().trim())
+    const myAvatar = md5((user.email||'').toLowerCase().trim())
     return (
         <AppBar
             {...rest}
