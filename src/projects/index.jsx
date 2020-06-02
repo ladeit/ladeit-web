@@ -91,7 +91,7 @@ class Index extends React.PureComponent{
       let arr = [];
       return list.map((v,i)=>{
         return  (
-          <div onClick={openHandle.bind(this,v.id)} style={{cursor:"pointer"}}>
+          <div onClick={openHandle.bind(this,v.id)} style={{cursor:checked||openList.includes(v.id)?'auto':'pointer'}}>
             <GroupT data={v} key={v.id} renderGroup={this.loadService.bind(this)} isChecked={checked} openList ={openList} />
           </div>
         )
