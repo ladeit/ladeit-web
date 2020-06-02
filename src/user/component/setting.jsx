@@ -128,7 +128,7 @@ class Index extends Component{
                 <Card className={classes.card}>
                     <CardHeader
                         className="header"
-                        title=""
+                        title="Change password"
                         subheader=""
                     />
                     <CardContent className="content">

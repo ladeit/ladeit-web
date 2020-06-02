@@ -35,7 +35,8 @@ import ConfirmDialog from 'components/Dialog/Alert.jsx'
 import YamlEditT from '../../cluster/component/yamlEdit.jsx'
 import LogJsx from './group/index_log'
 import PodJsx from './group/pod_small'
-
+import expand from '../../assets/svg/expand.svg'
+import collapse from '../../assets/svg/collapse.svg'
 const styles = theme => ({
     header:{
         textAlign:'right',
@@ -350,6 +351,16 @@ class Index extends React.Component{
                             </Tooltip>
                         )
                     }
+                    <Tooltip title="Expand" style={{display:(isChecked||(openList.includes(data.id)))?'inline':'none'}}>
+                        <IconButton size="small" aria-label="setting" className="title_icon">
+                            <img src={expand} alt="" style={{opacity:.8,width:'16px',height:'16px'}}/>
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Collapse" style={{display:(!isChecked&&(!openList.includes(data.id)))?'inline':'none'}}>
+                        <IconButton size="small" aria-label="setting" className="title_icon">
+                            <img src={collapse} alt="" style={{opacity:.8,width:'16px',height:'16px'}}/>
+                        </IconButton>
+                    </Tooltip>
                 </div>
                 <Paper className="box">
                 {

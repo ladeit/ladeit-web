@@ -40,7 +40,7 @@ import RobotT from './robot/index.tsx'
 import CustomDropdown from '@/components/CustomDropdown/CustomDropdown.jsx';
 import LanCom from '@/locales/about.jsx';
 import intl from 'react-intl-universal'
-
+import md5 from 'md5'
 const useStyles = makeStyles((theme) => ({
     root: {
         '& .menu_button':{
@@ -128,7 +128,7 @@ function TopBar({
 
     const classes = useStyles();
     const user = _.local("user");
-
+    const myAvatar = md5((user.email||'').toLowerCase().trim())
     return (
         <AppBar
             {...rest}
@@ -164,7 +164,7 @@ function TopBar({
                             buttonIcon={(
                               <Avatar
                                   className={classes.avatar}
-                                  src="https://www.gravatar.com/avatar/EMAIL_HASH?d=retro"
+                                  src={"https://www.gravatar.com/avatar/"+myAvatar+"?d=retro"}
                                   alt="My Avatar"
                               />
                           )}
