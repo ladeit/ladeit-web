@@ -232,11 +232,9 @@ class Index extends Component{
                                         <Divider light={true} orientation={'vertical'} />
                                         <div className="flex-one">
                                             <div className="cell_MD overflow-text">
-                                                {/* <Typography variant="body2" className="row_text"> */}
-                                                <Label>
+                                                <Typography variant="body2" className="row_text">
                                                     {intl.get('namespace.labelNamespce')}
-                                                </Label>
-                                                {/* </Typography> */}
+                                                </Typography>
                                                 <Typography variant="h5" className="link2 row_text" onClick={this.toUrl(`/namespace/${item.k8sName}/${v.namespace}/setting`)}>
                                                     {disableIcon(v)}{v.namespace}
                                                 </Typography>

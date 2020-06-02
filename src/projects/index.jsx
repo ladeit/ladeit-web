@@ -91,7 +91,7 @@ class Index extends React.PureComponent{
       let arr = [];
       return list.map((v,i)=>{
         return  (
-          <div onClick={openHandle.bind(this,v.id)}>
+          <div onClick={openHandle.bind(this,v.id)} style={{cursor:"pointer"}}>
             <GroupT data={v} key={v.id} renderGroup={this.loadService.bind(this)} isChecked={checked} openList ={openList} />
           </div>
         )
@@ -196,7 +196,7 @@ class Index extends React.PureComponent{
                     <span style={switchSty}>
                       {intl.get('services.open')}
                     </span>
-                    <Button color="primary" size="medium" startIcon={<AddIcon />} onClick={this.clickAddGroup()}>{intl.get('services.groupAdd')}</Button>
+                    <Button color="primary" size="medium" style={{marginLeft:'20px'}} startIcon={<AddIcon />} onClick={this.clickAddGroup()}>{intl.get('services.groupAdd')}</Button>
                   </div>
                   <div>
                     {this.htmlGroup()}
