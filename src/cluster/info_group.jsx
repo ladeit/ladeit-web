@@ -157,6 +157,15 @@ class Index extends Component{
         }
     }
 
+    clickShell(item){
+        const sc = this;
+        return ()=>{
+            Service.clusterShell(item.id,(res)=>{
+                window.top.open(res)
+            })
+        }
+    }
+
     clickEnvEdit = (item,env)=>{
         const sc = this;
         return ()=>{
@@ -189,24 +198,29 @@ class Index extends Component{
                     </Tooltip>
                     {
                         auth("W") ? (
-                            <Tooltip title="Add namespace" >
-                                <IconButton size="small" aria-label="user" className="title_icon" onClick={this.clickEnvAdd(item)} ><AddIcon /></IconButton>
-                            </Tooltip>
+                            <React.Fragment>
+                                <Tooltip title="Add namespace" >
+                                    <IconButton size="small" aria-label="add" className="title_icon" onClick={this.clickEnvAdd(item)} ><AddIcon /></IconButton>
+                                </Tooltip>
+                                <Tooltip title="Synchronize namespace" >
+                                    <IconButton size="small" aria-label="refresh" className="title_icon" onClick={this.handleRefreshNS(item)} ><RefreshIcon /></IconButton>
+                                </Tooltip>
+                                <Tooltip title="console" >
+                                    <IconButton size="small" aria-label="console" className="title_icon" onClick={this.clickShell(item)} ><Icons.ConsoleIcon width="24" height="18" /></IconButton>
+                                </Tooltip>
+                            </React.Fragment>
                         ) : (
-                            <Tooltip title={intl.get('tipsNoAuthority')} >
-                                <IconButton size="small" aria-label="user" className="title_icon" style={{opacity:.4}} ><AddIcon /></IconButton>
-                            </Tooltip>
-                        )
-                    }
-                    {
-                        auth("W") ? (
-                            <Tooltip title="Synchronize namespace" >
-                                <IconButton size="small" aria-label="user" className="title_icon" onClick={this.handleRefreshNS(item)} ><RefreshIcon /></IconButton>
-                            </Tooltip>
-                        ) : (
-                            <Tooltip title={intl.get('tipsNoAuthority')} >
-                                <IconButton size="small" aria-label="user" className="title_icon" style={{opacity:.4}}><RefreshIcon /></IconButton>
-                            </Tooltip>
+                            <React.Fragment>
+                                <Tooltip title={intl.get('tipsNoAuthority')} >
+                                    <IconButton size="small" aria-label="add" className="title_icon" style={{opacity:.4}} ><AddIcon /></IconButton>
+                                </Tooltip>
+                                <Tooltip title={intl.get('tipsNoAuthority')} >
+                                    <IconButton size="small" aria-label="refresh" className="title_icon" style={{opacity:.4}}><RefreshIcon /></IconButton>
+                                </Tooltip>
+                                <Tooltip title={intl.get('tipsNoAuthority')} >
+                                    <IconButton size="small" aria-label="console" className="title_icon" style={{opacity:.4}}><Icons.ConsoleIcon /></IconButton>
+                                </Tooltip>
+                            </React.Fragment>
                         )
                     }
                 </div>

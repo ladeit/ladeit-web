@@ -26,8 +26,8 @@ import DeploymentT from '@/topology/deployment.jsx'
 import CreateT from './create.jsx'
 import DrawerT from '@/components/Dialog/Drawer.jsx'
 import DrawerUserT from './group_user.jsx'
-import ProjectsFlagPng from '@static/img/project_flag.png'
-import ProjectsFlagSPng from '@static/img/project_flag_s.png'
+import ProjectsFlagPng from '@/assets/img/project_flag.png'
+import ProjectsFlagSPng from '@/assets/img/project_flag_s.png'
 
 const styles = theme => ({
   root:{

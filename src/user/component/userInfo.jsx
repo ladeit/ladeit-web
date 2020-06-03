@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core'
 import Icons from 'components/Icons/icons.jsx'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
-import UserBgImg from '@/static/img/user_bg.jpg';
+import UserBgImg from '@/assets/img/user_bg.jpg';
 import intl from 'react-intl-universal';
 import Service from '../Service'
 
