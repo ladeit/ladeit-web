@@ -315,7 +315,7 @@ class Index extends React.Component{
 
     render = ()=>{
         const sc = this;
-        const { classes,data,isChecked,openList,...other } = this.props;
+        const { classes,data,isChecked,openList,iconHandle,...other } = this.props;
         //const eye = this.state.eye;
         let name = data.name;
         let groupAuth = this.getAuth(data);
@@ -325,6 +325,7 @@ class Index extends React.Component{
             display:'flex',
             minWidth:'100px'
         }
+        // const changeIcon = ()=>{}
         return (
             <div className={classes.group} key={data.name} >
                 <div className="flex-middle">
@@ -351,13 +352,13 @@ class Index extends React.Component{
                             </Tooltip>
                         )
                     }
-                    <Tooltip title="Collapse" style={{display:((!openList.includes(data.id)))?'inline':'none'}}>
-                        <IconButton size="small" aria-label="setting" className="title_icon">
+                    <Tooltip interactive={true}  title="Collapse" style={{display:((!openList.includes(data.id)))?'inline':'none'}}>
+                        <IconButton size="small" aria-label="setting" className="title_icon" onClick={(e)=>{e.stopPropagation();iconHandle(data.id)}}>
                             <img src={collapse} alt="" style={{width:'16px'}}/>
                         </IconButton>
                     </Tooltip>
-                    <Tooltip title="Expand" style={{display:((openList.includes(data.id)))?'inline':'none'}}>
-                        <IconButton size="small" aria-label="setting" className="title_icon">
+                    <Tooltip interactive={true}  title="Expand" style={{display:((openList.includes(data.id)))?'inline':'none'}}>
+                        <IconButton size="small" aria-label="setting" className="title_icon" onClick={(e)=>{e.stopPropagation();iconHandle(data.id)}}>
                             <img src={expand} alt="" style={{width:'16px'}}/>
                         </IconButton>
                     </Tooltip>

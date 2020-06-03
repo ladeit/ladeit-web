@@ -47,7 +47,8 @@ const style = theme => ({
 const config = {
     filter:[
         {name:'serviceGroupId',value:'',options:[{key:'',value:'服务组'}]},
-        {name:'type',value:'',options:[{key:'',value:'类型'}]}
+        {name:'type',value:'',options:[{key:'',value:'类型'}]},
+        {name:'level',value:'',options:[{key:'level',value:'重要度'},{key:'110',value:'重要'},{key:'normal',value:'一般'}]}
     ]
 }
 
