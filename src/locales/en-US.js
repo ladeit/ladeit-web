@@ -356,7 +356,7 @@ export default ({
         buttonDelete:'Remove namespace',
         deleteDialog:{
             memo:'Namespace cannot be deleted while in use, as those services running: ',
-            warning:'This operation will not delete the namespace in the k8s cluster.'
+            warning:'Cautious! It will delete the namespace in the k8s cluster, and the components at the same time.'
         }
     },
     user:{

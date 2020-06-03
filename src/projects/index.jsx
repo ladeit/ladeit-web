@@ -77,12 +77,18 @@ class Index extends React.PureComponent{
 
   htmlGroup(){
     const { list,list_loaded,checked,openList } = this.state;
-    const openHandle= (id)=>{
+    const openHandle= (id,serviceGroup)=>{
       let openList = [...this.state.openList];
-      if(openList.includes(id)){
-          return
+      if(serviceGroup&&(!openList.includes(id))){//服务组展开后在点击服务组，不允许展开
+        return
       }
-      openList.push(id);
+      if(openList.includes(id)){
+        openList = openList.filter((currentId)=>{
+            return currentId !=id
+        })
+      }else{
+        openList.push(id);
+      }
       this.setState({
           openList
       })
@@ -91,8 +97,8 @@ class Index extends React.PureComponent{
       let arr = [];
       return list.map((v,i)=>{
         return  (
-          <div onClick={openHandle.bind(this,v.id)} style={{cursor:checked||openList.includes(v.id)?'auto':'pointer'}}>
-            <GroupT data={v} key={v.id} renderGroup={this.loadService.bind(this)} isChecked={checked} openList ={openList} />
+          <div onClick={openHandle.bind(this,v.id,'serviceGroup')} style={{cursor:openList.includes(v.id)?'pointer':'auto'}}>
+            <GroupT data={v} key={v.id} renderGroup={this.loadService.bind(this)} isChecked={checked} openList ={openList} iconHandle={openHandle}/>
           </div>
         )
       })
@@ -166,9 +172,11 @@ class Index extends React.PureComponent{
       checked: {},
     }))(Switch);
     const toggleChecked = (event)=>{
-      let openList = this.state.openList;
-      if(event.target.checked==false){
-        openList=[]
+      let openList = [];
+      if(event.target.checked==false&&list_loaded){
+        list.map((v)=>{
+          openList.push(v.id)
+        })
       }
       this.setState({
         checked:event.target.checked,
