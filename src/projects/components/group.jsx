@@ -351,14 +351,14 @@ class Index extends React.Component{
                             </Tooltip>
                         )
                     }
-                    <Tooltip title="Expand" style={{display:(isChecked||(openList.includes(data.id)))?'inline':'none'}}>
-                        <IconButton size="small" aria-label="setting" className="title_icon">
-                            <img src={expand} alt="" style={{width:'16px'}}/>
-                        </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Collapse" style={{display:(!isChecked&&(!openList.includes(data.id)))?'inline':'none'}}>
+                    <Tooltip title="Collapse" style={{display:((!openList.includes(data.id)))?'inline':'none'}}>
                         <IconButton size="small" aria-label="setting" className="title_icon">
                             <img src={collapse} alt="" style={{width:'16px'}}/>
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Expand" style={{display:((openList.includes(data.id)))?'inline':'none'}}>
+                        <IconButton size="small" aria-label="setting" className="title_icon">
+                            <img src={expand} alt="" style={{width:'16px'}}/>
                         </IconButton>
                     </Tooltip>
                 </div>
@@ -376,7 +376,7 @@ class Index extends React.Component{
                         let url = v.gateway.join(',');
                         let icon = {'0':<Tooltip title="k8s" ><Icons.K8sIcon style={{margin:'0 6px 0',width:'16px',height:'16px',opacity:.5}}/></Tooltip>,'1':<Tooltip title="istio" ><Icons.IstioIcon style={{margin:'-2px 6px 0',width:'10px',height:'16px',fill:'#8d9ea7'}}/></Tooltip>}[v.serviceType] || '';
                         // CheckCircleIcon,CancelIcon,ErrorIcon
-                        if((!isChecked)&&!(openList.includes(data.id))){
+                        if(openList.includes(data.id)){
                             return (
                                 <div style={{minWidth:"100px",display: "inline-block"}} >
                                      <div className="cell_icon overflow-text">

@@ -357,7 +357,7 @@ export default ({
         buttonDelete:'删除命名空间',
         deleteDialog:{
             memo:'命名空间使用中无法删除, 所绑定服务 ：',
-            warning:'此操作不会删除k8s集群中的命名空间。'
+            warning:'此操作会同时删掉k8s中的命名空间，以及其下所有组件，请谨慎操作。'
         }
     },
     user:{

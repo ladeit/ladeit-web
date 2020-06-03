@@ -17,7 +17,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Icons from 'components/Icons/icons.jsx'
 import Inputs from 'components/Form/inputs.jsx'
 import intl from 'react-intl-universal'
-
+import Warnning from '../../../assets/svg/warnning.svg'
 const style = theme => ({
     root:{
         '& .item':{
@@ -129,6 +129,11 @@ function validText(){
 function confirmText(){
     const sc = this;
     const onCancel = sc.state.isModal ? false : this.onClose;
+    const warningSty = {
+        position:"relative",
+        top:'8px',
+        marginRight:'2px'
+    }
     return (
         <React.Fragment>
             <DialogTitle>
@@ -136,7 +141,10 @@ function confirmText(){
             </DialogTitle>
             <DialogContent style={{width:'600px',margin:'0 auto'}}>
                 <div>
-                    <div>{intl.get('namespace.deleteDialog.warning')}</div>
+                    <div>
+                        <img src={Warnning} alt="" style={warningSty}/>
+                        {intl.get('namespace.deleteDialog.warning')}
+                    </div>
                     <div style={{padding:'16px 0'}}>
                         <Typography variant="h5">{intl.get('confirmTextPre')} <b className="danger">{sc.state.text}</b> {intl.get('confirmTextFix')}</Typography>
                     </div>
