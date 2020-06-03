@@ -353,12 +353,12 @@ class Index extends React.Component{
                     }
                     <Tooltip title="Expand" style={{display:(isChecked||(openList.includes(data.id)))?'inline':'none'}}>
                         <IconButton size="small" aria-label="setting" className="title_icon">
-                            <img src={expand} alt="" style={{opacity:.8,width:'16px',height:'16px'}}/>
+                            <img src={expand} alt="" style={{width:'16px'}}/>
                         </IconButton>
                     </Tooltip>
                     <Tooltip title="Collapse" style={{display:(!isChecked&&(!openList.includes(data.id)))?'inline':'none'}}>
                         <IconButton size="small" aria-label="setting" className="title_icon">
-                            <img src={collapse} alt="" style={{opacity:.8,width:'16px',height:'16px'}}/>
+                            <img src={collapse} alt="" style={{width:'16px'}}/>
                         </IconButton>
                     </Tooltip>
                 </div>
