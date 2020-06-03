@@ -33,7 +33,8 @@ const style = theme => ({
 const config = {
     filter:[
         {name:'serviceGroupId',value:'',options:[]},
-        {name:'type',value:'',options:[]}
+        {name:'type',value:'',options:[]},
+        {name:'level',value:'',options:[{key:'level',value:'重要度'},{key:'110',value:'重要'},{key:'normal',value:'一般'}]}
     ]
 }
 
