@@ -1,44 +1,37 @@
 import G2 from '@antv/g2';
 import { DataSet } from '@antv/data-set';
 import React from "react";
+import _ from 'lodash'
 
 function renderChart(id,row) {
-    let keys = [];
-    let occupyCpuLimit = {State:'limit'};
+    let data = [];
     if(!row || row.occupyCpuLimit.length<1){
         document.getElementById(id).innerHTML = `<div class="flex-center"> 一 </div>`;
         return;
     }
     //
     row.occupyCpuLimit.map(function (one) {
-        keys.push(one.name);
-        occupyCpuLimit[one.name] = one.num;
+        one.State = "cpulimit";
+        one.value = one.percentage;
+        data.push(one);
     })
-    let occupyCpuReq = {State:'cpu'};
     row.occupyCpuReq.map(function (one) {
-        occupyCpuReq[one.name] = one.num;
+        one.State = "cpureq";
+        one.value = one.percentage;
+        data.push(one);
     })
 
-    const data = [
-        occupyCpuLimit,
-        occupyCpuReq
-    ];
     const ds = new DataSet();
     const dv = ds.createView().source(data);
-    dv.transform({
-        type: 'fold',
-        fields: keys, // 展开字段集
-        key: 'cpu', // key字段
-        value: 'value', // value字段
-        retains: [ 'State' ] // 保留字段集，默认为除fields以外的所有字段
-    });
     const chart = new G2.Chart({
         container: id,
         forceFit: true,
         height: 60,
-        padding: [ 0, 20, 0, 50 ]
+        padding: [ 0, 30, 0, 80 ]
     });
-    chart.source(dv);
+    chart.source(dv, {
+        value: { min: 0, max: 1 },
+    });
     chart.coord().transpose();
     chart.axis('State', {
         label: {
@@ -49,11 +42,39 @@ function renderChart(id,row) {
         position: 'right',
         title: null,
         tickLine: null,
-        formatter(val) {
+        formatter(val,a,b) {
             return val + '%';
         }
     });
-    chart.intervalStack().position('State*value').color('cpu');
+    chart.tooltip({
+        useHtml:true,
+        htmlContent:function(title,items){
+            let arr = [];
+            items.map((one)=>{
+                let item = _.find(data,(v)=>{return v.name == one.name});
+                arr.push(`
+                    <p>
+                        <span style="background-color:${one.color};width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:8px;"></span>
+                        ${item.name}: ${item.num}m
+                    </p>
+                `)
+            })
+            return `
+                <div class="g2-tooltip g2-tooltip-position" style="transform:translateX(280px)">
+                    <div class="g2-tooltip-title" style="margin-bottom: 4px;">${title}</div>
+                    ${arr.join('\n')}
+                </div>
+            `
+        }
+    })
+    //chart.intervalStack().position('State*value').color('cpu');
+    chart.intervalStack()
+        .position('State*value')
+        .color('name', [ '#67b7dc', '#84b761', '#fdd400', '#cc4748', '#cd82ad', '#2f4074', '#448e4d', '#b7b83f', '#b9783f' ])
+        .style({
+            lineWidth: .1,
+            stroke: '#fff'
+        });
     chart.render();
 }
 

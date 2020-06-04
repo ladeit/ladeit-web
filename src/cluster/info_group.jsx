@@ -18,7 +18,7 @@ import DrawerT from '@/components/Dialog/Drawer.jsx'
 import ColonyT from './component/colonyAdd.jsx'
 import ClusterCpuJsx from './component/cluster_cpu'
 import ClusterMemJsx from './component/cluster_mem'
-import PodJsx from "../projects/components/group/pod_small"
+import PodJsx from "./component/pod_small"
 import EnvAdd from './component/envAdd.jsx'
 import AuthFilter from '@/AuthFilter.jsx'
 import intl from 'react-intl-universal'
@@ -205,9 +205,6 @@ class Index extends Component{
                                 <Tooltip title="Synchronize namespace" >
                                     <IconButton size="small" aria-label="refresh" className="title_icon" onClick={this.handleRefreshNS(item)} ><RefreshIcon /></IconButton>
                                 </Tooltip>
-                                <Tooltip title="console" >
-                                    <IconButton size="small" aria-label="console" className="title_icon" onClick={this.clickShell(item)} ><Icons.ConsoleIcon width="24" height="18" /></IconButton>
-                                </Tooltip>
                             </React.Fragment>
                         ) : (
                             <React.Fragment>
@@ -217,10 +214,18 @@ class Index extends Component{
                                 <Tooltip title={intl.get('tipsNoAuthority')} >
                                     <IconButton size="small" aria-label="refresh" className="title_icon" style={{opacity:.4}}><RefreshIcon /></IconButton>
                                 </Tooltip>
-                                <Tooltip title={intl.get('tipsNoAuthority')} >
-                                    <IconButton size="small" aria-label="console" className="title_icon" style={{opacity:.4}}><Icons.ConsoleIcon /></IconButton>
-                                </Tooltip>
                             </React.Fragment>
+                        )
+                    }
+                    {
+                        auth("X") ? (
+                            <Tooltip title="console" >
+                                <IconButton size="small" aria-label="console" className="title_icon" onClick={this.clickShell(item)} ><Icons.ConsoleIcon width="24" height="18" /></IconButton>
+                            </Tooltip>
+                        ) : (
+                            <Tooltip title={intl.get('tipsNoAuthority')} >
+                                <IconButton size="small" aria-label="console" className="title_icon" style={{opacity:.4}}><Icons.ConsoleIcon /></IconButton>
+                            </Tooltip>
                         )
                     }
                 </div>
