@@ -50,10 +50,10 @@ class Index extends React.PureComponent {
                 <DialogContent>
                     <div style={{ width: '400px' }}>
                         <div style={{height:'60px'}}>
-                            <TextField fullWidth label="版本" onChange={(e)=>{this.setDate(e,'version')}}/>
+                            <TextField fullWidth label={intl.get('services.image.imageVersion')} onChange={(e)=>{this.setDate(e,'version')}}/>
                         </div>
                         <div style={{height:'60px'}}>
-                            <TextField fullWidth label="镜像" onChange={(e)=>{this.setDate(e,'image')}}/>
+                            <TextField fullWidth label={intl.get('services.image.imagePath')} onChange={(e)=>{this.setDate(e,'image')}}/>
                         </div>
                     </div>
                 </DialogContent>
