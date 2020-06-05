@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-    withStyles, Typography, Button, IconButton, Divider,
+    withStyles, Typography, Button, IconButton, Divider,TextField,
     Dialog, DialogTitle, DialogContent, DialogActions,Input 
 } from '@material-ui/core';
 import intl from 'react-intl-universal'
@@ -43,19 +43,17 @@ class Index extends React.PureComponent {
         const { classes, onOk, onOk_text } = this.props;
         const { open, title,   } = this.state;
         return (
-            <Dialog open={Boolean(open)} onClose={this.onCancel} >
+            <Dialog open={Boolean(open)} onClose={this.onCancel} maxWidth='xs'>
                 <DialogTitle>
                     <Typography >{intl.get('newCreate')}</Typography>
                 </DialogTitle>
                 <DialogContent>
-                    <div style={{ width: '500px' }}>
-                        <div>
-                            <label>版本：</label>
-                            <Input onChange={(e)=>{this.setDate(e,'version')}}/>
+                    <div style={{ width: '400px' }}>
+                        <div style={{height:'60px'}}>
+                            <TextField fullWidth label="版本" onChange={(e)=>{this.setDate(e,'version')}}/>
                         </div>
-                        <div>
-                            <label>镜像：</label>
-                            <Input onChange={(e)=>{this.setDate(e,'image')}}/>
+                        <div style={{height:'60px'}}>
+                            <TextField fullWidth label="镜像" onChange={(e)=>{this.setDate(e,'image')}}/>
                         </div>
                     </div>
                 </DialogContent>

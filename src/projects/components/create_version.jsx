@@ -116,9 +116,9 @@ class Index extends React.PureComponent {
                 <div className="flex-box content_box">
                     <VersionListT handle={this.handle()} data={imageList.records} groupUrl={groupUrl}/>
                     {listFooter || <br/>}
-                    <span className="link2" onClick={()=>{this.refs.$imageCreate.onOpen()}}>{intl.get('services.firstCreateImageTips')}</span>
+                    <span className="link2" onClick={()=>{this.refs.$imageCreate.onOpen(imageList)}}>{intl.get('services.firstCreateImageTips')}</span>
                 </div>
-                <ImageCreateT ref="$imageCreate" />
+                <ImageCreateT ref="$imageCreate" onOk = {this.handleImageCreate}/>
             </div>
         )
     }
