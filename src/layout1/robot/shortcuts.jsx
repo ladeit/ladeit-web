@@ -10,7 +10,7 @@ const iconShortcutsImg = {
     top: "5px",
     marginRight:'10px',
     cursor:'pointer',
-    marginLeft:'16px',
+    marginLeft:'39px',
     color:'white',
 }
 const root = {
@@ -21,7 +21,7 @@ const root = {
     background: 'white',
     position: "relative",
     top: "5px",
-    marginLeft:'16px',
+    marginLeft:'39px',
 }
 const iconImg = {
     margin:'0 4px',

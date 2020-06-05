@@ -5,15 +5,18 @@ import {
 } from '@material-ui/icons'
 import {
     withStyles,Typography,Button,IconButton,Divider,TextField,
-    Grid,
+    Grid ,Input ,InputLabel ,InputAdornment,
     Card,CardHeader,CardContent,
-    Avatar
+    Avatar ,FormControl 
 } from '@material-ui/core';
+import clsx from 'clsx';
 import intl from 'react-intl-universal';
 import Inputs from 'components/Form/inputs.jsx'
 import Component from '@/Component.jsx'
 import Icons from 'components/Icons/icons.jsx'
 import Service from '../Service'
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 // template
 import CustomFileInput from "components/CustomFileInput/CustomFileInput.js";
 import SHA from 'js-sha256'
@@ -38,7 +41,14 @@ const styles = theme => ({
     },
     input:{
         padding:'8px 0'
-    }
+    },
+    margin: {
+        // margin: theme.spacing(1),
+    },
+    textField: {
+        width: '100%',
+
+    },
 });
 
 @inject('store')
@@ -59,7 +69,8 @@ class Index extends Component{
             email:'',
             nickName:''
         },
-        password:{}
+        password:{},
+        values:{}
     }
 
     changeAvatar = (files)=>{
@@ -113,15 +124,25 @@ class Index extends Component{
             store.notice.add({text:'修改成功。'})
         })
     }
-
     render(){
         const { classes,store } = this.props;
-        const { avatar,user,password } = this.state;
+        const { avatar,user,password,values } = this.state;
         const params = this.params;
         const passwordSty = {
             color:"rgb(192,201,206)",
             marginTop:'40px'
         }
+        const handleClickShowPassword =(key)=>{
+            let values = {...this.state.values};
+            values[key] = !values[key]
+            console.log(values)
+            this.setState({
+                values
+            })
+        }
+        const handleMouseDownPassword = (event) => {
+            event.preventDefault();
+          };
         return (
             <div className={classes.root}>
                 <Card className={classes.card}>
@@ -171,17 +192,74 @@ class Index extends Component{
                             </Grid>
                             <Grid item xs={12}>
                                 <div className={classes.input}>
-                                    <TextField fullWidth label={intl.get('user.inputPassword')} value={password.password} onChange={this.changePassword('password')}/>
+                                    <FormControl className={clsx(classes.margin, classes.textField)}>
+                                        <InputLabel htmlFor="standard-adornment-password">{intl.get('user.inputPassword')}</InputLabel>
+                                        <Input
+                                            id="standard-adornment-password"
+                                            type={values.showPassword ? 'text' : 'password'}
+                                            value={password.password}
+                                            onChange={this.changePassword('password')}
+                                            endAdornment={
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword.bind(this,'showPassword')}
+                                                onMouseDown={handleMouseDownPassword}
+                                                >
+                                                {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                            }
+                                        />
+                                     </FormControl>
                                 </div>
                             </Grid>
                             <Grid item xs={12}>
                                 <div className={classes.input}>
-                                    <TextField fullWidth label={intl.get('user.enterNewPassword')} value={password.newPassword} onChange={this.changePassword('newPassword')}/>
+                                    <FormControl className={clsx(classes.margin, classes.textField)}>
+                                            <InputLabel htmlFor="standard-adornment-password">{intl.get('user.enterNewPassword')}</InputLabel>
+                                            <Input
+                                                id="standard-adornment-newPassword"
+                                                type={values.newPassword ? 'text' : 'password'}
+                                                value={password.newPassword}
+                                                onChange={this.changePassword('newPassword')}
+                                                endAdornment={
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                    aria-label="toggle password visibility"
+                                                    onClick={handleClickShowPassword.bind(this,'newPassword')}
+                                                    onMouseDown={handleMouseDownPassword}
+                                                    >
+                                                    {values.newPassword ? <Visibility /> : <VisibilityOff />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                                }
+                                            />
+                                        </FormControl>
                                 </div>
                             </Grid>
                             <Grid item xs={12}>
                                 <div className={classes.input}>
-                                    <TextField fullWidth label={intl.get('user.confirmNewPassword')} value={password.confirmNewPassword} onChange={this.changePassword('confirmNewPassword')}/>
+                                        <FormControl className={clsx(classes.margin, classes.textField)}>
+                                            <InputLabel htmlFor="standard-adornment-password">{intl.get('user.confirmNewPassword')}</InputLabel>
+                                            <Input
+                                                id="standard-adornment-confirmNewPassword"
+                                                type={values.confirmNewPassword ? 'text' : 'password'}
+                                                value={password.confirmNewPassword}
+                                                onChange={this.changePassword('confirmNewPassword')}
+                                                endAdornment={
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                    aria-label="toggle password visibility"
+                                                    onClick={handleClickShowPassword.bind(this,'confirmNewPassword')}
+                                                    onMouseDown={handleMouseDownPassword}
+                                                    >
+                                                    {values.confirmNewPassword ? <Visibility /> : <VisibilityOff />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                                }
+                                            />
+                                        </FormControl>
                                 </div>
                             </Grid>
                             <Grid item xs={12}>
