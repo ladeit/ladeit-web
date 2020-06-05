@@ -14,6 +14,9 @@ export default {
     userUpdate(data,callback){
         _.ajax({url:'/api/v1/user/User',method:'put',data:data},(res)=>{callback(res)})
     },
+    updatePassword(data,callback){
+        _.ajax({url:'/api/v1/user/password',method:'put',data:data},(res)=>{callback(res)})
+    },
     userSlack(params,callback){
         // {userId}
         _.ajax({url:'/api/v1/user/getSlackUser',method:'get',params:params},(res)=>{callback(res)})

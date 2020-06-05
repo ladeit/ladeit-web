@@ -16,6 +16,7 @@ import Icons from 'components/Icons/icons.jsx'
 import Service from '../Service'
 // template
 import CustomFileInput from "components/CustomFileInput/CustomFileInput.js";
+import SHA from 'js-sha256'
 
 const styles = theme => ({
     root:{
@@ -57,7 +58,8 @@ class Index extends Component{
             username:'',
             email:'',
             nickName:''
-        }
+        },
+        password:{}
     }
 
     changeAvatar = (files)=>{
@@ -73,7 +75,14 @@ class Index extends Component{
             sc.forceUpdate();
         }
     }
-
+    changePassword(name){
+        const sc = this;
+        const user = this.state.password;
+        return (e)=>{
+            user[name] = e.target.value;
+            sc.forceUpdate();
+        }
+    }
     clickSubmit = ()=>{
         let user = this.state.user;
         let store = window.Store;
@@ -82,10 +91,32 @@ class Index extends Component{
             store.global.updateUser(user)
         })
     }
+    clickPasswordSubmit = ()=>{
+        let password = {...this.state.password};
+        let user  = this.state.user;
+        let store = window.Store;
+        if(!password.password){
+            store.notice.add({type:'warning',text:'请输入密码'})
+            return
+        }
+        if(!password.newPassword){
+            store.notice.add({type:'warning',text:'请输入新密码'})
+            return
+        }
+        if(password.newPassword!=password.confirmNewPassword){
+            store.notice.add({type:'warning',text:'新密码和重新输入的新密码不一致'})
+            return
+        }
+        password.password = SHA.sha256(password.password)
+        password.newPassword = SHA.sha256(password.newPassword)
+        Service.updatePassword({...password,...user},function(res){
+            store.notice.add({text:'修改成功。'})
+        })
+    }
 
     render(){
         const { classes,store } = this.props;
-        const { avatar,user } = this.state;
+        const { avatar,user,password } = this.state;
         const params = this.params;
         const passwordSty = {
             color:"rgb(192,201,206)",
@@ -140,22 +171,22 @@ class Index extends Component{
                             </Grid>
                             <Grid item xs={12}>
                                 <div className={classes.input}>
-                                    <TextField fullWidth label={intl.get('user.inputPassword')}/>
+                                    <TextField fullWidth label={intl.get('user.inputPassword')} value={password.password} onChange={this.changePassword('password')}/>
                                 </div>
                             </Grid>
                             <Grid item xs={12}>
                                 <div className={classes.input}>
-                                    <TextField fullWidth label={intl.get('user.enterNewPassword')}/>
+                                    <TextField fullWidth label={intl.get('user.enterNewPassword')} value={password.newPassword} onChange={this.changePassword('newPassword')}/>
                                 </div>
                             </Grid>
                             <Grid item xs={12}>
                                 <div className={classes.input}>
-                                    <TextField fullWidth label={intl.get('user.confirmNewPassword')}/>
+                                    <TextField fullWidth label={intl.get('user.confirmNewPassword')} value={password.confirmNewPassword} onChange={this.changePassword('confirmNewPassword')}/>
                                 </div>
                             </Grid>
                             <Grid item xs={12}>
                                 <div className={classes.input}>
-                                    <Button variant="contained" color="primary" className="" >{intl.get('user.changePassword')}</Button>
+                                    <Button variant="contained" color="primary" className="" onClick={this.clickPasswordSubmit}>{intl.get('user.changePassword')}</Button>
                                 </div>
                             </Grid>
                         </Grid>

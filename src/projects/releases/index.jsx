@@ -115,7 +115,9 @@ class Index extends Component{
         this.forceUpdate();
     }
     clickAdd = ()=>{
-        this.refs.$yaml.onOpen({})
+        const sc = this;
+        const data = sc.state.data;
+        this.refs.$yaml.onOpen({id:data.id})
     }
     clickAdd_save(){
         const sc = this;
@@ -123,6 +125,12 @@ class Index extends Component{
             sc.refs.$yaml.onCancel()
         }
     }  
+    handleImageCreate = () => {
+        const sc = this;
+        const data = sc.state.data;
+        data.records.length = 0;
+        sc.loadList({id:data.id,currentPage:1, pageSize:data.pageSize});
+    }
     render(){
         const { classes } = this.props;
         const { data } = this.state;
@@ -173,7 +181,7 @@ class Index extends Component{
                       }
                       {listFooter}
                     </div>
-                    <AddImage ref="$yaml" onOk={this.clickAdd_save()} title={intl.get('newCreate')} onOk_text={intl.get('generate')}/>
+                    <AddImage ref="$yaml" onOk={this.handleImageCreate} title={intl.get('newCreate')} onOk_text={intl.get('generate')}/>
                 </>
               }
             />

@@ -315,5 +315,9 @@ export default {
         //id = '48188919-993a-4083-a5b5-d2412fc38bec'
         _.ajax({url:`/api/v1/event/${id}`,method:'get'},(res)=>{callback(res)})
     },
+    createImage(data,callback){
+        _.ajax({url:'/api/v1/image',method:'post',data:data},(res)=>{
+            callback(res)})
+    },
 }
 

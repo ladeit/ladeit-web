@@ -37,6 +37,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import Icons from 'components/Icons/icons.jsx'
 import ProgressT from './robot/progress.jsx'
 import RobotT from './robot/index.tsx'
+import Shortcuts from './robot/shortcuts.jsx'
 import CustomDropdown from '@/components/CustomDropdown/CustomDropdown.jsx';
 import LanCom from '@/locales/about.jsx';
 import intl from 'react-intl-universal'
@@ -146,12 +147,10 @@ function TopBar({
                     </Grid>
                     <Grid item xs >
                         {htmlMenus()}
+                        <Shortcuts/>
                     </Grid>
                     <Grid item>
                         <ProgressT />
-                    </Grid>
-                    <Grid item style={{display:'none'}}>
-                        <LanCom className="index" callback={(lan)=>{_.href(lan)}}/>
                     </Grid>
                     <Grid item>
                         <Tooltip title="Robot">

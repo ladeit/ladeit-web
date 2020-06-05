@@ -388,6 +388,7 @@ export default ({
     notification:{
         important:'重要',
         common:'一般',
+        level:'重要度',
         //
         notification:'Notifications',
         seeAll:'查看更多',
