@@ -259,11 +259,6 @@ class Index extends React.Component{
         }
     }
 
-    handleImageCreate = () => {
-        this.refs.$imageCreate.onCancel();
-        this.props.renderGroup();
-    }
-
     htmlVersion(item,authX){// 灰度发布
         let { classes,data } = this.props;
         let arr = [];
@@ -352,14 +347,9 @@ class Index extends React.Component{
                             </Tooltip>
                         )
                     }
-                    <Tooltip interactive={true}  title="Collapse" style={{display:((!openList.includes(data.id)))?'inline':'none'}}>
-                        <IconButton size="small" aria-label="setting" className="title_icon" onClick={(e)=>{e.stopPropagation();iconHandle(data.id)}}>
-                            <img src={collapse} alt="" style={{width:'16px'}}/>
-                        </IconButton>
-                    </Tooltip>
-                    <Tooltip interactive={true}  title="Expand" style={{display:((openList.includes(data.id)))?'inline':'none'}}>
-                        <IconButton size="small" aria-label="setting" className="title_icon" onClick={(e)=>{e.stopPropagation();iconHandle(data.id)}}>
-                            <img src={expand} alt="" style={{width:'16px'}}/>
+                    <Tooltip  title={openList.includes(data.id)?'Expand':'Collapse'}>
+                        <IconButton size="small" aria-label="setting" className="title_icon" onClick={()=>{iconHandle(data.id)}}>
+                            <img src={openList.includes(data.id)?expand:collapse} alt="" style={{width:'16px'}}/>
                         </IconButton>
                     </Tooltip>
                 </div>
@@ -491,7 +481,7 @@ class Index extends React.Component{
                 <Terminal ref="$terminal" />
                 <LogJsx ref="$log" />
                 <ConfirmDialog ref="$confirm" />
-                <ImageCreateT ref="$imageCreate" onOk={sc.handleImageCreate}/>
+                <ImageCreateT ref="$imageCreate"/>
                 <YamlEditT ref="$yaml" />
             </div>
         )

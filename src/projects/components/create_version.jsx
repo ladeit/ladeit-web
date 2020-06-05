@@ -118,7 +118,7 @@ class Index extends React.PureComponent {
                     {listFooter || <br/>}
                     <span className="link2" onClick={()=>{this.refs.$imageCreate.onOpen()}}>{intl.get('services.firstCreateImageTips')}</span>
                 </div>
-                <ImageCreateT ref="$imageCreate" onOk={this.handleImageCreate}/>
+                <ImageCreateT ref="$imageCreate" />
             </div>
         )
     }

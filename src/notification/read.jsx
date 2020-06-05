@@ -47,18 +47,27 @@ const style = theme => ({
 const config = {
     filter:[
         {name:'serviceGroupId',value:'',options:[{key:'',value:'服务组'}]},
-        {name:'type',value:'',options:[{key:'',value:'类型'}]},
-        {name:'level',value:'',options:[{key:'level',value:'重要度'},{key:'110',value:'重要'},{key:'normal',value:'一般'}]}
+        {name:'type',value:'',options:[{key:'',value:'类型'}]}
     ]
 }
-
 
 @withStyles(style)
 @inject('store')
 @AuthFilter
 @observer
 class Index extends React.PureComponent {
-
+    constructor(props){
+        super(props)
+        config.filter[2] = 
+            {
+                name:'level',value:'',
+                options:[
+                {key:'level',value:intl.get('notification.level')},
+                {key:'WARNING',value:intl.get('notification.important')},
+                {key:'NORMAL',value:intl.get('notification.common')}]
+            }
+            
+    }
     componentDidMount(){
         const sc = this;
         Service.NOTIFICATION_FILTER(config.filter,function () {
