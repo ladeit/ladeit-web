@@ -82,7 +82,7 @@ const styles = theme => ({
             padding:'16px 24px',
             position:'relative',
             '&>div':{
-                height:'60px',
+                height:'86px',
             },
             '&:not(:first-child)':{
                 marginTop:'16px'
@@ -260,12 +260,14 @@ class Index extends Component{
                                             </div>
                                         </div>
                                         <Divider light={true} orientation={'vertical'} />
-                                        <div className="flex-one flex-center">
+                                        <div className="flex-one">
                                             <ClusterCpuJsx  data={v}/>
+                                            <div className="flex-center">CPU</div>
                                         </div>
                                         <Divider light={true} orientation={'vertical'} />
-                                        <div className="flex-one flex-center">
-                                            <ClusterMemJsx  data={v}/>
+                                        <div className="flex-one">
+                                            <ClusterMemJsx  data={v} />
+                                            <div className="flex-center">MEM</div>
                                         </div>
                                         <Divider light={true} orientation={'vertical'} />
                                         <div className="flex-box flex-center">
