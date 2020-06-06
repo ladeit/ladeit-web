@@ -153,7 +153,6 @@ class Index extends React.PureComponent {
     render = ()=>{
         const { classes } = this.props;
         const { form,disableSubmit } = this.state;
-        window.sc  =this;
         return (
             <Paper className={classes.root} elevation="16">
                 <DialogTitle >

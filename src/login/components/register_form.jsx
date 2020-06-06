@@ -130,6 +130,7 @@ class Index extends React.PureComponent {
 
     clickSubmit = ()=>{
         let sc = this;
+        let changeTab = this.props.changeTab;
         let param = this.refs.$form.getData();
         if(!(param.username && param.password)){return;}
         if(param.rpassword != param.password){
@@ -139,7 +140,9 @@ class Index extends React.PureComponent {
         Service.userPost({username:param.username,password:SHA.sha256(param.password)},(res)=>{// res ： true
             sc.setState({disableSubmit:false})
             if(res){
-                History.push('/login')
+                //History.push('/login')
+                window.Store.notice.add({text:intl.get('tipsCreate')})
+                changeTab('tabIndex',0);
             }
         })
     }

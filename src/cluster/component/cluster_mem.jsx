@@ -12,25 +12,27 @@ function getPercentage(val){
 function renderChart(id,row) {
     let colorIndex = 0;
     let data = [];
-    let option = {requestFree:0,limitFree:0,limitSize:row.memLimit||0,requesSize:row.memRequest||0};
+    let option = {occupyMemLimit:false,occupyMemReq:false,requestFree:0,limitFree:0,limitSize:row.memLimit||0,requestSize:row.memRequest||0};
     // if(!row || row.occupyMemLimit.length<1){
     //     document.getElementById(id).innerHTML = `<div class="flex-center"> 一 </div>`;
     //     return;
     // }
     //
-    let usedMax = 0;
-    row.occupyMemUsed.map(function (one) {
-        usedMax += one.num;
-    })
-    row.occupyMemUsed.map(function (one) {
-        one.State = "used";
-        one.value =  getPercentage(one.num / usedMax);
-        data.push(one);
-    })
+    // let usedMax = 0;
+    // row.occupyMemUsed.map(function (one) {
+    //     usedMax += one.num;
+    // })
+    // row.occupyMemUsed.map(function (one) {
+    //     one.State = "used";
+    //     one.value =  getPercentage(one.num / usedMax);
+    //     data.push(one);
+    // })
     row.occupyMemLimit.map(function (one) {
         if(one.name == "free"){
             option.limitFree = one.num;
             return;
+        }else{
+            option.occupyMemLimit = true;
         }
         one.State = "limit";
         one.value = getPercentage(one.percentage);
@@ -40,16 +42,18 @@ function renderChart(id,row) {
         if(one.name == "free"){
             option.requestFree = one.num;
             return;
+        }else{
+            option.occupyMemReq = true;
         }
         one.State = "request";
         one.value =  getPercentage(one.percentage);
         data.push(one);
     })
-    if(row.occupyMemLimit.length<1){
-        data.push({State:"limit",name:'none',value:100});
+    if(!option.occupyMemLimit){// 占位元素
+        data.push({State:"limit",name:'none',value:0.1});
     }
-    if(row.occupyMemReq.length<1){
-        data.push({State:"request",name:'none',value:100});
+    if(!option.occupyMemReq){// 占位元素
+        data.push({State:"request",name:'none',value:0.1});
     }
 
     // start init chart
@@ -82,8 +86,8 @@ function renderChart(id,row) {
         useHtml:true,
         htmlContent:function(title,items){
             let arr = [];
-            let freeSize = option[title+'Free'];
-            let totalSize = option[title+'Size'];
+            let freeSize = option[title+'Free']||0;
+            let totalSize = option[title+'Size']||0;
             if(title == "used"){
                 items.map((one)=>{
                     if(one.name == "none"){return;}
@@ -91,12 +95,12 @@ function renderChart(id,row) {
                     arr.push(`
                         <p>
                             <span style="background-color:${one.color};width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:8px;"></span>
-                            ${item.name}: <b>${item.num}</b> m
+                            ${item.name}: <b>${item.num}</b>m
                         </p>
                     `)
                 })
                 return `
-                    <div class="g2-tooltip g2-tooltip-position" style="transform:translateX(-340px)">
+                    <div class="g2-tooltip1 g2-tooltip-position" style="transform:translateX(-340px)">
                         <div class="g2-tooltip-title" >${title}</div>
                         ${arr.join('\n')}
                     </div>
@@ -109,36 +113,36 @@ function renderChart(id,row) {
                 arr.push(`
                     <p>
                         <span style="background-color:${one.color};width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:8px;"></span>
-                        &nbsp;&nbsp; ${item.name}: <div><b>${item.num}</b> m  &nbsp;&nbsp; <b>${item.value}%</b></div>
+                        &nbsp;&nbsp; ${item.name}: <div><b>${item.num}</b>m  &nbsp;&nbsp; <b>${item.value}%</b></div>
                     </p>
                 `)
             })
             return `
-                <div class="g2-tooltip g2-tooltip-position" style="transform:translateX(-340px)">
+                <div class="g2-tooltip1 g2-tooltip-position" style="transform:translateX(-340px)">
                     <div class="g2-tooltip-title">${title}</div>
                     ${arr.join('\n')}
                     <hr class="MuiDivider-root MuiDivider-light">
                     <p>
-                        free : <b>${freeSize}</b> m  &nbsp;&nbsp; total : <b>${totalSize}</b> m  
+                        free : <b>${freeSize}</b>m  &nbsp;&nbsp; total : <b>${totalSize}</b>m  
                     </p>
                 </div>
             `
         }
     })
-    //chart.intervalStack().position('State*value').color('cpu');
-    chart.intervalStack()
-        .position('State*value')
-        .color('name', function (name) {
-            if(name == 'none'){
-                return 'rgba(0,0,0,0)';
-            }
-            colorIndex++ > colors.length -1  && (colorIndex = 0);
-            return colors[colorIndex];
-        })
-        .style({
-            lineWidth: .1,
-            stroke: '#fff'
-        });
+    chart.intervalStack().position('State*value').color('name');
+    // chart.intervalStack()
+    //     .position('State*value')
+    //     .color('name', function (name) {
+    //         if(name == 'none'){
+    //             return 'rgba(0,0,0,0)';
+    //         }
+    //         colorIndex++ > colors.length -1  && (colorIndex = 0);
+    //         return colors[colorIndex];
+    //     })
+    //     .style({
+    //         lineWidth: .1,
+    //         stroke: '#fff'
+    //     });
     chart.render();
 }
 
