@@ -76,7 +76,7 @@ class Index extends React.PureComponent {
                         horizontal: 'center',
                     }}
                 >
-                    {el && <PodJsx service={service}  style={{width:'380px',height:'240px'}} />}
+                    {el && <PodJsx service={service}  style={{width:'380px',padding:'24px 0 24px 16px'}} />}
                 </Popover>
             </div>
         )

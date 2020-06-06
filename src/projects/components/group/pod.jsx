@@ -11,12 +11,18 @@ import CreatePipe from "./pod_pipe";
 import Service from "../../Service";
 //
 const styles = theme => ({
-    pipeChart_left:{
-        '&>div':{
-            transform:'translateX(24px)'
+    box:{
+        width:'100%',
+        minHeight:'200px',
+        position:'relative',
+        '&>.chart':{
+            width:'100%',
+            height:'100%'
         }
     },
-    pipeChart_right:{
+    buttonGroup:{
+        position:'absolute',
+        right:'8px',
         '& .MuiButton-root':{
             width:'46px'
         },
@@ -134,9 +140,9 @@ class Index extends React.PureComponent {
     render(){
         const { classes,className,service,...props } = this.props;
         return (
-            <div className={clsx('flex-r','flex-center',className)} {...props}>
-                <div className={clsx('flex-box',classes.pipeChart_left)}><div id="pipeChart"></div></div>
-                <div className={clsx('flex-one',classes.pipeChart_right)}>{this.renderScaleButton()}</div>
+            <div className={clsx('flex-center',classes.box,className)} {...props}>
+                <div id="pipeChart" className="chart"></div>
+                <div className={clsx(classes.buttonGroup)}>{this.renderScaleButton()}</div>
             </div>
         )
     }
