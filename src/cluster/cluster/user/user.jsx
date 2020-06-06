@@ -83,11 +83,7 @@ const styles = theme => ({
             display:'inline-block'
         },
         '& .service_auth':{
-            maxWidth:'580px',
-            wordBreak:'break-word',
-            '&>span':{
-                whiteSpace:'nowrap'
-            }
+            maxWidth:'580px'
         },
         '& .auth':{
             marginRight:'16px',

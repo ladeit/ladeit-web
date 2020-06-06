@@ -116,10 +116,10 @@ export default ({
         },
         pipeChart:{
             status1:"Running",
-            status2:"Waiting",
+            status2:"Pending",
             status3:"Unknown",
-            status4:"Normal",
-            status5:"Error"
+            status4:"Succeeded",
+            status5:"Failed"
         },
         // status
         errorStatus:{

@@ -38,7 +38,7 @@ function createView(name,info,numDom,options){
         height:200,
         legend:{
             position: 'left-center',
-            offsetX: 16
+            offsetX: 0
         }
     },options);
     //
@@ -46,20 +46,21 @@ function createView(name,info,numDom,options){
         container: name,
         forceFit: true,
         height: opt.height,
-        padding: 'auto',
+        padding: {right:-16},
     })
     chart.source(getData(info));
-    chart.tooltip(false);
     chart.legend(opt.legend);
     chart.coord('theta', {
         innerRadius: 0.85
     });
+    //chart.tooltip(false);
     chart.tooltip({
         showTitle: false,
         itemTpl: '<li><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value}</li>'
     });
     chart.intervalStack().position('percent').color('type', [ '#0a7aca','#0a9afe', '#8ed1ff' ,'#4ecb73','#f2637b'])
         .opacity(1)
+        .style({})
         .label('percent', {
             offset: -16,
             textStyle: {

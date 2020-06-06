@@ -116,11 +116,11 @@ export default ({
             Saturday:'星期六'
         },
         pipeChart:{
-            status1:"运行",
-            status2:"等待",
+            status1:"运行中",
+            status2:"挂起",
             status3:"未知",
-            status4:"正常",
-            status5:"异常"
+            status4:"成功",
+            status5:"失败"
         },
         // status
         errorStatus:{
