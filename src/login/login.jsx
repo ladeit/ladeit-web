@@ -69,7 +69,7 @@ class Index extends React.PureComponent {
                         </Tabs>
                         <Divider light={true}/>
                         { tabIndex == 0 && <LoginJsx /> }
-                        { tabIndex == 1 && <RegisterJsx /> }
+                        { tabIndex == 1 && <RegisterJsx changeTab={this.handleChange}/> }
                     </Paper>
                 </div>
             </div>
