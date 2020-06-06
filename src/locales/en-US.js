@@ -66,8 +66,8 @@ export default ({
         downloadYaml:'Download yaml',
         imageMoreButton:'more images',
         firstButton:'First deploy',
-        firstCreateImageButton:"Create mannual",
-        firstCreateImageTips:"没找到 ？ 手动添加镜像",
+        firstCreateImageButton:"Create mannually",
+        firstCreateImageTips:"Can not find? Create mannually.",
         firstMemo1:'There is no image to deploy, please  <%=button%>  or push new image to ladeit as the reference first.',
         firstMemo2:'We recommend to put the request inot CI tool, so it can push the new image to ladeit automatically when you release.',
         // label
@@ -135,7 +135,7 @@ export default ({
             '2':'BlueGreen...',
             '3':'A/BTest...',
             '4':'Rolling...',
-            '8':'运行失败 en',
+            '8':'Failed',
         },
         releaseStatus:{
             '0':'Preparing',
