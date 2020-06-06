@@ -45,11 +45,11 @@ function renderChart(id,row) {
         one.value =  getPercentage(one.percentage);
         data.push(one);
     })
-    if(row.occupyCpuLimit.length<1){
-        data.push({State:"limit",name:'none',value:100});
+    if(row.occupyCpuLimit.length<1){// 占位元素
+        data.push({State:"limit",name:'none',value:0.1});
     }
-    if(row.occupyCpuReq.length<1){
-        data.push({State:"request",name:'none',value:100});
+    if(row.occupyCpuReq.length<1){// 占位元素
+        data.push({State:"request",name:'none',value:0.1});
     }
 
     // start init chart
@@ -117,20 +117,20 @@ function renderChart(id,row) {
             `
         }
     })
-    //chart.intervalStack().position('State*value').color('cpu');
-    chart.intervalStack()
-        .position('State*value')
-        .color('name', function (name) {
-            if(name == 'none'){
-                return 'rgba(0,0,0,0)';
-            }
-            colorIndex++ > colors.length -1  && (colorIndex = 0);
-            return colors[colorIndex];
-        })
-        .style({
-            lineWidth: .1,
-            stroke: '#fff'
-        });
+    chart.intervalStack().position('State*value').color('name');
+    // chart.intervalStack()
+    //     .position('State*value')
+    //     .color('name', function (name) {
+    //         if(name == 'none'){
+    //             return 'rgba(0,0,0,0)';
+    //         }
+    //         colorIndex++ > colors.length -1  && (colorIndex = 0);
+    //         return colors[colorIndex];
+    //     })
+    //     .style({
+    //         lineWidth: .1,
+    //         stroke: '#fff'
+    //     });
     chart.render();
 }
 
