@@ -12,25 +12,27 @@ function getPercentage(val){
 function renderChart(id,row) {
     let colorIndex = 0;
     let data = [];
-    let option = {requestFree:0,limitFree:0,limitSize:row.cpuLimit||0,requestSize:row.cpuRequest||0};
+    let option = {occupyCpuReq:false,occupyCpuLimit:false,requestFree:0,limitFree:0,limitSize:row.cpuLimit||0,requestSize:row.cpuRequest||0};
     // if(!row || row.occupyCpuLimit.length<1){
     //     document.getElementById(id).innerHTML = `<div class="flex-center"> 一 </div>`;
     //     return;
     // }
     //
-    let usedMax = 0;
-    row.occupyCpuUsed.map(function (one) {
-        usedMax += one.num;
-    })
-    row.occupyCpuUsed.map(function (one) {
-        one.State = "used";
-        one.value =  getPercentage(one.num / usedMax);
-        data.push(one);
-    })
+    // let usedMax = 0;
+    // row.occupyCpuUsed.map(function (one) {
+    //     usedMax += one.num;
+    // })
+    // row.occupyCpuUsed.map(function (one) {
+    //     one.State = "used";
+    //     one.value =  getPercentage(one.num / usedMax);
+    //     data.push(one);
+    // })
     row.occupyCpuLimit.map(function (one) {
         if(one.name == "free"){
             option.limitFree = one.num;
             return;
+        }else{
+            option.occupyCpuLimit = true;
         }
         one.State = "limit";
         one.value = getPercentage(one.percentage);
@@ -40,15 +42,17 @@ function renderChart(id,row) {
         if(one.name == "free"){
             option.requestFree = one.num;
             return;
+        }else{
+            option.occupyCpuReq = true;
         }
         one.State = "request";
         one.value =  getPercentage(one.percentage);
         data.push(one);
     })
-    if(row.occupyCpuLimit.length<1){// 占位元素
+    if(!option.occupyCpuLimit){// 占位元素
         data.push({State:"limit",name:'none',value:0.1});
     }
-    if(row.occupyCpuReq.length<1){// 占位元素
+    if(!option.occupyCpuReq){// 占位元素
         data.push({State:"request",name:'none',value:0.1});
     }
 
@@ -83,12 +87,12 @@ function renderChart(id,row) {
                     arr.push(`
                         <p>
                             <span style="background-color:${one.color};width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:8px;"></span>
-                            ${item.name}: <b>${item.num}</b> m
+                            ${item.name}: <b>${item.num}</b>m
                         </p>
                     `)
                 })
                 return `
-                    <div class="g2-tooltip g2-tooltip-position" style="transform:translateX(280px)">
+                    <div class="g2-tooltip1 g2-tooltip-position" style="transform:translateX(280px)">
                         <div class="g2-tooltip-title" >${title}</div>
                         ${arr.join('\n')}
                     </div>
@@ -101,17 +105,17 @@ function renderChart(id,row) {
                 arr.push(`
                     <p>
                         <span style="background-color:${one.color};width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:8px;"></span>
-                        &nbsp;&nbsp; ${item.name}: <div><b>${item.num}</b> m  &nbsp;&nbsp; <b>${item.value}%</b></div>
+                        &nbsp;&nbsp; ${item.name}: <div><b>${item.num}</b>m  &nbsp;&nbsp; <b>${item.value}%</b></div>
                     </p>
                 `)
             })
             return `
-                <div class="g2-tooltip g2-tooltip-position" style="transform:translateX(280px)">
+                <div class="g2-tooltip1 g2-tooltip-position" style="transform:translateX(280px)">
                     <div class="g2-tooltip-title">${title}</div>
                     ${arr.join('\n')}
                     <hr class="MuiDivider-root MuiDivider-light">
                     <p>
-                        free : <b>${freeSize}</b> m  &nbsp;&nbsp; total : <b>${totalSize}</b> m  
+                        free : <b>${freeSize}</b>m  &nbsp;&nbsp; total : <b>${totalSize}</b>m  
                     </p>
                 </div>
             `
