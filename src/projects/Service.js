@@ -67,7 +67,10 @@ export default {
         _.ajax({url:`/api/v1/resource/group/${groupId}/topology`},(res)=>{callback(res)})
     },
     groupList(callback){
-        _.ajax({url:'/api/v1/servicegroup/get',params:{GroupName:'',OrderParam:''}},(res)=>{callback(res)})
+        _.ajax({url:'/api/v1/servicegroup/get',params:{GroupName:'',OrderParam:''}},(res)=>{
+            cache['serviceMap'] = '';
+            callback(res)
+        })
     },
     groupDel(data,callback){
         _.ajax({url:`/api/v1/servicegroup/del/${data.id}`,method:'delete',data:{isdelService:data.isdelService}},(res)=>{callback(res||true)},()=>{callback()})
@@ -89,6 +92,8 @@ export default {
                     window.History.replace('/nomatch');
                 }else{
                     res.filter = name;
+                    cache['serviceMap'] = '';
+                    //
                     _.ajax({url:'/api/v1/servicegroup/getGroupToken',params:{ServiceGroupId:res[0].id}},(tokenInfo)=>{
                         let one = res[0];
                         one.token = tokenInfo.content;
