@@ -13,7 +13,7 @@ import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import UserBgImg from '@/assets/img/user_bg.jpg';
 import intl from 'react-intl-universal';
 import Service from '../Service'
-
+import md5 from 'md5'
 const styles = theme => ({
     root:{
         margin:'-24px -24px 0'
@@ -110,6 +110,7 @@ class Index extends React.PureComponent {
         this.setState({tabValue:newValue})
     }
 
+    
     render(){
         const { classes,user } = this.props;
         const { tabValue,activityList } = this.state;
@@ -117,11 +118,12 @@ class Index extends React.PureComponent {
         if(activityList.records.length && activityList.totalPage == activityList.pageNum){
             listFooter = <div className="flex-center" style={{margin:'24px 0'}}><div className="buttonMore"><Button disabled size="small">{intl.get('tipsListToBottom')}</Button></div></div>;
         }
+        const myAvatar = md5((user.email||'').toLowerCase().trim())
         return (
             <div className={classes.root}>
                 <div className={classes.user_bg} style={{backgroundImage:`url(${UserBgImg})`}}></div>
                 <div className={classes.user_info} >
-                    <Avatar src="https://img.toutiao.io/subject%2F6fb1a80dffde44eda80e6eb5c63df9e1" className={classes.user_avatar}/>
+                    <Avatar src={"https://www.gravatar.com/avatar/"+myAvatar+"?d=retro&size=120"} className={classes.user_avatar}/>
                     <div className="user_name">
                         <Typography variant="body2"></Typography>
                         <Typography variant="body1">{user.username}</Typography>
