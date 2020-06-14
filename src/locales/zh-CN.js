@@ -42,6 +42,13 @@ export default ({
     tipsNoFoundData:'未加载到数据,请刷新重试 !',
     tipsFaild:'加载失败 .',
     tipsNoAuthorityByAdmin:'系统管理员权限无需设置分组权限',
+    tipsValidMust:'不能为空',
+    tipsValidChar:'包含特殊符号',
+    tipsValidNum:'必须数字',
+    tipsValidAddress:'地址格式错误',
+    tipsValidEmail:'邮箱格式错误',
+    tipsValidCharOrNum:'只能为字母、数字',
+    tipsDifPassword:'密码不一致',
 
     // 模块内
     login: {
@@ -53,7 +60,7 @@ export default ({
         password: '密码',
         prepassword: "确认密码",
         login: '登  录',
-        register:'注  册'
+        register:'注  册',
     },
     services:{
         // index

@@ -59,9 +59,9 @@ class Index extends React.PureComponent {
         this.state = {
             disableSubmit:'no',
             form:[
-                {name:'username',valid:[this.clickAbleSubmit], inputProps:{placeholder:intl.get('login.username'),endAdornment: <PersonIcon className="inputIcon"/>}},
-                {name:'password',valid:[this.clickAbleSubmit,this.validPassword], inputProps:{type:'password',placeholder:intl.get('login.password'),endAdornment: <VisibilityOffIcon className="inputIcon" onClick={this.clickVisiblePassword}/>}},
-                {name:'rpassword',valid:[this.clickAbleSubmit,this.validPassword], inputProps:{type:'password',placeholder:intl.get('login.prepassword'),endAdornment: <VisibilityOffIcon className="inputIcon" onClick={this.clickVisiblePassword}/>}},
+                {name:'username',valid:['require',this.clickAbleSubmit], inputProps:{placeholder:intl.get('login.username'),endAdornment: <PersonIcon className="inputIcon"/>}},
+                {name:'password',valid:['require',this.clickAbleSubmit,this.validPassword], inputProps:{type:'password',placeholder:intl.get('login.password'),endAdornment: <VisibilityOffIcon className="inputIcon" onClick={this.clickVisiblePassword}/>}},
+                {name:'rpassword',valid:['require',this.clickAbleSubmit,this.validPassword], inputProps:{type:'password',placeholder:intl.get('login.prepassword'),endAdornment: <VisibilityOffIcon className="inputIcon" onClick={this.clickVisiblePassword}/>}},
             ]
         }
     }
@@ -100,9 +100,13 @@ class Index extends React.PureComponent {
     validPassword = (column,error)=>{
         const map = this.refs.$form.getData();
 
-        if(map.password != map.rpassword){
-            error.rpassword = '密码不一致'
-        }else{
+        if(!map.password) {
+            //
+        } else if(!map.rpassword) {
+            //
+        } else if(map.password != map.rpassword){
+            error.rpassword = intl.get('tipsDifPassword')
+        } else{
             delete error.rpassword;
         }
     }

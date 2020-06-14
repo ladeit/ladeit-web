@@ -41,7 +41,13 @@ export default ({
     tipsNoFoundData:'No data, please retry.',
     tipsFaild:'Failed to load.',
     tipsNoAuthorityByAdmin:'No need to set up privilege for administrator.',
-
+    tipsValidMust:'不能为空 - ',
+    tipsValidChar:'包含特殊符号 - ',
+    tipsValidNum:'必须数字 - ',
+    tipsValidAddress:'地址格式错误 - ',
+    tipsValidEmail:'邮箱格式错误 - ',
+    tipsValidCharOrNum:'只能为字母、数字 - ',
+    tipsDifPassword:'密码不一致 - ',
     // 模块内
     login: {
         loginTitle:'Login in',
