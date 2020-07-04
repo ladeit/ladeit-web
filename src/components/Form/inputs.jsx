@@ -261,31 +261,31 @@ class EditLabel1 extends React.PureComponent{// button - click
 const FormRule = {
     require:(one)=>{
         one._type = (!one.value || one.value.trim()=="")?"error":""
-        one._label = "不能为空"
+        one._label = intl.get('tipsValidMust')
     },
     'name':function(one){
         one._type = /^[\da-zA-Z\-]*$/.test(one.value)?"":"error"
-        one._label = "包含特殊符号"
+        one._label = intl.get('tipsValidChar')
     },
     numberOrNull:(one)=>{
         one._type = /^[\s0-9]*$/.test(one.value)?"":"error"
-        one._label = "必须数字"
+        one._label = intl.get('tipsValidNum')
     },
     number:(one)=>{
         one._type = /^[0-9]+$/.test(one.value)?"":"error"
-        one._label = "必须数字"
+        one._label = intl.get('tipsValidNum')
     },
     http:function(one){
         one._type = /^http\:\/\/.*/.test(one.value)?"":"error"
-        one._label = "地址格式错误"
+        one._label = intl.get('tipsValidAddress')
     },
     email:function(one){
         one._type = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(one.value)?"":"error"
-        one._label = "邮箱格式错误"
+        one._label = intl.get('tipsValidEmail')
     },
     'number+word':function(one){
         one._type = /^[\da-zA-Z]*$/.test(one.value)?"":"error"
-        one._label = "只能为字母、数字"
+        one._label = intl.get('tipsValidCharOrNum')
     },
 }
 // form
